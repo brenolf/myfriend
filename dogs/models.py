@@ -1,7 +1,7 @@
 from django.db import models
 
 class Dog(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=50)
     birth_date = models.DateField('data de nascimento aproximada')
     SIZE_CHOICES = ("Pequeno", "Médio", "Grande") #complementar
     size = models.CharField(max_length=2, choices=SIZE_CHOICES)
@@ -18,6 +18,7 @@ class Dog(models.Model):
 
 
 class Breed(models.Model):
+	breed_name = models.CharField(max_length=50)
 	#aqui precisa ser limitado
 
 class Address(models.Model):
@@ -59,7 +60,7 @@ class Address(models.Model):
 	postal_code = models.CharField(max_length=9) #colocar validação
 
 
-class Characteristic(models.Model):
+#class Characteristic(models.Model):
 	#aqui também precisa ser limitado, são características "imposed" perguntadas
 
 #class Album(models.Model): #many photos and videos
@@ -78,8 +79,9 @@ class Person(models.Model):
 	birth_date = models.DateField()
 	SEX_CHOICES = ("Masculino","Feminino")
     sex = models.CharField(max_length=2, choices=SEX_CHOICES)
-    answers = models.OneToOneField(Answer)
+    #answers = models.OneToOneField(Answer)
 
 
-class Answers(models.Model):
+#class Answers(models.Model):
+
 	#conjunto de true/none/false também
