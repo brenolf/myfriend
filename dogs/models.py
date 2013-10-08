@@ -3,6 +3,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 
 
@@ -73,6 +74,18 @@ class Dog(models.Model):
     adopted = models.BooleanField()
     adopted_by = models.ForeignKey(Person,related_name="adoped_by")
     in_adoption_by = models.ForeignKey(Person,related_name="in_adoption_by")
+
+class PersonForm(ModelForm):
+	class Meta:
+		model = Person
+		exclude = ['title']
+
+
+class DogForm(ModelForm):
+	class Meta:
+		model = Dog
+		exclude = ['title']
+
 
 
 #class Characteristic(models.Model):

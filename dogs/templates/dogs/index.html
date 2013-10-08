@@ -1,4 +1,4 @@
-{% if users %}
+{% if persons %}
     <ul>
     {% for person in persons %}
     	<li><a href="/dogs/person/{{ person.user.username }}/">{{ person.user.username}}</a></li>
@@ -8,5 +8,5 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No users are available.</p>
+    <p>No persons are available.</p>
 {% endif %}
