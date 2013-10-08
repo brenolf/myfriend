@@ -1,63 +1,78 @@
+ #!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from django.db import models
-
-class Dog(models.Model):
-    name = models.CharField(max_length=50)
-    birth_date = models.DateField('data de nascimento aproximada')
-    SIZE_CHOICES = ("Pequeno", "Médio", "Grande") #complementar
-    size = models.CharField(max_length=2, choices=SIZE_CHOICES)
-    description = models.TextField() 
-    SEX_CHOICES = ("Macho","Fêmea")
-    sex = models.CharField(max_length=2, choices=SEX_CHOICES)
-    color = models.CharField()
-    breed = models.ForeignKey(Breed)
-    #A ideia é que um cachorro seja associado a um endereço da pessoa, e não à pessoa. Se quiser ser associada a ela, é só
-    #colocar que o endereço do cachorro é o mesmo que o dela, e eles vão ficar sincronizados
-    address = models.ForeignKey(Address)
-    adopted = models.BooleanField()
+from django.contrib.auth.models import User
 
 
+
+class Address(models.Model):
+	#precisa ter telefone de contato também
+	street = models.CharField(max_length=200)
+	number = models.CharField(max_length=20)
+	apartment = models.CharField(max_length=50)
+	neighbourhood = models.CharField(max_length=100)
+	city = models.CharField(max_length=50)
+	STATE_CHOICES = (("AC", "Acre"),
+		("AL", "Alagoas"),
+		("AP", "Amapá"),
+		("AM", "Amazonas"),
+		("BA", "Bahia",),
+		("CE", "Ceará"),
+		("DF", "Distrito Federal"),
+		("ES", "Espírito Santo"),
+		("GO", "Goiás"),
+		("MA", "Maranhão"),
+		("MT", "Mato Grosso"),
+		("MS", "Mato Grosso do Sul"),
+		("MG", "Minas Gerais"),
+		("PA", "Pará"),
+		("PB", "Paraíba"),
+		("PR", "Paraná"),
+		("PE", "Pernambuco"),
+		("PI", "Piauí"),
+		("RJ", "Rio de Janeiro"),
+		("RN", "Rio Grande do Norte"),
+		("RS", "Rio Grande do Sul"),
+		("RO", "Rondônia"),
+		("RR", "Roraima"),
+		("SC", "Santa Catarina"),
+		("SP", "São Paulo"),
+		("SE", "Sergipe"),
+		("TO", "Tocantins"))
+	state = models.CharField(max_length=2, choices=STATE_CHOICES)
+	postal_code = models.CharField(max_length=9) #colocar validação
 
 class Breed(models.Model):
 	breed_name = models.CharField(max_length=50)
 	#aqui precisa ser limitado
 
-class Address(models.Model):
-	#precisa ter telefone de contato também
-	street = models.CharField()
-	number = models.CharField()
-	apartment = models.CharField()
-	neighbourhood = models.CharField()
-	city = models.CharField()
-	STATE_CHOICES = (
-		("Acre", "AC"),
-		("Alagoas", "AL"),
-		("Amapá", "AP"),
-		("Amazonas", "AM"),
-		("Bahia" ", BA"),
-		("Ceará", "CE"),
-		("Distrito Federal", "DF"),
-		("Espírito Santo", "ES"),
-		("Goiás", "GO"),
-		("Maranhão", "MA"),
-		("Mato Grosso", "MT"),
-		("Mato Grosso do Sul", "MS"),
-		("Minas Gerais", "MG"),
-		("Pará", "PA"),
-		("Paraíba", "PB"),
-		("Paraná", "PR"),
-		("Pernambuco", "PE"),
-		("Piauí", "PI"),
-		("Rio de Janeiro", "RJ"),
-		("Rio Grande do Norte", "RN"),
-		("Rio Grande do Sul", "RS"),
-		("Rondônia", "RO"),
-		("Roraima", "RR"),
-		("Santa Catarina", "SC"),
-		("São Paulo", "SP"),
-		("Sergipe", "SE"),
-		("Tocantins", "TO"))
-	state = models.CharField(max_length=2, choices=STATE_CHOICES)
-	postal_code = models.CharField(max_length=9) #colocar validação
+
+class Person(models.Model):
+	user = models.OneToOneField(User)
+	birth_date = models.DateField()
+	SEX_CHOICES = (("M","Masculino"),("F","Feminino"))
+	sex = models.CharField(max_length=2, choices=SEX_CHOICES)
+	address = models.ForeignKey(Address)
+    #answers = models.OneToOneField(Answer)
+
+
+class Dog(models.Model):
+    name = models.CharField(max_length=50)
+    birth_date = models.DateField('data de nascimento aproximada')
+    SIZE_CHOICES = (("P","Pequeno"), ("M","Médio"), ("G","Grande")) #complementar
+    size = models.CharField(max_length=2, choices=SIZE_CHOICES)
+    description = models.TextField() 
+    SEX_CHOICES = (("M","Macho"),("F","Fêmea"))
+    sex = models.CharField(max_length=2, choices=SEX_CHOICES)
+    color = models.CharField(max_length=50)
+    breed = models.ForeignKey(Breed)
+    #A ideia é que um cachorro seja associado a um endereço da pessoa, e não à pessoa. Se quiser ser associada a ela, é só
+    #colocar que o endereço do cachorro é o mesmo que o dela, e eles vão ficar sincronizados
+    address = models.ForeignKey(Address)
+    adopted = models.BooleanField()
+    adopted_by = models.ForeignKey(Person,related_name="adoped_by")
+    in_adoption_by = models.ForeignKey(Person,related_name="in_adoption_by")
 
 
 #class Characteristic(models.Model):
@@ -68,18 +83,6 @@ class Address(models.Model):
 #class Photo(models.Model):
 
 #class Video(models.Model):
-
-class Person(models.Model):
-	user = models.OneToOneField(User)
-	dogs_adopted = models.ManyToManyField(Dog) #Será o melhor jeito de fazer? pensei que só o
-	#campo adopted seria o suficiente, mas aí não dá pra trackear quem colocou o cão pra adoção
-	#depois de alguém ter adotado
-	#o nome também não serve bem se o cara consegue cadastrar seus próprios cães, mas acho que serve
-	dogs_to_adoption = models.ManyToManyField(Dog) 
-	birth_date = models.DateField()
-	SEX_CHOICES = ("Masculino","Feminino")
-    sex = models.CharField(max_length=2, choices=SEX_CHOICES)
-    #answers = models.OneToOneField(Answer)
 
 
 #class Answers(models.Model):

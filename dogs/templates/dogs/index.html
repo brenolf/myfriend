@@ -1,0 +1,12 @@
+{% if users %}
+    <ul>
+    {% for person in persons %}
+    	<li><a href="/dogs/person/{{ person.user.username }}/">{{ person.user.username}}</a></li>
+        {% for dog in person.dogs_adopted %}
+        	<li><a href="/dogs/dogs/{{ dog.id }}/">{{ dog.name }}</a></li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No users are available.</p>
+{% endif %}
