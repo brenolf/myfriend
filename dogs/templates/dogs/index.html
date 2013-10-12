@@ -3,7 +3,7 @@
     {% for person in persons %}
     	<li><a href="/persons/{{ person.user.username }}/">{{ person.user.username}} {{person.dogs_adopted.size}}</a></li>
     	<ul>
-	        {% for dog in person.adopted_by.all %}
+	        {% for dog in person.in_adoption_by.all %}
 	        	<li><a href="/dogs/{{ dog.id }}/">{{ dog.name }} ae</a></li>
 	        {% endfor %}
     	</ul>
