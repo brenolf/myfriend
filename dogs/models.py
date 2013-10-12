@@ -55,8 +55,8 @@ class Breed(models.Model):
 class Person(models.Model):
     user = models.OneToOneField(User)
     birth_date = models.DateField()
-    SEX_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
-    sex = models.CharField(max_length=2, choices=SEX_CHOICES)
+    GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
+    gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
     address = models.ForeignKey(Address)
 
     def __unicode__(self):
