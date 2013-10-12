@@ -100,7 +100,7 @@ class DogForm(ModelForm):
 
     class Meta:
         model = Dog
-        exclude = ['address']
+        exclude = ['address', 'adopted', 'adopted_by', 'in_adoption_by']
 
 
 class AddressForm(ModelForm):
