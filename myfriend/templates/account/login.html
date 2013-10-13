@@ -1,43 +1,77 @@
-{% extends "base.html" %}
 
+
+{% extends "base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load account %}
 {% load url from future %}
-
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
-
 {% block content %}
 
-<h1>{% trans "Sign In" %}</h1>
-wewfwefwef
-{% if socialaccount.providers  %}
-<p>{% blocktrans with site.name as site_name %}Please sign dddddin with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> 
-for a {{site_name}} account andwefwef sign in below:{% endblocktrans %}</p>
+	<section class="silver content text">
+		<div class="row">
+			<div class="col-sm-6">
+				{% if socialaccount.providers  %}
+				<p>{% blocktrans with site.name as site_name %}Por favor, logue-se com uma das suas contas nesses sites. Ou <a href="{{ signup_url }}">cadastre-se</a> 
+				para uma conta em {{site_name}} e se logue abaixo:{% endblocktrans %}</p>
 
-<div class="socialaccount_ballot">
+				<div class="socialaccount_ballot">
 
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
+				  <ul class="socialaccount_providers">
+					{% include "socialaccount/snippets/provider_list.html" with process="login" %}
+				  </ul>
 
-  <div class="login-or">{% trans 'or' %}</div>
+				  <div class="login-or">{% trans 'or' %}</div>
 
-</div>
+				</div>
 
-{% include "socialaccount/snippets/login_extra.html" %}
+				{% include "socialaccount/snippets/login_extra.html" %}
 
-{% endif %}
+				{% endif %}
+			</div>
+			<div class="col-sm-6">
+				<h1>Entrar</h1>
+				<i class="hr"></i>
+				 
+  
 
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
+  
+   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+
+				<form name="login" action="" method="POST">{% csrf_token %}
+				
+				  {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Usuário:</div>
+							<div class="col-sm-6"><input type="text" name="login" placeholder="Seu usuário" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Senha:</div>
+							<div class="col-sm-6"><input type="text" name="password" placeholder="Sua senha" class="form-control"/></div>
+						</div>
+					</div>
+					
+					{{form.remember}}
+
+					<button type="submit" class="btn btn-primary">Entrar</button>
+				</form>
+			</div>
+
+			<form class="login" method="POST" action="{% url 'account_login' %}">
+ 
+ 
 </form>
 
-{% endblock %}
+			<div class="clear"></div>
 
+		</div>
+	</section>
+
+
+{% endblock %}
