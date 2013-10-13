@@ -52,8 +52,8 @@
 				<i class="hr"></i>
 				<div class="tac">
 					<div class="btn-group">
-						<a href="#" class="btn btn-lg btn-primary"><i class="icon icon-edit"></i> Editar seus dados</a>
-						<a href="#" class="btn btn-lg btn-success"><i class="icon icon-plus"></i> Registrar cachorro</a>
+						<a href="{% url 'person-edit' %}" class="btn btn-lg btn-primary"><i class="icon icon-edit"></i> Editar seus dados</a>
+						<a href="{% url 'dog-create' %}" class="btn btn-lg btn-success"><i class="icon icon-plus"></i> Registrar cachorro</a>
 					</div>
 				</div>
 			</div>
@@ -73,19 +73,22 @@
 						<th>Dono original</th>
 						<th>Controle</th>
 					</tr>
-
+					{% for dog in dogs %}
 					<tr>
-						<td><a href="#">Carl</a></td>
-						<td>Para adoção</td>
-						<td>Você</td>
+						<td><a href="{% url 'detail-dog' dog.id %}">{{dog.name}}</a></td>
+						<td>{% if dog.adopted %} Adotado {% else %} Para adoção {% endif %}</td>
+						<td>{% if user.id == dog.in_adoption_by.user.id %} Você {% else %}
+						<a href="{% url 'detail-person' dog.in_adoption_by.id %}">{{dog.in_adoption_by.user.firstname}}</a> {% endif %}</td>
 						<td>
 							<div class="btn-group">
-								<a href="#" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
-								<a href="#" class="btn btn-danger"><i class="icon icon-remove"></i> Excluir</a>
-								<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>
+								<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+								<form name="adopt" action="" method="post">{% csrf_token %}
+								<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button></form>
+								<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
 							</div>
 						</td>
 					</tr>
+					{% endfor %}
 
 				</table>
 

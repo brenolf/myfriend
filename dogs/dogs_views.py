@@ -7,6 +7,21 @@ from django.contrib.auth.decorators import login_required
 
 from dogs.models import *
 
+@login_required(login_url='/accounts/login/')
+def user(request):
+	dogs = request.user.person.in_adoption_by.all()
+	context = {'user':request.user, 'dogs':dogs}
+	if request.method == 'POST' and 'remove' in request.POST:
+		dogid = request.POST['remove']
+		d = Dog.objects.get(pk=dogid)
+		d.remove()
+	return render(request, 'persons/user.html', context)
+
+
+
+
+def about(request):
+	return render(request, 'general/about.html', context)
 
 def index(request):
     dogs = Dog.objects.all()[:10]
@@ -16,7 +31,11 @@ def index(request):
 
 def detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
-    return render(request, 'dogs/dog.html', {'dog': dog})
+    if request.method == 'POST' and request.user:
+    	dog.adopted_by = request.user.person
+    	dog.adopted = True	
+    	dog.save()
+    return render(request, 'dogs/dog.html', {'dog': dog, 'user':request.user})
     
 def search(request):
 	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET:

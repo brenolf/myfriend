@@ -29,10 +29,10 @@
 
 			<div class="col-xs-12 col-md-8">
 				<ul>
-					<li class="r"><a href="#"><i class="icon icon-home"></i> home</a></li>
-					<li class="p"><a href="#"><i class="icon icon-search"></i> procurar</a></li>
-					<li class="g"><a href="#"><i class="icon icon-comment"></i> histórias</a></li>
-					<li class="b"><a href="#"><i class="icon icon-user"></i> entrar</a></li>
+					<li class="r"><a href="{% url 'index' %}"><i class="icon icon-home"></i> home</a></li>
+					<li class="p"><a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> procurar</a></li>
+					<li class="g"><a href="{% url 'index' %}"><i class="icon icon-comment"></i> histórias</a></li>
+					<li class="b"><a href="{% url 'account_login' %}"><i class="icon icon-user"></i> entrar</a></li>
 				</ul>	
 
 				<select name="mnh" class="form-control">
@@ -57,9 +57,9 @@
 	<footer>
 
 		<div>
-			<a href="#"><i class="icon icon-search"></i> Procurar</a>
-			<a href="#"><i class="icon icon-user"></i> Entrar</a>
-			<a href="#"><i class="icon icon-plus"></i> Registrar</a>
+			<a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> Procurar</a>
+			<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
+			<a href="{% url 'account_signup' %}"><i class="icon icon-plus"></i> Registrar</a>
 		</div>
 
 		<div id="credits">
