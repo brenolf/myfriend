@@ -83,8 +83,8 @@ class Dog(models.Model):
     name = models.CharField(max_length=50)
     birth_date = models.DateField('data de nascimento aproximada')
     # complementar
-    SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"), ("m", "Médio"), ("l","Grande"),("xl","Muito Grande"))
-    size = models.CharField(max_length=2, choices=SIZE_CHOICES)
+    #SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"), ("m", "Médio"), ("l","Grande"),("xl","Muito Grande"))
+    size = models.CharField(max_length=2)
     description = models.TextField()
     GENDER_CHOICES = (("M", "Macho"), ("F", "Fêmea"))
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
