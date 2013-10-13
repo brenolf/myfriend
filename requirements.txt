@@ -1,4 +1,5 @@
 Django==1.5.4
+PIL==1.1.7
 South==0.8.2
 argparse==1.2.1
 dj-database-url==0.2.2

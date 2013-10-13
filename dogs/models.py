@@ -94,6 +94,7 @@ class Dog(models.Model):
     # e não à pessoa. Se quiser ser associada a ela, é só
     # colocar que o endereço do cachorro é o mesmo que o dela, e eles vão
     # ficar sincronizados
+    photo = models.ImageField(null=True, upload_to="dog_images/")
     adopted = models.BooleanField()
     adopted_by = models.ForeignKey(
         Person, related_name="adopted_by", null=True)
@@ -114,6 +115,7 @@ class DogForm(ModelForm):
 
     class Meta:
         model = Dog
+        #photo = models.ImageField(upload_to = 'dog_images/', default = 'dog_images/None/no-img.jpg')
         exclude = ['address', 'adopted', 'adopted_by','in_adoption_by']
 
 

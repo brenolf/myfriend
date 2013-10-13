@@ -21,7 +21,7 @@ def detail(request, dog_id):
 def create(request):  # depois mudar pra ficar restful
 	if request.method == 'POST':  # If the form has been submitted...
 		# A form bound to the POST data
-		form_dog = DogForm(request.POST)
+		form_dog = DogForm(request.POST, request.FILES)
 		if form_dog.is_valid():
 			dog = form_dog.save(commit=False)
 			x=request.user

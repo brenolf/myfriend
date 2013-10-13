@@ -1,14 +1,176 @@
-{% if persons %}
-    <ul>
-    {% for person in persons %}
-    	<li><a href="/persons/{{ person.user.username }}/">{{ person.user.username}} {{person.dogs_adopted.size}}</a></li>
-    	<ul>
-	        {% for dog in person.in_adoption_by.all %}
-	        	<li><a href="/dogs/{{ dog.id }}/">{{ dog.name }} ae</a></li>
-	        {% endfor %}
-    	</ul>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No persons are available.</p>
-{% endif %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MyFriend</title>
+	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}/>
+	<link rel="stylesheet" type="text/css" href={% static "css/bootstrap.min.css" %}/>
+	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link rel="shortcut icon" href={% static "img/logo.png" %}>
+</head>
+<body>
+
+	<header class="home">
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="mask">
+					<img class="static_bg" src={% static "img/1.jpg" %} style="display: none;">
+					<video id="main_video" class="video-js vjs-default-skin" loop autoplay muted preload="auto" controls preload="auto" width="1500" height="100%" data-setup="{'controls': false}" poster={% static "img/1.jpg" %}>  
+						<source src={% static "img/bg.mp4" type='video/mp4' /> 
+					</video>
+
+					<div></div>
+				</div>
+
+				<div id="logo">
+					<img src={% static "img/logo.png" %} alt="MyFriend">
+					<h1>MyFriend</h1>
+					<div class="clear"></div>
+				</div>
+
+				<ul>
+					<li class="r"><a href="#"><i class="icon icon-home"></i> home</a></li>
+					<li class="p"><a href="#"><i class="icon icon-search"></i> procurar</a></li>
+					<li class="g"><a href="#"><i class="icon icon-comment"></i> histórias</a></li>
+					<li class="b"><a href="#"><i class="icon icon-user"></i> entrar</a></li>
+				</ul>
+
+				<select name="mnh" class="form-control">
+					<option value="home">Home</option>
+					<option value="search">Procurar</option>
+					<option value="testimonials">Histórias</option>
+					<option value="login">Entrar</option>
+				</select>
+
+				<div class="clear"></div>
+
+			</div>
+		</div>
+	</header>
+
+	<section class="blue">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Cães não são nossa vida inteira, mas eles fazem nossas vidas inteiras</h1>
+				<h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
+			</div>
+		</div>
+	</section>
+
+	<section class="imgholder">
+		
+	</section>
+
+	<section class="red">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>O mais legal é ver dar certo!</h1>
+				<h2>Vários cãezinhos já estão em um novo lar, conheça essas histórias</h2>
+
+				<div class="image_carousel">
+					<div id="adopted_dogs">
+						<img src={% static "img/dogs/1.jpg" %} alt="1" width="140" height="140" data-toggle="tooltip" title="Max"/>
+						<img src={% static "img/dogs/2.jpg" %} alt="2" width="140" height="140" data-toggle="tooltip" title="Bob" />
+						<img src={% static "img/dogs/3.jpg" %} alt="3" width="140" height="140" data-toggle="tooltip" title="Niul" />
+						<img src={% static "img/dogs/4.jpg" %} alt="4" width="140" height="140" data-toggle="tooltip" title="Moo" />
+						<img src={% static "img/dogs/5.jpg" %} alt="5" width="140" height="140" data-toggle="tooltip" title="Ala" />
+						<img src={% static "img/dogs/6.jpg" %} alt="6" width="140" height="140" data-toggle="tooltip" title="Lolo" />
+						<img src={% static "img/dogs/7.jpg" %} alt="7" width="140" height="140" data-toggle="tooltip" title="Nina" />
+						<img src={% static "img/dogs/8.jpg" %} alt="8" width="140" height="140" data-toggle="tooltip" title="Maggie" />
+						<img src={% static "img/dogs/9.jpg" %} alt="9" width="140" height="140" data-toggle="tooltip" title="Carl" />
+						<img src={% static "img/dogs/10.jpg" %} alt="10" width="140" height="140" data-toggle="tooltip" title="Liz" />
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="silver content">
+		<div class="row">
+
+			<div class="col-sm-6">
+				<h1>Eventos</h1>
+
+				<div class="event">
+					<div class="date">09<span>set</span></div>
+					<div class="ctt"><span>A nice title</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+					<div class="clear"></div>
+				</div>
+
+				<div class="event">
+					<div class="date">09<span>set</span></div>
+					<div class="ctt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+					<div class="clear"></div>
+				</div>
+
+				<div class="event">
+					<div class="date">09<span>set</span></div>
+					<div class="ctt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+					<div class="clear"></div>
+				</div>
+
+				<div class="event">
+					<div class="date">09<span>set</span></div>
+					<div class="ctt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<h1>Patrocínio</h1>
+
+				<a href="#"><img class="partner" src={% static "img/parceiros/pedigree.jpg" %} alt="Pedigree"/></a>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+	</section>
+
+
+	<section class="ribbon">
+		<img src={% static "img/logo_inverse.png" %} alt="MyFriend">
+	</section>
+
+	<footer>
+
+		<div>
+			<a href="#"><i class="icon icon-search"></i> Procurar</a>
+			<a href="#"><i class="icon icon-user"></i> Entrar</a>
+			<a href="#"><i class="icon icon-plus"></i> Registrar</a>
+		</div>
+
+		<div id="credits">
+
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Sobre</a></li>
+				<li><a href="#">Procurar</a></li>
+				<li><a href="#">Histórias</a></li>
+				<li><a href="#">Eventos</a></li>
+			</ul>
+
+			<div class="clear"></div>
+
+			<div class="medias">
+				<a href="#"><i class="icon icon-twitter"></i></a>
+				<a href="#"><i class="icon icon-facebook"></i></a>
+				<a href="#"><i class="icon icon-google-plus"></i></a>
+			</div>
+
+			&copy; MyFriend 2013
+		</div>
+	</footer>
+
+</body>
+
+<script type="text/javascript" src={% static "js/jquery.js" %}></script>
+<script type="text/javascript" src={% static "js/caroufredsel.js" %}></script>
+<script type="text/javascript" src={% static "js/bootstrap.js" %}></script>
+<script type="text/javascript" src={% static "js/js.js" %}></script>
+<script src="http://vjs.zencdn.net/c/video.js"></script>
+<script type="text/javascript" src={% static "js/responsive.js" %}></script>
+
+</html>

@@ -18,7 +18,7 @@ erro
 				<h1>Dados do cão</h1>
 				<i class="hr"></i>
 
-				<form name="signup" action="" method="post">{% csrf_token %}
+				<form name="signup" action="" enctype="multipart/form-data" method="post">{% csrf_token %}
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Nome:</div>
@@ -98,7 +98,8 @@ erro
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Foto:</div>
-							<div class="col-sm-6"><input type="file" name="pic" placeholder="Foto do cachorro" class="form-control"/></div>
+							{{ form_dog.photo }}
+							<!--<div class="col-sm-6"><input type="file" name="photo" placeholder="Foto do cachorro" class="form-control"/></div>-->
 						</div>
 					</div>
 					{% comment %}
