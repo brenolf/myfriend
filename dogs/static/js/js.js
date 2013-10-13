@@ -13,5 +13,20 @@ if(adopted_dogs.length !== 0){
 		}
 	});
 
-	$('#adopted_dogs img').tooltip({placement: 'bottom'});
+	var img = $('#adopted_dogs img');
+
+	img.tooltip({placement: 'bottom'});
+
+	img.each(function(){
+		e = $(this);
+		var url = e.attr('data-url');
+		console.log(url);
+
+		if(url){
+			e.css({cursor: 'pointer'});
+			e.click(function(){
+				window.location = url;
+			});
+		}
+	});
 }
