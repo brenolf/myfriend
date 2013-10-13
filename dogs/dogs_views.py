@@ -15,7 +15,7 @@ def index(request):
 
 def detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
-    return render(request, 'dogs/detail.html', {'dog': dog})
+    return render(request, 'dogs/dog.html', {'dog': dog})
 
 @login_required(login_url='/accounts/login/')
 def create(request):  # depois mudar pra ficar restful
