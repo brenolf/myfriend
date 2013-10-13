@@ -6,9 +6,9 @@
 	<title>MyFriend - Usuário</title>
 	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}/>
 	<link rel="stylesheet" type="text/css" href={% static "css/bootstrap.min.css" %}/>
-	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+	<link href={% static "http://vjs.zencdn.net/c/video-js.css" %} rel="stylesheet">
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"  rel="stylesheet">
+	<link href=http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 	<link rel="shortcut icon" href={% static "img/logo.png" %}>
 </head>
 <body>
@@ -47,7 +47,7 @@
 
 
 	{% block content %}
-	{% endblock %}
+	{% enblock %}
 	
 
 	<section class="ribbon">
