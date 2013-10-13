@@ -2,11 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound,HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from dogs.models import *
 from django.contrib.auth.models import User
 
-
+@login_required(login_url='/accounts/login/')
 def create(request):  # depois mudar pra ficar restful
     if request.method == 'POST':  # If the form has been submitted...
         # A form bound to the POST data

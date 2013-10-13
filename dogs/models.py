@@ -5,6 +5,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
+#segundo o próprio site do python, é o melhor lugar pra colocar signals, mas wtf hein?
+#tentar achar lugar melhor
+from django.dispatch import receiver
+from allauth.account.signals import user_signed_up
+
+@receiver(user_signed_up)
+def after_sign_up(sender, **kwargs):
+    request = kwargs['request']
+    user = kwargs['user']
+    p = Person()
+    user.person = p
+    user.save()
+    p.user = user
+    p.save()
+
 
 class Address(models.Model):
     # precisa ter telefone de contato também
@@ -54,10 +69,10 @@ class Breed(models.Model):
 
 class Person(models.Model):
     user = models.OneToOneField(User)
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True)
     GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
-    gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
-    address = models.ForeignKey(Address)
+    gender = models.CharField(max_length=2, choices=GENDER_CHOICES,null=True)
+    address = models.ForeignKey(Address,null=True)
 
     def __unicode__(self):
         return self.user.username
@@ -99,7 +114,7 @@ class DogForm(ModelForm):
 
     class Meta:
         model = Dog
-        exclude = ['address', 'adopted', 'adopted_by']
+        exclude = ['address', 'adopted', 'adopted_by','in_adoption_by']
 
 
 class AddressForm(ModelForm):
