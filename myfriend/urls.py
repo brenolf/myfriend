@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 	url(r'^teste/', include('teste.urls')),
 	url(r'^', include('dogs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/', include('allauth.urls')),
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )

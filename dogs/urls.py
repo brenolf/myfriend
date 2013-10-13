@@ -12,4 +12,6 @@ urlpatterns = patterns('',
                            dogs_views.detail, name='detail'),
                        url(r'^persons/(?P<person_username>\w+)/$',
                            persons_views.detail, name='detail'),
+                       url(r'^login/$', 'django.contrib.auth.views.login', {
+                       'template_name': 'auth/signin.html'}),
                        )

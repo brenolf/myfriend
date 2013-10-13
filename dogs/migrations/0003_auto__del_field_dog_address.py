@@ -8,66 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Address'
-        db.create_table(u'dogs_address', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('street', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('number', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('apartment', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('neighbourhood', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('state', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('postal_code', self.gf('django.db.models.fields.CharField')(max_length=9)),
-        ))
-        db.send_create_signal(u'dogs', ['Address'])
-
-        # Adding model 'Breed'
-        db.create_table(u'dogs_breed', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('breed_name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-        ))
-        db.send_create_signal(u'dogs', ['Breed'])
-
-        # Adding model 'Person'
-        db.create_table(u'dogs_person', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('birth_date', self.gf('django.db.models.fields.DateField')()),
-            ('gender', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('address', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['dogs.Address'])),
-        ))
-        db.send_create_signal(u'dogs', ['Person'])
-
-        # Adding model 'Dog'
-        db.create_table(u'dogs_dog', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('birth_date', self.gf('django.db.models.fields.DateField')()),
-            ('size', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('gender', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('color', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('breed', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['dogs.Breed'])),
-            ('address', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['dogs.Address'])),
-            ('adopted', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('adopted_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='adopted_by', null=True, to=orm['dogs.Person'])),
-            ('in_adoption_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='in_adoption_by', to=orm['dogs.Person'])),
-        ))
-        db.send_create_signal(u'dogs', ['Dog'])
+        # Deleting field 'Dog.address'
+        db.delete_column(u'dogs_dog', 'address_id')
 
 
     def backwards(self, orm):
-        # Deleting model 'Address'
-        db.delete_table(u'dogs_address')
-
-        # Deleting model 'Breed'
-        db.delete_table(u'dogs_breed')
-
-        # Deleting model 'Person'
-        db.delete_table(u'dogs_person')
-
-        # Deleting model 'Dog'
-        db.delete_table(u'dogs_dog')
+        # Adding field 'Dog.address'
+        db.add_column(u'dogs_dog', 'address',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=-1, to=orm['dogs.Address']),
+                      keep_default=False)
 
 
     models = {
@@ -125,7 +74,6 @@ class Migration(SchemaMigration):
         },
         u'dogs.dog': {
             'Meta': {'object_name': 'Dog'},
-            'address': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['dogs.Address']"}),
             'adopted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'adopted_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'adopted_by'", 'null': 'True', 'to': u"orm['dogs.Person']"}),
             'birth_date': ('django.db.models.fields.DateField', [], {}),
