@@ -71,16 +71,17 @@
 
 				<div class="image_carousel">
 					<div id="adopted_dogs">
-						<img src={% static "img/dogs/1.jpg" %} alt="1" width="140" height="140" data-toggle="tooltip" title="Max"/>
-						<img src={% static "img/dogs/2.jpg" %} alt="2" width="140" height="140" data-toggle="tooltip" title="Bob" />
-						<img src={% static "img/dogs/3.jpg" %} alt="3" width="140" height="140" data-toggle="tooltip" title="Niul" />
-						<img src={% static "img/dogs/4.jpg" %} alt="4" width="140" height="140" data-toggle="tooltip" title="Moo" />
-						<img src={% static "img/dogs/5.jpg" %} alt="5" width="140" height="140" data-toggle="tooltip" title="Ala" />
-						<img src={% static "img/dogs/6.jpg" %} alt="6" width="140" height="140" data-toggle="tooltip" title="Lolo" />
-						<img src={% static "img/dogs/7.jpg" %} alt="7" width="140" height="140" data-toggle="tooltip" title="Nina" />
-						<img src={% static "img/dogs/8.jpg" %} alt="8" width="140" height="140" data-toggle="tooltip" title="Maggie" />
-						<img src={% static "img/dogs/9.jpg" %} alt="9" width="140" height="140" data-toggle="tooltip" title="Carl" />
-						<img src={% static "img/dogs/10.jpg" %} alt="10" width="140" height="140" data-toggle="tooltip" title="Liz" />
+						{% for dog in dogs %}
+						{% if dog.photo %}
+						<!--<a href="{% url 'detail-dog' dog.id %}">-->
+						<img src="{{dog.photo.url}}" alt="{{dog.name}}" width="140" height="140" data-toggle="tooltip" title="{{dog.name}}" 
+						data-url="{% url 'detail-dog' dog.id %}"/> 
+						{% else %}
+						<!--<a href="{% url 'detail-dog' dog.id %}">-->
+						<img src="" alt="{{dog.name}}" width="140" height="140" data-toggle="tooltip" title="{{dog.name}}" 
+						data-url="{% url 'detail-dog' dog.id %}"/>
+						{% endif %} 
+						{% endfor %}
 					</div>
 					<div class="clear"></div>
 				</div>

@@ -83,12 +83,20 @@ class Dog(models.Model):
     name = models.CharField(max_length=50)
     birth_date = models.DateField('data de nascimento aproximada')
     # complementar
-    #SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"), ("m", "Médio"), ("l","Grande"),("xl","Muito Grande"))
-    size = models.CharField(max_length=2)
+    SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"), ("m", "Médio"), ("l","Grande"),("xl","Muito Grande"))
+    size = models.CharField(max_length=2, choices=SIZE_CHOICES)
     description = models.TextField()
     GENDER_CHOICES = (("M", "Macho"), ("F", "Fêmea"))
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
-    color = models.CharField(max_length=50)
+    COLOR_CHOICES = (
+    ("bl","Preto"),
+	("ma","Marrom"),
+	("wh","Branco"),
+	("gr","Cinza"),
+	("go","Dourado"),
+	("bw","Preto/Branco"),
+	)
+    color = models.CharField(max_length=50, choices=COLOR_CHOICES)
     breed = models.ForeignKey(Breed)
     # A ideia é que um cachorro seja associado a um endereço da pessoa,
     # e não à pessoa. Se quiser ser associada a ela, é só

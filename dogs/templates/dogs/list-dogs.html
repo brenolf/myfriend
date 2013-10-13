@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 
 	<section class="silver content text search-list">
@@ -13,7 +14,7 @@
 
 						<div class="preview">
 							<div class="colour">
-								<img src={% static "img/mask.png" height="100">
+								<img src={% static "img/mask.png" %} height="100">
 							</div>
 						</div>
 
@@ -22,17 +23,17 @@
 					<div class="col-sm-6 tal">
 						<div class="row">
 							<div class="col-sm-12">
-								<strong>Raça: </strong> Lorem
+								<strong>Raça: </strong> {{breed}}
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<strong>Raça: </strong> Lorem
+								<strong>Tamanho: </strong> {{size}}
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<strong>Raça: </strong> Lorem
+								<strong>Cor: </strong> {{color}}
 							</div>
 						</div>
 						<div class="row">
@@ -44,7 +45,28 @@
 				</div>				
 
 				<i class="hr" style="margin-bottom: 30px;"></i>
+				
+				
 
+				<div class="row tac">
+					
+				
+					{% for dog in dogs %}
+					
+					<div class="col-sm-3">
+						{% if dog.photo %}
+						<a href="#"><img src="{{dog.photo.url}}" alt="{{dog.name}}" title="{{dog.name}}" class="frame"/></a>
+						{% else %}
+						<a href="#"><img src="" alt="{{dog.name}}" title="{{dog.name}}" class="frame"/></a>
+						
+						{% endif %} 
+						<div>Nome</div>
+						
+					</div>
+					{% endfor %}
+					
+				</div>
+				{% comment %}
 				<div class="row tac">
 					<div class="col-sm-3">
 						<a href="#"><img src={% static "img/dogs/9.jpg" %} alt="Carl" title="Carl" class="frame"/></a>
@@ -63,25 +85,7 @@
 						<div>Nome</div>
 					</div>
 				</div>
-
-				<div class="row tac">
-					<div class="col-sm-3">
-						<a href="#"><img src={% static "img/dogs/9.jpg" %} alt="Carl" title="Carl" class="frame"/></a>
-						<div>Nome</div>
-					</div>
-					<div class="col-sm-3">
-						<a href="#"><img src={% static "img/dogs/9.jpg" %} alt="Carl" title="Carl" class="frame"/></a>
-						<div>Nome</div>
-					</div>
-					<div class="col-sm-3">
-						<a href="#"><img src={% static "img/dogs/9.jpg" %} alt="Carl" title="Carl" class="frame"/></a>
-						<div>Nome</div>
-					</div>
-					<div class="col-sm-3">
-						<a href="#"><img src={% static "img/dogs/9.jpg" %} alt="Carl" title="Carl" class="frame"/></a>
-						<div>Nome</div>
-					</div>
-				</div>
+				{% endcomment %}
 
 			</div>
 

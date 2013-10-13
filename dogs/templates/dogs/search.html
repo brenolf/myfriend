@@ -18,17 +18,15 @@
 						</div>
 
 					</div>
-
+					<form name="search" action="" method="get">
 					<div class="col-sm-6 tal">
 						<div class="row">
 							<div class="col-sm-6">Raça:</div>
 							<div class="col-sm-6">
 								<select name="breed" class="form-control">
-									<option value="xs">Toy</option>
-									<option value="s">Pequeno</option>
-									<option value="m">Médio</option>
-									<option value="l">Grande</option>
-									<option value="xl">Muito Grande</option>
+									{% for b in breeds %}
+									<option value="{{b}}">{{b}}</option>
+									{% endfor %}
 								</select>
 							</div>
 						</div>
@@ -36,7 +34,7 @@
 						<div class="row">
 							<div class="col-sm-6">Tamanho:</div>
 							<div class="col-sm-6">
-								<select name="breed" class="form-control">
+								<select name="size" class="form-control">
 									<option value="xs">Toy</option>
 									<option value="s">Pequeno</option>
 									<option value="m">Médio</option>
@@ -61,7 +59,7 @@
 						</div>
 
 						<div class="row tar">
-							<button class="btn btn-primary"><i class="icon icon-search"></i> Buscar</button>
+							<button type="submit" class="btn btn-primary" value="submit"><i class="icon icon-search"></i> Buscar</button>
 						</div>
 
 

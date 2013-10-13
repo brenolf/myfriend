@@ -4,18 +4,33 @@ from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+
 from dogs.models import *
 
 
 def index(request):
-    persons = Person.objects.all()
-    context = {'persons': persons}
+    dogs = Dog.objects.all()[:10]
+    context = {'dogs': dogs}
     return render(request, 'dogs/index.html', context)
 
 
 def detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
     return render(request, 'dogs/dog.html', {'dog': dog})
+    
+def search(request):
+	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET:
+		return render(request, 'dogs/search.html', {'breeds': Breed.objects.all()})
+	else:
+		dogs=Dog.objects.filter(breed__breed_name=request.GET['breed'],
+	size=request.GET['size'], color=request.GET['color'])
+		context = {
+		'color':dict(Dog.COLOR_CHOICES)[request.GET['color']],
+		'size':dict(Dog.SIZE_CHOICES)[request.GET['size']],
+		'breed':request.GET['breed'],
+		'dogs':dogs
+		}
+		return render(request, 'dogs/list-dogs.html', context)
 
 @login_required(login_url='/accounts/login/')
 def create(request):  # depois mudar pra ficar restful
