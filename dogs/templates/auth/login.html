@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MyFriend - Seus dados</title>
+	<title>MyFriend - Entrar</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
@@ -46,9 +46,31 @@
 
 	<section class="silver content text">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-6">
+				<h1>Entrar</h1>
+				<i class="hr"></i>
 
-				<h1>Seus dados</h1>
+				<form name="login" action="">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Usuário:</div>
+							<div class="col-sm-6"><input type="text" name="user" placeholder="Seu usuário" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Senha:</div>
+							<div class="col-sm-6"><input type="text" name="user" placeholder="Sua senha" class="form-control"/></div>
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Entrar</button>
+				</form>
+			</div>
+
+			<div class="col-sm-6">
+				<h1>Registrar</h1>
 				<i class="hr"></i>
 
 				<form name="signup" action="">
@@ -69,7 +91,7 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Senha:</div>
-							<div class="col-sm-6"><input type="text" name="pass" placeholder="Sua senha" class="form-control"/></div>
+							<div class="col-sm-6"><input type="text" name="user" placeholder="Sua senha" class="form-control"/></div>
 						</div>
 					</div>
 
@@ -80,58 +102,7 @@
 						</div>
 					</div>
 
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Sexo:</div>
-							<div class="col-sm-6">
-								<div class="col-md-6">
-									<input type="radio" name="gender" value="M"/> Masculino
-								</div>
-								<div class="col-md-6">
-									<input type="radio" name="gender" value="F"/> Feminino
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">CEP:</div>
-							<div class="col-sm-6"><input type="text" name="zipcode" placeholder="Seu CEP" class="form-control"/></div>
-						</div>
-					</div>
-
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Rua:</div>
-							<div class="col-sm-6"><input type="text" name="street" placeholder="Sua rua" class="form-control"/></div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Bairro:</div>
-							<div class="col-sm-6"><input type="text" name="neighb" placeholder="Seu bairro" class="form-control"/></div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Cidade:</div>
-							<div class="col-sm-6"><input type="text" name="city" placeholder="Sua cidade" class="form-control"/></div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Estado:</div>
-							<div class="col-sm-6"><input type="text" name="state" placeholder="Seu estado" class="form-control"/></div>
-						</div>
-					</div>
-
-
-					<button type="submit" class="btn btn-primary">Concluir registro</button>
+					<button type="submit" class="btn btn-primary">Registrar</button>
 				</form>
 			</div>
 

@@ -28,13 +28,14 @@ def create(request):  # depois mudar pra ficar restful
 			dog.in_adoption_by = request.user.person
 			dog.save()			
 		else:
-			return render(request, 'dogs/create.html', {
-				'form_dog': form_dog
+			return render(request, 'dogs/newdog.html', {
+				'form_dog': form_dog,
+				'error':True
 			})
 		return HttpResponseRedirect('/dogs')  # Redirect after POST
 	else:
 		form_dog = DogForm()  # An unbound form
 
-	return render(request, 'dogs/create.html', {
+	return render(request, 'dogs/newdog.html', {
 		'form_dog': form_dog,
 	})

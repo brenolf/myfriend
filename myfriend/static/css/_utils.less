@@ -1,0 +1,98 @@
+.size(@w, @h){
+	width: @w;
+	height: @h;
+}
+
+.scale(@ratio){
+	transform: scale(@ratio, @ratio);
+	-ms-transform: scale(@ratio, @ratio);
+	-webkit-transform: scale(@ratio, @ratio);
+	-moz-transform: scale(@ratio, @ratio);
+	-o-transform: scale(@ratio, @ratio);
+}
+
+.clear {
+	clear: both;
+	float: none;
+}
+
+.transition(@prop: all, @time: 0.2s, @type: linear){
+	-webkit-transition: @prop @time @type;
+	-moz-transition: @prop @time @type;
+	-o-transition: @prop @time @type;
+	-ms-transition: @prop @time @type;
+	transition: @prop @time @type;
+}
+
+.radius(@r){
+	border-radius: @r;
+	-moz-border-radius: @r;
+	-ms-border-radius: @r;
+	-o-border-radius: @r;
+	-webkit-border-radius: @r;
+}
+
+.box_shadow(@t; @l; @size; @colour){
+	box-shadow: @t @l @size @colour;
+	-webkit-box-shadow: @t @l @size @colour;
+	-moz-box-shadow: @t @l @size @colour;
+	-ms-box-shadow: @t @l @size @colour;
+	-o-box-shadow: @t @l @size @colour;
+}
+
+.sectionGet(@colour){
+	background-color: @colour;
+	text-align: center;
+	padding: 45px;
+	color: #fff;
+	position: relative;
+	z-index: 10;
+
+	h1 {
+		margin-top: 0;
+		font-size: 60px;
+		font-family: Voltaire, sans-serif;
+		color: darken(@colour, 35%);
+		margin-bottom: 20px;
+	}
+
+	h2 {
+		font-size: 30px !important;
+		font-weight: normal;
+		font-family: Andika, sans-serif;
+	}
+}
+
+.centering {
+	margin: 0 auto;
+	width: 920px;
+}
+
+.content {
+	padding-bottom: 80px !important;
+
+	&.text {
+		font-size: 23px;
+		font-family: Andika;
+	}
+}
+
+.hr {
+	display: inline-block;
+	width: 100%;
+	height: 2px;
+	background: rgba(250, 250, 250, 0.9);
+	border-top: solid 1px rgba(50, 50, 50, 0.4);
+}
+
+.tac {
+	text-align: center;
+}
+
+.tal {
+	text-align: left;
+}
+
+.tar {
+	text-align: right;
+}
