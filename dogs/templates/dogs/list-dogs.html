@@ -38,7 +38,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<a href="#" class="btn btn-primary">Refazer a busca</a>
+							<a href="{% url 'search-dog' %}" class="btn btn-primary">Refazer a busca</a>
 						</div>
 					</div>
 				</div>
@@ -50,10 +50,12 @@
 
 			<div class="row tac">
 
-				
+			
 				{% for dog in dogs %}
 
 				<div class="col-sm-3">
+					
+
 					{% if dog.photo %}
 					<a href="{% url 'detail-dog' dog.id %}"><img src="{{dog.photo.url}}" alt="{{dog.name}}" title="{{dog.name}}" class="frame"/></a>
 					{% else %}

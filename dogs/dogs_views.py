@@ -41,11 +41,24 @@ def search(request):
 	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET:
 		return render(request, 'dogs/search.html', {'breeds': Breed.objects.all()})
 	else:
-		dogs=Dog.objects.filter(breed__breed_name=request.GET['breed'],
-	size=request.GET['size'], color=request.GET['color'])
+		dogs=Dog.objects.all()
+		if request.GET['color'] == 'Todas':
+			color='Todas'
+		else:
+			color=dict(Dog.COLOR_CHOICES)[request.GET['size']]
+			dogs=dogs.filter(color=request.GET['color'])
+		if request.GET['size'] == 'Todas':
+			size='Todas'
+		else:
+			size=dict(Dog.SIZE_CHOICES)[request.GET['size']]
+			dogs=dogs.filter(size=request.GET['size'])
+		if request.GET['breed'] != 'Todas':
+			dogs=dogs.filter(breed__breed_name=request.GET['breed'])
+		
+		
 		context = {
-		'color':dict(Dog.COLOR_CHOICES)[request.GET['color']],
-		'size':dict(Dog.SIZE_CHOICES)[request.GET['size']],
+		'color':color,
+		'size':size,
 		'breed':request.GET['breed'],
 		'dogs':dogs
 		}

@@ -25,6 +25,7 @@
 							<div class="col-sm-6">Raça:</div>
 							<div class="col-sm-6">
 								<select name="breed" class="form-control">
+									<option value="Todas">Todas</option>
 									{% for b in breeds %}
 									<option value="{{b}}">{{b}}</option>
 									{% endfor %}
@@ -36,6 +37,7 @@
 							<div class="col-sm-6">Tamanho:</div>
 							<div class="col-sm-6">
 								<select name="size" class="form-control">
+									<option value="Todas">Todas</option>
 									<option value="xs">Toy</option>
 									<option value="s">Pequeno</option>
 									<option value="m" selected="selected">Médio</option>
@@ -49,6 +51,7 @@
 							<div class="col-sm-6">Cor:</div>
 							<div class="col-sm-6">
 								<select name="color" class="form-control">
+									<option value="Todas">Todas</option>
 									<option value="bl">Preto</option>
 									<option value="ma">Marrom</option>
 									<option value="wh">Branco</option>

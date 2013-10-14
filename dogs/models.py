@@ -20,12 +20,16 @@ def after_sign_up(sender, **kwargs):
     p.user = user
     p.save()
 
+@register.filter
+def modulo(num, val):
+    return num % val ==0
+
 
 class Address(models.Model):
     # precisa ter telefone de contato também
     street = models.CharField(max_length=200)
     number = models.CharField(max_length=20)
-    apartment = models.CharField(max_length=50,null=True)
+    apartment = models.CharField(max_length=50, null=True)
     neighbourhood = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     STATE_CHOICES = (("AC", "Acre"),
