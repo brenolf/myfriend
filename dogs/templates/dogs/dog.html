@@ -20,7 +20,13 @@
 
 						<div class="row tac">
 							<div class="col-sm-12">
-								<a href="#" class="btn btn-success"><i class="icon icon-heart"></i> Adotar</a>
+								
+									{% if not dog.adopted %}
+									<form name="adopt" action="" method="post">{% csrf_token %}
+								<button  class="btn btn-success" type="submit"><i class="icon icon-heart"></i> Adotar</button></form>
+								{% else %}
+									<button  class="btn btn-success" type="submit" disabled><i class="icon icon-heart"></i> Adotar</button>
+								{% endif %}
 							</div>
 						</div>
 
@@ -37,6 +43,12 @@
 							<strong>Sobre mim: </strong>
 							{{dog.description}}
 						</div>
+						{% if dog.adopted %}
+						<div><strong>Adotado por: </strong> <a href="{% url 'detail-person' dog.adopted_by.id %}">{{dog.adopted_by}}</a> </div>
+						{% else %}
+						<div><strong>Colocado em adoção por: </strong> <a href="{% url 'detail-person' dog.in_adoption_by.user.id %}">{{dog.in_adoption_by}}</a> </div>
+						{% endif %}
+
 					</div>
 
 				</div>
