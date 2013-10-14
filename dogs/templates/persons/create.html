@@ -1,0 +1,101 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+{{ form_user.as_p }}
+{{ form_person.as_p }}
+{{ form_address.as_p }}
+<input type="submit" value="Submit" />
+</form>
+	<section class="silver content text">
+		<div class="row">
+			<div class="col-sm-12">
+
+				<h1>Seus dados</h1>
+				<i class="hr"></i>
+
+				<form name="signup" action="">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Nome:</div>
+							<div class="col-sm-6"><input type="text" name="first_name" placeholder="Seu nome" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Sobrenome:</div>
+							<div class="col-sm-6"><input type="text" name="last_name" placeholder="Seu sobrenome" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Data de nascimento:</div>
+							<div class="col-sm-6"><input type="date" name="birth_date" placeholder="Data de nascimento" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Sexo:</div>
+							<div class="col-sm-6">
+								<div class="col-md-6">
+									<input type="radio" name="gender" value="M"/> Masculino
+								</div>
+								<div class="col-md-6">
+									<input type="radio" name="gender" value="F"/> Feminino
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">CEP:</div>
+							<div class="col-sm-6"><input type="text" name="postal_code" placeholder="Seu CEP" class="form-control"/></div>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Rua:</div>
+							<div class="col-sm-6"><input type="text" name="street" placeholder="Sua rua" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Bairro:</div>
+							<div class="col-sm-6"><input type="text" name="neighbourhood" placeholder="Seu bairro" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Cidade:</div>
+							<div class="col-sm-6"><input type="text" name="city" placeholder="Sua cidade" class="form-control"/></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Estado:</div>
+							<div class="col-sm-6"><input type="text" name="state" placeholder="Seu estado" class="form-control"/></div>
+						</div>
+					</div>
+
+
+					<button type="submit" class="btn btn-primary">Concluir registro</button>
+				</form>
+			</div>
+
+			<div class="clear"></div>
+
+		</div>
+	</section>
+
+
+{% endblock %}
