@@ -35,7 +35,7 @@
 					<li class="r"><a href="{% url 'index' %}"><i class="icon icon-home"></i> home</a></li>
 					<li class="p"><a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> procurar</a></li>
 					<li class="g"><a href="{% url 'index' %}"><i class="icon icon-comment"></i> histórias</a></li>
-					{% if request.user %}
+					{% if request.user.is_authenticated %}
 						<li class="b"><a href="{% url 'user' %}"><i class="icon icon-user"></i> sua conta</a></li>
 					{% else %}
 						<li class="b"><a href="{% url 'account_login' %}"><i class="icon icon-user"></i> entrar</a></li>
@@ -145,7 +145,7 @@
 
 		<div>
 			<a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> Procurar</a>
-			{% if request.user %}
+			{% if request.user.is_authenticated %}
 				<a href="{% url 'account_logout' %}"><i class="icon icon-user"></i> Sair</a>
 			{% else %}
 				<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
