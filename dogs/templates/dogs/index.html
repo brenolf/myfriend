@@ -35,7 +35,11 @@
 					<li class="r"><a href="{% url 'index' %}"><i class="icon icon-home"></i> home</a></li>
 					<li class="p"><a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> procurar</a></li>
 					<li class="g"><a href="{% url 'index' %}"><i class="icon icon-comment"></i> histórias</a></li>
-					<li class="b"><a href="{% url 'account_login' %}"><i class="icon icon-user"></i> entrar</a></li>
+					{% if request.user %}
+						<li class="b"><a href="{% url 'user' %}"><i class="icon icon-user"></i> {{request.user.first_name}}</a></li>
+					{% else %}
+						<li class="b"><a href="{% url 'account_login' %}"><i class="icon icon-user"></i> entrar</a></li>
+					{% endif %}
 
 				</ul>
 
@@ -141,8 +145,14 @@
 
 		<div>
 			<a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> Procurar</a>
-			<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
+			{% if request.user %}
+				<a href="{% url 'account_logout' %}"><i class="icon icon-user"></i> Sair</a>
+			{% else %}
+				<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
 			<a href="{% url 'account_signup' %}"><i class="icon icon-plus"></i> Registrar</a>
+			{% endif %}
+
+			
 		</div>
 
 		<div id="credits">
