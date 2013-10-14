@@ -33,7 +33,7 @@
 					<li class="p"><a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> procurar</a></li>
 					<li class="g"><a href="{% url 'index' %}"><i class="icon icon-comment"></i> histórias</a></li>
 					{% if request.user %}
-						<li class="b"><a href="{% url 'user' %}"><i class="icon icon-user"></i> {{request.user.first_name}}</a></li>
+						<li class="b"><a href="{% url 'user' %}"><i class="icon icon-user"></i> sua conta</a></li>
 					{% else %}
 						<li class="b"><a href="{% url 'account_login' %}"><i class="icon icon-user"></i> entrar</a></li>
 					{% endif %}
