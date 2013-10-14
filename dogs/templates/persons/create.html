@@ -6,96 +6,126 @@
 
 
 
-	<section class="silver content text">
-		<div class="row">
-			<div class="col-sm-12">
+<section class="silver content text">
+	<div class="row">
+		<div class="col-sm-12">
 
-				<h1>Seus dados</h1>
-				<i class="hr"></i>
+			<h1>Seus dados</h1>
+			<i class="hr"></i>
 
-				<form action="" method="post">
-					{% csrf_token %}
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Nome:</div>
-							<div class="col-sm-6">{{ form_user.first_name|attr:"class:form-control"|attr:"placeholder:Seu nome"}}</div>
+			<form action="" method="post">
+				{% csrf_token %}
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_user.first_name.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Nome:</div>
+						<div class="col-sm-6">{{ form_user.first_name|attr:"class:form-control"|attr:"placeholder:Seu nome"}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_user.last_name.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Sobrenome:</div>
+						<div class="col-sm-6">{{ form_user.last_name|attr:"class:form-control"|attr:"placeholder:Seu sobrenome"}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_person.birth_date.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Data de nascimento:</div>
+						<div class="col-sm-6">{{ form_person.birth_date|attr:"class:form-control"|attr:"placeholder:Sua data de nascimento"}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_person.gender.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Sexo:</div>
+						<div class="col-sm-6">{{ form_person.gender|attr:"class:form-control"|attr:"placeholder:Seu sexo"}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_address.postal_code.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">CEP:</div>
+						<div class="col-sm-6">{{ form_address.postal_code|attr:"class:form-control"|attr:"placeholder:Seu CEP"}}</div>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_address.street.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Rua:</div>
+						<div class="col-sm-6">{{ form_address.street|attr:"class:form-control"|attr:"placeholder:Sua rua "}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_address.number.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Número:</div>
+						<div class="col-sm-6">{{ form_address.number|attr:"class:form-control"|attr:"placeholder:Seu número"}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_address.neighbourhood.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Bairro:</div>
+						<div class="col-sm-6">{{ form_address.neighbourhood|attr:"class:form-control"|attr:"placeholder:Seu bairro"}}
 						</div>
 					</div>
+				</div>
 
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Sobrenome:</div>
-							<div class="col-sm-6">{{ form_user.last_name|attr:"class:form-control"|attr:"placeholder:Seu sobrenome"}}</div>
-						</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_address.city.errors }}</span></div>
 					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Data de nascimento:</div>
-							<div class="col-sm-6">{{ form_person.birth_date|attr:"class:form-control"|attr:"placeholder:Sua data de nascimento"}}</div>
-						</div>
+					<div class="row">
+						<div class="col-sm-6">Cidade:</div>
+						<div class="col-sm-6">{{ form_address.city|attr:"class:form-control"|attr:"placeholder:Sua cidade"}}</div>
 					</div>
+				</div>
 
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Sexo:</div>
-							{{ form_person.gender|attr:"class:form-control"|attr:"placeholder:Seu sexo"}}
-						</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_address.state.errors }}</span></div>
 					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">CEP:</div>
-							<div class="col-sm-6">{{ form_address.postal_code|attr:"class:form-control"|attr:"placeholder:Seu CEP"}}</div>
-						</div>
+					<div class="row">
+						<div class="col-sm-6">Estado:</div>
+						<div class="col-sm-6">{{ form_address.state|attr:"class:form-control"|attr:"placeholder:Seu estado"}}</div>
 					</div>
+				</div>
 
 
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Rua:</div>
-							<div class="col-sm-6">{{ form_address.street|attr:"class:form-control"|attr:"placeholder:Sua rua "}}</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Número:</div>
-							<div class="col-sm-6">{{ form_address.number|attr:"class:form-control"|attr:"placeholder:Seu número"}}</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Bairro:</div>
-							<div class="col-sm-6">{{ form_address.neighbourhood|attr:"class:form-control"|attr:"placeholder:Seu bairro"}}
-								</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Cidade:</div>
-							<div class="col-sm-6">{{ form_address.city|attr:"class:form-control"|attr:"placeholder:Sua cidade"}}</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6">Estado:</div>
-							<div class="col-sm-6">{{ form_address.state|attr:"class:form-control"|attr:"placeholder:Seu estado"}}</div>
-						</div>
-					</div>
-
-
-					<button type="submit" class="btn btn-primary"  value="Submit">Concluir registro</button>
-				</form>
-			</div>
-
-			<div class="clear"></div>
-
+				<button type="submit" class="btn btn-primary"  value="Submit">Concluir registro</button>
+			</form>
 		</div>
-	</section>
+
+		<div class="clear"></div>
+
+	</div>
+</section>
 
 
 {% endblock %}
