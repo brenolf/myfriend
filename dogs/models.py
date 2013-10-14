@@ -25,7 +25,7 @@ class Address(models.Model):
     # precisa ter telefone de contato também
     street = models.CharField(max_length=200)
     number = models.CharField(max_length=20)
-    apartment = models.CharField(max_length=50)
+    apartment = models.CharField(max_length=50,null=True)
     neighbourhood = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     STATE_CHOICES = (("AC", "Acre"),

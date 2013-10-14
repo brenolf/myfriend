@@ -1,13 +1,11 @@
 
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-{{ form_user.as_p }}
-{{ form_person.as_p }}
-{{ form_address.as_p }}
-<input type="submit" value="Submit" />
-</form>
+
+
+
 	<section class="silver content text">
 		<div class="row">
 			<div class="col-sm-12">
@@ -15,46 +13,40 @@
 				<h1>Seus dados</h1>
 				<i class="hr"></i>
 
-				<form name="signup" action="">
+				<form action="" method="post">
+					{% csrf_token %}
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Nome:</div>
-							<div class="col-sm-6"><input type="text" name="first_name" placeholder="Seu nome" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_user.first_name|attr:"class:form-control"|attr:"placeholder:Seu nome"}}</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Sobrenome:</div>
-							<div class="col-sm-6"><input type="text" name="last_name" placeholder="Seu sobrenome" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_user.last_name|attr:"class:form-control"|attr:"placeholder:Seu sobrenome"}}</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Data de nascimento:</div>
-							<div class="col-sm-6"><input type="date" name="birth_date" placeholder="Data de nascimento" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_person.birth_date|attr:"class:form-control"|attr:"placeholder:Sua data de nascimento"}}</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Sexo:</div>
-							<div class="col-sm-6">
-								<div class="col-md-6">
-									<input type="radio" name="gender" value="M"/> Masculino
-								</div>
-								<div class="col-md-6">
-									<input type="radio" name="gender" value="F"/> Feminino
-								</div>
-							</div>
+							{{ form_person.gender|attr:"class:form-control"|attr:"placeholder:Seu sexo"}}
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">CEP:</div>
-							<div class="col-sm-6"><input type="text" name="postal_code" placeholder="Seu CEP" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_address.postal_code|attr:"class:form-control"|attr:"placeholder:Seu CEP"}}</div>
 						</div>
 					</div>
 
@@ -62,33 +54,41 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Rua:</div>
-							<div class="col-sm-6"><input type="text" name="street" placeholder="Sua rua" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_address.street|attr:"class:form-control"|attr:"placeholder:Sua rua "}}</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">Número:</div>
+							<div class="col-sm-6">{{ form_address.number|attr:"class:form-control"|attr:"placeholder:Seu número"}}</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Bairro:</div>
-							<div class="col-sm-6"><input type="text" name="neighbourhood" placeholder="Seu bairro" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_address.neighbourhood|attr:"class:form-control"|attr:"placeholder:Seu bairro"}}
+								</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Cidade:</div>
-							<div class="col-sm-6"><input type="text" name="city" placeholder="Sua cidade" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_address.city|attr:"class:form-control"|attr:"placeholder:Sua cidade"}}</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">Estado:</div>
-							<div class="col-sm-6"><input type="text" name="state" placeholder="Seu estado" class="form-control"/></div>
+							<div class="col-sm-6">{{ form_address.state|attr:"class:form-control"|attr:"placeholder:Seu estado"}}</div>
 						</div>
 					</div>
 
 
-					<button type="submit" class="btn btn-primary">Concluir registro</button>
+					<button type="submit" class="btn btn-primary"  value="Submit">Concluir registro</button>
 				</form>
 			</div>
 

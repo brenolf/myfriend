@@ -9,16 +9,18 @@ from django.contrib.auth.models import User
 
 @login_required(login_url='/accounts/login/')
 def create(request):  # depois mudar pra ficar restful
+    user=request.user
     if request.method == 'POST':  # If the form has been submitted...
         # A form bound to the POST data
 
         form_address = AddressForm(request.POST)
         form_person = PersonForm(request.POST)
         form_user = UserForm(request.POST)
-        user.first_name = form.cleaned_data['first_name']
-        user.last_name = form.cleaned_data['last_name']
-        user.birth_date = form.cleaned_data['birth_date']
-        if form_address.is_valid():
+        
+        if form_address.is_valid() and form_user.is_valid():
+            user.first_name = form_user.cleaned_data['first_name']
+            user.last_name = form_user.cleaned_data['last_name']
+            user.birth_date = form_user.cleaned_data['birth_date']
             address = form_address.save()
             if form_person.is_valid():
                 person = form_person.save(commit=False)
@@ -33,6 +35,14 @@ def create(request):  # depois mudar pra ficar restful
                     'form_person': form_person,
                     'form_address': form_address,
                     'form_user': form_user,
+                    'user': request.user,
+                })
+        else:
+            return render(request, 'persons/create.html', {
+                    'form_person': form_person,
+                    'form_address': form_address,
+                    'form_user': form_user,
+                    'user': request.user,
                 })
             return HttpResponseRedirect('/dogs')  # Redirect after POST
     else:
@@ -40,10 +50,14 @@ def create(request):  # depois mudar pra ficar restful
         form_address = AddressForm(instance=request.user.person.address)
         form_user = UserForm(instance=request.user)
 
+    print request.user.first_name
+
+
     return render(request, 'persons/create.html', {
         'form_person': form_person,
         'form_address': form_address,
         'form_user': form_user,
+        'user': request.user,
     })
 
 
