@@ -59,7 +59,7 @@
 					{% if dog.photo %}
 					<a href="{% url 'detail-dog' dog.id %}"><img src="{{dog.photo.url}}" alt="{{dog.name}}" title="{{dog.name}}" class="frame"/></a>
 					{% else %}
-					<a href="{% url 'detail-dog' dog.id %}"><img src="" alt="{{dog.name}}" title="{{dog.name}}" class="frame"/></a>
+					<a href="{% url 'detail-dog' dog.id %}"><img src="{% static "img/logo.png" %}" alt="{{dog.name}}" title="{{dog.name}}" class="frame"/></a>
 
 					{% endif %} 
 					<div>{{dog.name}}</div>
