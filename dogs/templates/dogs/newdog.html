@@ -2,16 +2,6 @@
 {% load widget_tweaks %}
 {% block content %}
 
-{% if error %}
-erro
-{% for field in form_dog %}
-<div class="fieldWrapper">
-	{{ field.errors }}
-	{{ field.label_tag }}
-</div>
-{% endfor %}
-{% endif %}
-
 <section class="silver content text">
 	<div class="row">
 		<div class="col-sm-12">
