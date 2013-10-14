@@ -4,7 +4,27 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
-{% block content %}
+
+<section class="silver content text">
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}Você está prestes a entrar com sua conta {{provider_name}} account to login to 
+				{{site_name}}. Por favor, para completar, preencha o formulário abaixo:{% endblocktrans %}</h1>
+				<i class="hr"></i>
+
+				<form class="signup" id="signup_form" method="post" action="">
+					{% csrf_token %}
+					{{ form.as_p }}
+					{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+					{% endif %}
+					<button type="submit" class="btn btn-success"><i class="icon icon-ok"></i> Registrar</button>
+				</form>
+			</div>
+		</div>
+	</section>
+
+<!-- {% block content %}
     <h1>{% trans "Sign Up" %}</h1>
 
 <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to 
@@ -17,8 +37,8 @@
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
   <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
-        
+</form> -->
+
 
 {% endblock %}
 
