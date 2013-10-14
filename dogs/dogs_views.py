@@ -21,7 +21,7 @@ def user(request):
 
 
 def about(request):
-	return render(request, 'general/about.html', context)
+	return render(request, 'general/about.html', {})
 
 def index(request):
     dogs = Dog.objects.all()[:10]
