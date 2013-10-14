@@ -20,9 +20,7 @@ def after_sign_up(sender, **kwargs):
     p.user = user
     p.save()
 
-@register.filter
-def modulo(num, val):
-    return num % val ==0
+
 
 
 class Address(models.Model):
