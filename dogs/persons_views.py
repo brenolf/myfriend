@@ -62,6 +62,6 @@ def create(request):  # depois mudar pra ficar restful
 
 
 def detail(request, person_username):
-    user = get_object_or_404(User, username=person_username)
+    user = get_object_or_404(User, pk=person_username)
     person = user.person
     return render(request, 'persons/detail.html', {'person': person})

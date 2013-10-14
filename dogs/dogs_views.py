@@ -14,7 +14,7 @@ def user(request):
 	if request.method == 'POST' and 'remove' in request.POST:
 		dogid = request.POST['remove']
 		d = Dog.objects.get(pk=dogid)
-		d.remove()
+		d.delete()
 	return render(request, 'persons/user.html', context)
 
 
@@ -35,7 +35,9 @@ def detail(request, dog_id):
     	dog.adopted_by = request.user.person
     	dog.adopted = True	
     	dog.save()
-    return render(request, 'dogs/dog.html', {'dog': dog, 'user':request.user})
+    color=dict(Dog.COLOR_CHOICES)[dog.color]
+    size=dict(Dog.SIZE_CHOICES)[dog.size]
+    return render(request, 'dogs/dog.html', {'dog': dog, 'user':request.user, 'color':color,'size':size})
     
 def search(request):
 	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET:
@@ -45,7 +47,7 @@ def search(request):
 		if request.GET['color'] == 'Todas':
 			color='Todas'
 		else:
-			color=dict(Dog.COLOR_CHOICES)[request.GET['size']]
+			color=dict(Dog.COLOR_CHOICES)[request.GET['color']]
 			dogs=dogs.filter(color=request.GET['color'])
 		if request.GET['size'] == 'Todas':
 			size='Todas'

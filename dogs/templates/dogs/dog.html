@@ -21,7 +21,7 @@
 						<div class="row tac">
 							<div class="col-sm-12">
 								
-									{% if not dog.adopted %}
+									{% if not dog.adopted  and   dog.in_adoption_by.user.id != request.user.id %}
 									<form name="adopt" action="" method="post">{% csrf_token %}
 								<button  class="btn btn-success" type="submit"><i class="icon icon-heart"></i> Adotar</button></form>
 								{% else %}
@@ -34,9 +34,9 @@
 					<div class="col-sm-9 tal">
 						<div><strong>Nome: </strong> {{dog.name}}</div>
 						<div><strong>Sexo: </strong> {{dog.gender}} &#9794;</div>
-						<div><strong>Cor: </strong> {{dog.color}}</div>
+						<div><strong>Cor: </strong> {{color}}</div>
 						<div><strong>Raça: </strong> {{dog.breed}}</div>
-						<div><strong>Porte: </strong> {{dog.size}}</div>
+						<div><strong>Porte: </strong> {{size}}</div>
 						<!--<div><strong>Idade: </strong> 10 anos</div>-->
 						<div><strong>Data de nascimento: </strong> {{dog.birth_date}} </div>
 						<div>
@@ -44,9 +44,9 @@
 							{{dog.description}}
 						</div>
 						{% if dog.adopted %}
-						<div><strong>Adotado por: </strong> <a href="{% url 'detail-person' dog.adopted_by.id %}">{{dog.adopted_by}}</a> </div>
+						<div><strong>Adotado por: </strong> <a href="{% url 'detail-person' dog.adopted_by.user.id %}">{{dog.adopted_by}}</a> </div>
 						{% else %}
-						<div><strong>Colocado em adoção por: </strong> <a href="{% url 'detail-person' dog.in_adoption_by.user.id %}">{{dog.in_adoption_by}}</a> </div>
+						<div><strong>Colocado em adoção por: </strong> {{dog.in_adoption_by}} </div>
 						{% endif %}
 
 					</div>

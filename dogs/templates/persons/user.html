@@ -37,7 +37,7 @@
 					<td><a href="{% url 'detail-dog' dog.id %}">{{dog.name}}</a></td>
 					<td>{% if dog.adopted %} Adotado {% else %} Para adoção {% endif %}</td>
 					<td>{% if user.id == dog.in_adoption_by.user.id %} Você {% else %}
-						<a href="{% url 'detail-person' dog.in_adoption_by.id %}">{{dog.in_adoption_by.user.firstname}}</a> {% endif %}</td>
+						{{dog.in_adoption_by.user.firstname}} {% endif %}</td>
 						<td>
 							<form name="adopt" action="" method="post">{% csrf_token %}
 								<div class="btn-group">
