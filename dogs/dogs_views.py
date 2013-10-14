@@ -73,3 +73,30 @@ def create(request):  # depois mudar pra ficar restful
 	return render(request, 'dogs/newdog.html', {
 		'form_dog': form_dog,
 	})
+
+@login_required(login_url='/accounts/login/')
+def edit(request, dog_id):  # depois mudar pra ficar restful
+	dog=get_object_or_404(Dog,pk=dog_id)
+	if dog.in_adoption_by != request.user.person:
+		return render(request, 'index.html', {})
+	if request.method == 'POST':  # If the form has been submitted...
+		# A form bound to the POST data
+		form_dog = DogForm(request.POST, request.FILES)
+		if form_dog.is_valid():
+			dog = form_dog.save(commit=False)
+			dog.id=dog_id
+			x=request.user
+			dog.in_adoption_by = request.user.person
+			dog.save()			
+		else:
+			return render(request, 'dogs/newdog.html', {
+				'form_dog': form_dog,
+				'error':True
+			})
+		return HttpResponseRedirect('/dogs')  # Redirect after POST
+	else:
+		form_dog = DogForm(instance=get_object_or_404(Dog,pk=dog_id))  # An unbound form
+
+	return render(request, 'dogs/newdog.html', {
+		'form_dog': form_dog,
+	})
