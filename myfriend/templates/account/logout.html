@@ -6,7 +6,7 @@
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sign Out" %}</h1>
+<!-- <h1>{% trans "Sign Out" %}</h1>
 
 <p>{% trans 'Are you sure you want to sign out?' %}</p>
 
@@ -16,7 +16,26 @@
   <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
   {% endif %}
   <button type="submit">{% trans 'Sign Out' %}</button>
-</form>
+</form> -->
 
+
+<section class="silver content text">
+	<div class="row tac">
+		<div class="col-sm-12">
+			<h1>Sair</h1>
+			<i class="hr"></i>
+
+			<div style="margin: 20px 0;">Você tem certeza que deseja sair do sistema?</div>
+
+			<form method="post" action="{% url 'account_logout' %}">
+				{% csrf_token %}
+				{% if redirect_field_value %}
+				<input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
+				{% endif %}
+				<button type="submit" class="btn btn-lg btn-danger"><i class="icon icon-power-off"></i> Sim, desejo sair</a>
+			</form>
+		</div>
+	</div>
+</section>
 
 {% endblock %}
