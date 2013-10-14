@@ -66,7 +66,7 @@ def create(request):  # depois mudar pra ficar restful
 				'form_dog': form_dog,
 				'error':True
 			})
-		return HttpResponseRedirect('/dogs')  # Redirect after POST
+		return HttpResponseRedirect('/')  # Redirect after POST
 	else:
 		form_dog = DogForm()  # An unbound form
 
@@ -93,7 +93,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 				'form_dog': form_dog,
 				'error':True
 			})
-		return HttpResponseRedirect('/dogs')  # Redirect after POST
+		return HttpResponseRedirect('/')  # Redirect after POST
 	else:
 		form_dog = DogForm(instance=get_object_or_404(Dog,pk=dog_id))  # An unbound form
 

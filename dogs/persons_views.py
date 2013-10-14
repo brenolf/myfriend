@@ -20,7 +20,6 @@ def create(request):  # depois mudar pra ficar restful
         if form_address.is_valid() and form_user.is_valid():
             user.first_name = form_user.cleaned_data['first_name']
             user.last_name = form_user.cleaned_data['last_name']
-            user.birth_date = form_user.cleaned_data['birth_date']
             address = form_address.save()
             if form_person.is_valid():
                 person = form_person.save(commit=False)
