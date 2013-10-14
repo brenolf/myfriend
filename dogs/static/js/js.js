@@ -30,3 +30,12 @@ if(adopted_dogs.length !== 0){
 		}
 	});
 }
+
+var mnhSelect = $('header select');
+if(mnhSelect.length !== 0){
+	mnhSelect.change(function(){
+		var e = $(this);
+		var maps = {home: '/', search: '/dogs/search/', testimonials: '/', login: '/accounts/login/'};
+		window.location = maps[e.val()];
+	});
+}

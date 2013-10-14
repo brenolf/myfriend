@@ -1,24 +1,25 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 
-	<section class="silver content text search-list">
+<section class="silver content text search-list">
 
-		<div class="row">
-			<div class="col-sm-12">
+	<div class="row">
+		<div class="col-sm-12">
 
-				<h1>Busca</h1>
-				
-				<div class="row tac">
-					<div class="col-sm-6">
+			<h1>Busca</h1>
 
-						<div class="preview">
-							<div class="colour">
-								<img src={% static "img/mask.png" height="100">
-							</div>
+			<div class="row tac">
+				<div class="col-sm-6">
+
+					<div class="preview">
+						<div class="colour" id="dog-mask" style="background: #333333;">
+							<img src={% static "img/mask.png" %} id="dog-img">
 						</div>
-
 					</div>
-					<form name="search" action="" method="get">
+
+				</div>
+				<form name="search" id="wysiwyg-form" action="" method="get">
 					<div class="col-sm-6 tal">
 						<div class="row">
 							<div class="col-sm-6">Raça:</div>
@@ -37,7 +38,7 @@
 								<select name="size" class="form-control">
 									<option value="xs">Toy</option>
 									<option value="s">Pequeno</option>
-									<option value="m">Médio</option>
+									<option value="m" selected="selected">Médio</option>
 									<option value="l">Grande</option>
 									<option value="xl">Muito Grande</option>
 								</select>
@@ -69,4 +70,4 @@
 
 		</div>
 	</section>
-{% endblock %}
+	{% endblock %}
