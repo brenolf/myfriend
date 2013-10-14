@@ -116,7 +116,7 @@ class PersonForm(ModelForm):
 
     class Meta:
         model = Person
-        exclude = ['address']
+        exclude = ['address', 'user']
 
 
 class DogForm(ModelForm):
@@ -131,6 +131,12 @@ class AddressForm(ModelForm):
 
     class Meta:
         model = Address
+
+class UserForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
 
 
 

@@ -11,27 +11,39 @@ from django.contrib.auth.models import User
 def create(request):  # depois mudar pra ficar restful
     if request.method == 'POST':  # If the form has been submitted...
         # A form bound to the POST data
+
         form_address = AddressForm(request.POST)
         form_person = PersonForm(request.POST)
+        form_user = UserForm(request.POST)
+        user.first_name = form.cleaned_data['first_name']
+        user.last_name = form.cleaned_data['last_name']
+        user.birth_date = form.cleaned_data['birth_date']
         if form_address.is_valid():
             address = form_address.save()
             if form_person.is_valid():
                 person = form_person.save(commit=False)
                 person.address = address
+                person.id = user.person.id
+                user.person = person
                 person.save()
+                user.save()
+
             else:
                 return render(request, 'persons/create.html', {
                     'form_person': form_person,
                     'form_address': form_address,
+                    'form_user': form_user,
                 })
             return HttpResponseRedirect('/dogs')  # Redirect after POST
     else:
-        form_person = PersonForm()  # An unbound form
-        form_address = AddressForm()
+        form_person = PersonForm(instance=request.user.person)
+        form_address = AddressForm(instance=request.user.person.address)
+        form_user = UserForm(instance=request.user)
 
     return render(request, 'persons/create.html', {
         'form_person': form_person,
         'form_address': form_address,
+        'form_user': form_user,
     })
 
 
