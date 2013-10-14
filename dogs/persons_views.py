@@ -28,6 +28,7 @@ def create(request):  # depois mudar pra ficar restful
                 user.person = person
                 person.save()
                 user.save()
+                return HttpResponseRedirect('/')
 
             else:
                 return render(request, 'persons/create.html', {
@@ -43,7 +44,7 @@ def create(request):  # depois mudar pra ficar restful
                     'form_user': form_user,
                     'user': request.user,
                 })
-            return HttpResponseRedirect('/dogs')  # Redirect after POST
+            return HttpResponseRedirect('/')  # Redirect after POST
     else:
         form_person = PersonForm(instance=request.user.person)
         form_address = AddressForm(instance=request.user.person.address)
