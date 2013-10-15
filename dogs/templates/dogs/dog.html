@@ -33,7 +33,7 @@
 					</div>
 					<div class="col-sm-9 tal">
 						<div><strong>Nome: </strong> {{dog.name}}</div>
-						<div><strong>Sexo: </strong> {{dog.gender}} &#9794;</div>
+						<div><strong>Sexo: </strong> <span class="gender {{dog.gender}}">{% ifequal dog.gender "M" %}&#9794; {% else %}&#9792;{% endifequal %}</span></div>
 						<div><strong>Cor: </strong> {{color}}</div>
 						<div><strong>Raça: </strong> {{dog.breed}}</div>
 						<div><strong>Porte: </strong> {{size}}</div>
