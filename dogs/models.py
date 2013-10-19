@@ -5,10 +5,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-#segundo o próprio site do python, é o melhor lugar pra colocar signals, mas wtf hein?
-#tentar achar lugar melhor
+# segundo o próprio site do python, é o melhor lugar pra colocar signals, mas wtf hein?
+# tentar achar lugar melhor
 from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
+
 
 @receiver(user_signed_up)
 def after_sign_up(sender, **kwargs):
@@ -19,8 +20,6 @@ def after_sign_up(sender, **kwargs):
     user.save()
     p.user = user
     p.save()
-
-
 
 
 class Address(models.Model):
@@ -73,8 +72,8 @@ class Person(models.Model):
     user = models.OneToOneField(User)
     birth_date = models.DateField(null=True)
     GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
-    gender = models.CharField(max_length=2, choices=GENDER_CHOICES,null=True)
-    address = models.ForeignKey(Address,null=True)
+    gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True)
+    address = models.ForeignKey(Address, null=True)
 
     def __unicode__(self):
         return self.user.username
@@ -85,19 +84,20 @@ class Dog(models.Model):
     name = models.CharField(max_length=50)
     birth_date = models.DateField('data de nascimento aproximada')
     # complementar
-    SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"), ("m", "Médio"), ("l","Grande"),("xl","Muito Grande"))
+    SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"),
+                    ("m", "Médio"), ("l", "Grande"), ("xl", "Muito Grande"))
     size = models.CharField(max_length=2, choices=SIZE_CHOICES)
     description = models.TextField()
     GENDER_CHOICES = (("M", "Macho"), ("F", "Fêmea"))
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
     COLOR_CHOICES = (
-    ("bl","Preto"),
-	("ma","Marrom"),
-	("wh","Branco"),
-	("gr","Cinza"),
-	("go","Dourado"),
-	("bw","Preto/Branco"),
-	)
+        ("bl", "Preto"),
+        ("ma", "Marrom"),
+        ("wh", "Branco"),
+        ("gr", "Cinza"),
+        ("go", "Dourado"),
+        ("bw", "Preto/Branco"),
+    )
     color = models.CharField(max_length=50, choices=COLOR_CHOICES)
     breed = models.ForeignKey(Breed)
     # A ideia é que um cachorro seja associado a um endereço da pessoa,
@@ -126,13 +126,14 @@ class DogForm(ModelForm):
     class Meta:
         model = Dog
         #photo = models.ImageField(upload_to = 'dog_images/', default = 'dog_images/None/no-img.jpg')
-        exclude = ['address', 'adopted', 'adopted_by','in_adoption_by']
+        exclude = ['address', 'adopted', 'adopted_by', 'in_adoption_by']
 
 
 class AddressForm(ModelForm):
 
     class Meta:
         model = Address
+
 
 class UserForm(ModelForm):
 

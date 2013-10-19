@@ -7,14 +7,18 @@
 		<div class="row">
 			<div class="col-sm-12">
 
-				<h1>Oi, eu sou o <span>{{dog.name}}</span>!</h1>
+				<h1>Oi, eu sou {% if dog.gender == 'M' %} o {% else %} a {% endif %} <span>{{dog.name}}</span>!</h1>
 
 
 				<div class="row">
 					<div class="col-sm-3">
 						<div class="row tac">
 							<div class="col-sm-12">
+								{% if dog.photo %}
 								<img src="{{dog.photo.url}}"  alt="{{dog.name}}" title="{{dog.name}}" class="frame"/>
+								{% else %}
+								<img src="{% static "img/logo.png" %}" alt="{{dog.name}}" title="{{dog.name}}" class="fame"/>
+								{% endif %}
 							</div>
 						</div>
 
@@ -33,7 +37,7 @@
 					</div>
 					<div class="col-sm-9 tal">
 						<div><strong>Nome: </strong> {{dog.name}}</div>
-						<div><strong>Sexo: </strong> {{dog.gender}} &#9794;</div>
+						<div><strong>Sexo: </strong> {{dog.gender}} </div>
 						<div><strong>Cor: </strong> {{color}}</div>
 						<div><strong>Raça: </strong> {{dog.breed}}</div>
 						<div><strong>Porte: </strong> {{size}}</div>
