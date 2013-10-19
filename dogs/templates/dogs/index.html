@@ -17,7 +17,7 @@
 			<div class="col-sm-12">
 				<div id="mask">
 					<img class="static_bg" src={% static "img/1.jpg" %} style="display: none;">
-					<video id="main_video" class="video-js vjs-default-skin" loop autoplay muted preload="auto" controls preload="auto" width="1500" height="100%" data-setup="{'controls': false}" poster={% static "img/1.jpg" %}>  
+					<video id="main_video" class="video-js vjs-default-skin" loop autoplay muted preload="auto" controls preload="auto" width="100%" height="100%" data-setup="{'controls': false}" poster={% static "img/1.jpg" %}>  
 						<source src={% static "img/bg.mp4" %} type='video/mp4' /> 
 						<source src={% static "img/bg.webm" %} type='video/webm' />
 					</video>
@@ -26,8 +26,10 @@
 				</div>
 
 				<div id="logo">
-					<img src={% static "img/logo.png" %} alt="MyFriend">
-					<h1>MyFriend</h1>
+					<a href="/">
+						<img src={% static "img/logo.png" %} alt="MyFriend">
+						<h1>MyFriend</h1>
+					</a>
 					<div class="clear"></div>
 				</div>
 
@@ -37,9 +39,9 @@
 					<li class="p"><a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> procurar</a></li>
 					<li class="g"><a href="{% url 'index' %}"><i class="icon icon-comment"></i> histórias</a></li>
 					{% if request.user.is_authenticated %}
-						<li class="b"><a href="{% url 'user' %}"><i class="icon icon-user"></i> sua conta</a></li>
+					<li class="b"><a href="{% url 'user' %}"><i class="icon icon-user"></i> sua conta</a></li>
 					{% else %}
-						<li class="b"><a href="{% url 'account_login' %}"><i class="icon icon-user"></i> entrar</a></li>
+					<li class="b"><a href="{% url 'account_login' %}"><i class="icon icon-user"></i> entrar</a></li>
 					{% endif %}
 
 				</ul>
@@ -147,9 +149,9 @@
 		<div>
 			<a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> Procurar</a>
 			{% if request.user.is_authenticated %}
-				<a href="{% url 'account_logout' %}"><i class="icon icon-user"></i> Sair</a>
+			<a href="{% url 'account_logout' %}"><i class="icon icon-user"></i> Sair</a>
 			{% else %}
-				<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
+			<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
 			<a href="{% url 'account_signup' %}"><i class="icon icon-plus"></i> Registrar</a>
 			{% endif %}
 

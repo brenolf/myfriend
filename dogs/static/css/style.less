@@ -69,6 +69,7 @@ header {
 		top: 0;
 		left: 0;
 		z-index: 0;
+		width: 100%;
 
 		div {
 			background-color: rgba(140, 140, 140, 0.3);
@@ -122,6 +123,11 @@ header {
 		z-index: 10;
 		padding: 30px 0;
 		float: left;
+
+		a, a:hover {
+			text-decoration: none !important;
+			color: #fff !important;
+		}
 
 		img {
 			width: 150px;
@@ -244,5 +250,17 @@ section {
 		img {
 			height: inherit;
 		}
+	}
+}
+
+.gender {
+	&.F {
+		font-weight: bold;
+		color: #FF1F24;
+	}
+
+	&.M {
+		font-weight: bold;
+		color: #1F46FF;
 	}
 }
