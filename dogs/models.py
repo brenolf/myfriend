@@ -74,6 +74,7 @@ class Person(models.Model):
     GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True)
     address = models.ForeignKey(Address, null=True)
+    tel = models.CharField(max_length=20, null=True)
 
     def __unicode__(self):
         return self.user.username
@@ -112,6 +113,26 @@ class Dog(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class InAdoption(models.Model):
+    adopter = models.ForeignKey(Person,related_name="adopter")
+    donator = models.ForeignKey(Person,related_name="donator")
+    dog = models.ForeignKey(Dog)
+
+class MessageThread(models.Model):
+    subject = models.CharField(max_length=50)
+    person1 = models.ForeignKey(Person,related_name="person1")
+    person2 = models.ForeignKey(Person,related_name="person2")
+    #meio gambs se pa, mas eh que precisa identificar
+    #as pessoas que fazem parte da thread de algum jeito
+    
+
+class Message(models.Model):
+    thread = models.ForeignKey(MessageThread)
+    sender = models.ForeignKey(Person,related_name="sender")
+    recipient = models.ForeignKey(Person,related_name="recipient")
+    content = models.TextField(max_length=500)
+    date = models.DateField(auto_now_add=True)
 
 
 class PersonForm(ModelForm):
