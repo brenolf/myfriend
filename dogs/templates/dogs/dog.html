@@ -3,65 +3,64 @@
 {% load staticfiles %}
 {% block content %}
 
-	<section class="silver content text">
-		<div class="row">
-			<div class="col-sm-12">
+<section class="silver content text">
+	<div class="row">
+		<div class="col-sm-12">
 
-				<h1>Oi, eu sou {% if dog.gender == 'M' %} o {% else %} a {% endif %} <span>{{dog.name}}</span>!</h1>
+			<h1>Oi, eu sou {% if dog.gender == 'M' %} o {% else %} a {% endif %} <span>{{dog.name}}</span>!</h1>
 
 
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="row tac">
-							<div class="col-sm-12">
-								{% if dog.photo %}
-								<img src="{{dog.photo.url}}"  alt="{{dog.name}}" title="{{dog.name}}" class="frame"/>
-								{% else %}
-								<img src="{% static "img/logo.png" %}" alt="{{dog.name}}" title="{{dog.name}}" class="fame"/>
-								{% endif %}
-							</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="row tac">
+						<div class="col-sm-12">
+							{% if dog.photo %}
+							<img src="{{dog.photo.url}}"  alt="{{dog.name}}" title="{{dog.name}}" class="frame"/>
+							{% else %}
+							<img src="{% static "img/logo.png" %}" alt="{{dog.name}}" title="{{dog.name}}" class="fame"/>
+							{% endif %}
 						</div>
-
-						<div class="row tac">
-							<div class="col-sm-12">
-								
-									{% if not dog.adopted  and   dog.in_adoption_by.user.id != request.user.id and request.user.is_authenticated %}
-									<form name="adopt" action="" method="post">{% csrf_token %}
-								<button  class="btn btn-success" type="submit"><i class="icon icon-heart"></i> Adotar</button></form>
-								{% else %}
-									<button  class="btn btn-success" type="submit" disabled><i class="icon icon-heart"></i> Adotar</button>
-								{% endif %}
-							</div>
-						</div>
-
 					</div>
-					<div class="col-sm-9 tal">
-						<div><strong>Nome: </strong> {{dog.name}}</div>
-						<div><strong>Sexo: </strong> <span class="gender {{dog.gender}}">{% ifequal dog.gender "M" %}Masculino &#9794; {% else %}Feminino &#9792;{% endifequal %}</span></div>
-						<div><strong>Cor: </strong> {{color}}</div>
-						<div><strong>Raça: </strong> {{dog.breed}}</div>
-						<div><strong>Porte: </strong> {{size}}</div>
-						<!--<div><strong>Idade: </strong> 10 anos</div>-->
-						<div><strong>Data de nascimento: </strong> {{dog.birth_date}} </div>
-						<div>
-							<strong>Sobre mim: </strong>
-							{{dog.description}}
-						</div>
-						{% if dog.adopted %}
-						<div><strong>Adotado por: </strong> {{dog.adopted_by}}</div>
-						{% else %}
-						<div><strong>Colocado em adoção por: </strong> {{dog.in_adoption_by}} </div>
-						{% endif %}
 
+					<div class="row tac">
+						<div class="col-sm-12">
+
+							{% if not dog.adopted  and   dog.in_adoption_by.user.id != request.user.id and request.user.is_authenticated %}
+							<form name="adopt" action="" method="post">{% csrf_token %}
+								<a class="btn btn-success"><i class="icon icon-heart"></i> Adotar</a>
+							</form>
+							{% else %}
+							<button  class="btn btn-success" type="submit" disabled><i class="icon icon-heart"></i> Adotar</button>
+							{% endif %}
+						</div>
 					</div>
+
+				</div>
+				<div class="col-sm-9 tal">
+					<div><strong>Nome: </strong> {{dog.name}}</div>
+					<div><strong>Sexo: </strong> <span class="gender {{dog.gender}}">{% ifequal dog.gender "M" %}Masculino &#9794; {% else %}Feminino &#9792;{% endifequal %}</span></div>
+					<div><strong>Cor: </strong> {{color}}</div>
+					<div><strong>Raça: </strong> {{dog.breed}}</div>
+					<div><strong>Porte: </strong> {{size}}</div>
+					<div><strong>Data de nascimento: </strong> {{dog.birth_date}} </div>
+					<div>
+						<strong>Sobre mim: </strong>
+						{{dog.description}}
+					</div>
+					{% if dog.adopted %}
+					<div><strong>Adotado por: </strong> {{dog.adopted_by}}</div>
+					{% else %}
+					<div><strong>Colocado em adoção por: </strong> {{dog.in_adoption_by}} </div>
+					{% endif %}
 
 				</div>
 
 			</div>
 
-			<div class="clear"></div>
-
 		</div>
-	</section>
+
+		<div class="clear"></div>
+	</div>
+</section>
 
 {% endblock %}

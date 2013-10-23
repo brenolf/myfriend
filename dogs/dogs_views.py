@@ -41,10 +41,15 @@ def detail(request, dog_id):
 
 
 def search(request):
-    if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET:
+    if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET or request.GET['breed'] == '' or request.GET['size'] == '' or request.GET['color'] == '':
         return render(request, 'dogs/search.html', {'breeds': Breed.objects.all()})
+
     else:
-        dogs = Dog.objects.all()
+        dogs = Dog.objects.all().filter(adopted = False)
+        
+        if request.user:
+            dogs = dogs.exclude(in_adoption_by = request.user.person)
+
         if request.GET['color'] == 'Todas':
             color = 'Todas'
         else:
@@ -64,6 +69,7 @@ def search(request):
             'breed': request.GET['breed'],
             'dogs': dogs
         }
+
         return render(request, 'dogs/list-dogs.html', context)
 
 

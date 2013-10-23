@@ -19,8 +19,8 @@ footer .medias{margin:15px 0}footer .medias a{width:40px !important;border-radiu
 .imgholder{height:300px;background:0 -100px url(../../img/b.jpg) fixed;background-size:100% auto;position:relative;z-index:10}
 .image_carousel{padding:15px 0 15px 40px}.image_carousel img{border:2px solid #8b242a;background-color:#fff;border-radius:100%;-moz-border-radius:100%;-ms-border-radius:100%;-o-border-radius:100%;-webkit-border-radius:100%;padding:9px;margin:7px;display:block;float:left}
 .partner{width:250px;box-shadow:0 0 4px #555;-webkit-box-shadow:0 0 4px #555;-moz-box-shadow:0 0 4px #555;-ms-box-shadow:0 0 4px #555;-o-box-shadow:0 0 4px #555}
-body{margin:0;padding:0;margin-bottom:350px !important}
-header{width:100%;height:600px;position:relative;overflow:hidden;z-index:10}header.basic{min-height:150px;height:auto}header.basic #mask{height:100%;width:100%;background:url(../../img/b.jpg);background-size:100% auto;background-position-y:-500px}
+body{margin:0;padding:0;margin-bottom:350px !important}body.modal-open{margin-right:0 !important}
+header{width:100%;height:600px;position:relative;overflow:hidden;z-index:10;background-color:#fff}header.basic{min-height:150px;height:auto}header.basic #mask{height:100%;width:100%;background:url(../../img/b.jpg);background-size:100% auto;background-position-y:-500px}
 header.basic ul{margin:45px 0 0 -40px;float:none}header.basic ul li a{width:150px;height:50px;font:bold 15px/50px sans-serif}header.basic ul li a:hover{border-bottom:solid 3px #fff}
 header.basic #logo{width:300px;float:none}header.basic #logo img{width:80px}
 header.basic #logo h1{font-size:50px;line-height:80px}
