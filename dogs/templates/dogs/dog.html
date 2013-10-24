@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 
-			<h1>Oi, eu sou {% if dog.gender == 'M' %} o {% else %} a {% endif %} <span>{{dog.name}}</span>!</h1>
+			<h1>Oi, eu sou {{genderLetter}} <span>{{dog.name}}</span>!</h1>
 
 
 			<div class="row">
@@ -26,11 +26,9 @@
 						<div class="col-sm-12">
 
 							{% if not dog.adopted  and   dog.in_adoption_by.user.id != request.user.id and request.user.is_authenticated %}
-							<form name="adopt" action="" method="post">{% csrf_token %}
-								<a class="btn btn-success"><i class="icon icon-heart"></i> Adotar</a>
-							</form>
+							<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
 							{% else %}
-							<button  class="btn btn-success" type="submit" disabled><i class="icon icon-heart"></i> Adotar</button>
+							<a class="btn btn-success disabled"><i class="icon icon-heart"></i> Adotar</a>
 							{% endif %}
 						</div>
 					</div>
@@ -62,5 +60,30 @@
 		<div class="clear"></div>
 	</div>
 </section>
+
+<div class="modal fade" id="adoptionModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Adotar {{dog.name}}</h4>
+			</div>
+			<form name="adoptionMessageForm" action="" method="post">{% csrf_token %}
+				<div class="modal-body">
+
+					<div>Adotar um animal representa muito mais do que um gesto de solidariedade; é um gesto de amor. Existem pessoas que, por tanto amar, acabam se tornando protetores. Mande uma mensagem para <strong>{{dog.in_adoption_by}}</strong> para mostrar interesse na adoção d{{genderLetter}} <strong>{{dog.name}}</strong>.</div>
+
+					<span class="badge" style="display: none;" id="adoptionMessageError">Você deve escrever uma mensagem!</span>
+					<textarea name="message" placeholder="Escreva aqui sua mensagem" class="form-control" id="adoptionMessage"></textarea>
+
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+					<a class="btn btn-success" id="continueAdoption"><i class="icon icon-heart"></i> Continuar Adoção</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

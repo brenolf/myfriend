@@ -32,12 +32,13 @@ def index(request):
 def detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
     if request.method == 'POST' and request.user:
-        dog.adopted_by = request.user.person
-        dog.adopted = True
+        # dog.adopted_by = request.user.person
+        # dog.adopted = True
         dog.save()
     color = dict(Dog.COLOR_CHOICES)[dog.color]
     size = dict(Dog.SIZE_CHOICES)[dog.size]
-    return render(request, 'dogs/dog.html', {'dog': dog, 'user': request.user, 'color': color, 'size': size})
+    letter = 'o' if dog.gender == 'M' else 'a'
+    return render(request, 'dogs/dog.html', {'dog': dog, 'user': request.user, 'color': color, 'size': size, 'genderLetter': letter})
 
 
 def search(request):

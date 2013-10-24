@@ -1,5 +1,4 @@
 var adopted_dogs = $('#adopted_dogs');
-
 if(adopted_dogs.length !== 0){
 	adopted_dogs.carouFredSel({
 		height: 200,
@@ -37,5 +36,23 @@ if(mnhSelect.length !== 0){
 		var e = $(this);
 		var maps = {home: '/', search: '/dogs/search/', testimonials: '/', login: '/accounts/login/'};
 		window.location = maps[e.val()];
+	});
+}
+
+var adoptionButton = $('#adoptionButton');
+if(adoptionButton.length !== 0){
+	$('#continueAdoption').click(function(){
+		var errb = $('#adoptionMessageError');
+
+		errb.hide();
+
+		if($('#adoptionMessage').val() === '')
+			errb.show();
+		else
+			$('form[name="adoptionMessageForm"]').submit();
+	});
+
+	adoptionButton.click(function(){
+		$('#adoptionModal').modal();
 	});
 }
