@@ -32,7 +32,7 @@ def index(request):
 def detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
 
-    if request.method == 'POST' and request.user and not dog.in_adoption_process and not dog.adopted:
+    if request.method == 'POST' and request.user.is_authenticated() and not dog.in_adoption_process and not dog.adopted:
 
         message_form = MessageForm(request.POST)
 
@@ -68,7 +68,7 @@ def search(request):
     else:
         dogs = Dog.objects.all().filter(adopted = False)
         
-        if request.user:
+        if request.user.is_authenticated():
             dogs = dogs.exclude(in_adoption_by = request.user.person)
 
         if request.GET['color'] == 'Todas':
