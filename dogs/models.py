@@ -125,12 +125,12 @@ class MessageThread(models.Model):
     person2 = models.ForeignKey(Person,related_name="person2")
     #meio gambs se pa, mas eh que precisa identificar
     #as pessoas que fazem parte da thread de algum jeito
+    related_dog = models.ForeignKey(Dog, related_name="related_dog", null=True)
     
 
 class Message(models.Model):
     thread = models.ForeignKey(MessageThread)
     sender = models.ForeignKey(Person,related_name="sender")
-    recipient = models.ForeignKey(Person,related_name="recipient")
     content = models.TextField(max_length=500)
     date = models.DateField(auto_now_add=True)
 
