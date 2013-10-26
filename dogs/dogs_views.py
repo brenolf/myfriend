@@ -32,13 +32,33 @@ def index(request):
 def detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
 
-    if request.method == 'POST' and request.user:
-        process = InAdoptionForm(request.user.person, dog)
+    if request.method == 'POST' and request.user and not dog.in_adoption_process and not dog.adopted:
+
+        message_form = MessageForm(request.POST)
+
+        if message_form.is_valid():
+            thread = MessageThread(subject = 'subject', person1 = request.user.person, person2 = dog.in_adoption_by, related_dog = dog)
+            thread.save()
+
+            message = message_form.save(commit=False)
+            message.thread = thread
+            message.sender = request.user.person
+            message.save()
+
+            process = InAdoption(request.user.person, dog)
+
+            dog.in_adoption_process = True
+            dog.save()
+        else:
+            print '----------------- Erro tentando adotar cachorro!'
 
     color = dict(Dog.COLOR_CHOICES)[dog.color]
     size = dict(Dog.SIZE_CHOICES)[dog.size]
     letter = 'o' if dog.gender == 'M' else 'a'
-    return render(request, 'dogs/dog.html', {'dog': dog, 'user': request.user, 'color': color, 'size': size, 'genderLetter': letter})
+    
+    available = not dog.adopted and dog.in_adoption_by.user.id != request.user.id and request.user.is_authenticated and not dog.in_adoption_process
+
+    return render(request, 'dogs/dog.html', {'dog': dog, 'user': request.user, 'color': color, 'size': size, 'genderLetter': letter, 'dogIsAvailable': available})
 
 
 def search(request):

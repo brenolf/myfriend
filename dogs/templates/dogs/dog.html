@@ -25,10 +25,10 @@
 					<div class="row tac">
 						<div class="col-sm-12">
 
-							{% if not dog.adopted  and   dog.in_adoption_by.user.id != request.user.id and request.user.is_authenticated %}
+							{% if adoptionAvailable %}
 							<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
-							{% else %}
-							<a class="btn btn-success disabled"><i class="icon icon-heart"></i> Adotar</a>
+							{% elif dog.in_adoption_process%}
+							<a class="btn btn-default disabled"><i class="icon icon-comments"></i> Em processo de adoção</a>
 							{% endif %}
 						</div>
 					</div>
@@ -74,7 +74,7 @@
 					<div>Adotar um animal representa muito mais do que um gesto de solidariedade; é um gesto de amor. Existem pessoas que, por tanto amar, acabam se tornando protetores. Mande uma mensagem para <strong>{{dog.in_adoption_by}}</strong> para mostrar interesse na adoção d{{genderLetter}} <strong>{{dog.name}}</strong>.</div>
 
 					<span class="badge" style="display: none;" id="adoptionMessageError">Você deve escrever uma mensagem!</span>
-					<textarea name="message" placeholder="Escreva aqui sua mensagem" class="form-control" id="adoptionMessage"></textarea>
+					<textarea name="content" placeholder="Escreva aqui sua mensagem" class="form-control" id="adoptionMessage" maxlength="500"></textarea>
 
 				</div>
 				<div class="modal-footer">

@@ -67,7 +67,7 @@
 
 			<a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> Procurar</a>
 			{% if request.user.is_authenticated %}
-			<a href="{% url 'account_logout' %}"><i class="icon icon-user"></i> Sair</a>
+			<a href="{% url 'account_logout' %}"><i class="icon icon-power-off"></i> Sair</a>
 			{% else %}
 			<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
 			<a href="{% url 'account_signup' %}"><i class="icon icon-plus"></i> Registrar</a>

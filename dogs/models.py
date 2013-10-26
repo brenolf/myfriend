@@ -106,10 +106,11 @@ class Dog(models.Model):
     # colocar que o endereço do cachorro é o mesmo que o dela, e eles vão
     # ficar sincronizados
     photo = models.ImageField(null=True, upload_to="dog_images/")
-    adopted = models.BooleanField()
+    adopted = models.BooleanField() # ja foi adotado
     adopted_by = models.ForeignKey(
-        Person, related_name="adopted_by", null=True)
-    in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by")
+        Person, related_name="adopted_by", null=True) # quem adotou
+    in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by") # quem pos para adocao
+    in_adoption_process = models.BooleanField() # em estado de adocao
 
     def __unicode__(self):
         return self.name
@@ -132,6 +133,11 @@ class Message(models.Model):
     content = models.TextField(max_length=500)
     date = models.DateField(auto_now_add=True)
 
+class MessageForm(ModelForm):
+
+    class Meta:
+        model = Message
+        exclude = ['thread', 'sender', 'date']
 
 class PersonForm(ModelForm):
 
@@ -139,18 +145,12 @@ class PersonForm(ModelForm):
         model = Person
         exclude = ['address', 'user']
 
-
-class InAdoptionForm(ModelForm):
-
-    class Meta:
-        model = InAdoption
-
 class DogForm(ModelForm):
 
     class Meta:
         model = Dog
         #photo = models.ImageField(upload_to = 'dog_images/', default = 'dog_images/None/no-img.jpg')
-        exclude = ['address', 'adopted', 'adopted_by', 'in_adoption_by']
+        exclude = ['address', 'adopted', 'adopted_by', 'in_adoption_by', 'in_adoption_process']
 
 
 class AddressForm(ModelForm):
