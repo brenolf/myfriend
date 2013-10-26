@@ -31,10 +31,10 @@ def index(request):
 
 def detail(request, dog_id):
     dog = get_object_or_404(Dog, pk=dog_id)
+
     if request.method == 'POST' and request.user:
-        # dog.adopted_by = request.user.person
-        # dog.adopted = True
-        dog.save()
+        process = InAdoptionForm(request.user.person, dog)
+
     color = dict(Dog.COLOR_CHOICES)[dog.color]
     size = dict(Dog.SIZE_CHOICES)[dog.size]
     letter = 'o' if dog.gender == 'M' else 'a'

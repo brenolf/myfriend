@@ -114,17 +114,15 @@ class Dog(models.Model):
     def __unicode__(self):
         return self.name
 
+# Classe usada para processo de adocao
 class InAdoption(models.Model):
     adopter = models.ForeignKey(Person,related_name="adopter")
-    donator = models.ForeignKey(Person,related_name="donator")
     dog = models.ForeignKey(Dog)
 
 class MessageThread(models.Model):
     subject = models.CharField(max_length=50)
     person1 = models.ForeignKey(Person,related_name="person1")
     person2 = models.ForeignKey(Person,related_name="person2")
-    #meio gambs se pa, mas eh que precisa identificar
-    #as pessoas que fazem parte da thread de algum jeito
     related_dog = models.ForeignKey(Dog, related_name="related_dog", null=True)
     
 
@@ -141,6 +139,11 @@ class PersonForm(ModelForm):
         model = Person
         exclude = ['address', 'user']
 
+
+class InAdoptionForm(ModelForm):
+
+    class Meta:
+        model = InAdoption
 
 class DogForm(ModelForm):
 
