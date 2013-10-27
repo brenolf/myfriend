@@ -84,12 +84,12 @@ if(process.length !== 0){
 				</div>');
 		}
 
-		$('#formMessage').show();
+		$('#formMessage, .modal-footer').show();
 	};
 
 	$('.dogprocess').click(function(){
 		$('#loader').show();
-		$('#formMessage').hide();
+		$('#formMessage, .modal-footer').hide();
 		$('#formMessage textarea').val('');
 		$('#processModal').modal();
 		$('#processThread').empty();
@@ -110,23 +110,24 @@ if(process.length !== 0){
 		});
 	});
 
-	var communication = function(deny, allow, success){
-		if(success == undefined){
-			success = function(){
-				$('#formMessage').hide();
-				$('#formMessage textarea').val('');
-				$('#processModal').modal();
-				$('#processThread').empty();
+	var reload_thread = function(){
+		$('#formMessage').hide();
+		$('#formMessage textarea').val('');
+		$('#processModal').modal();
+		$('#processThread').empty();
 
-				$.ajax({
-					type: 'POST',
-					url: '/thread/',
-					data: {csrfmiddlewaretoken: safecode, dog: window.dog},
-					success: retrieve_messages,
-					dataType: 'json'
-				});
-			};
-		}
+		$.ajax({
+			type: 'POST',
+			url: '/thread/',
+			data: {csrfmiddlewaretoken: safecode, dog: window.dog},
+			success: retrieve_messages,
+			dataType: 'json'
+		});
+	};
+
+	var communication = function(deny, allow, success){
+		if(success == undefined)
+			success = reload_thread;
 
 		$.ajax({
 			type: 'POST',
@@ -156,6 +157,23 @@ if(process.length !== 0){
 
 	$('#denyAdoption, #confirmAdoption').click(function(){
 		var isConfirm = $(this).attr('id') === 'confirmAdoption';
-		communication(!isConfirm, isConfirm, function(){alert('Sucesso')});
+
+		$('#processThread').empty();
+		$('#formMessage, .modal-footer').hide();
+		$('#loader').show();
+		
+
+		communication(!isConfirm, isConfirm, function(data){
+			$('#loader').hide();
+			action = isConfirm ? 'realizada' : 'negada';
+
+			if(data.ok){
+				$('#processThread').append('<h2>Adoção ' + action + ' com sucesso!</h2>');
+				setTimeout(function(){window.location.reload(true);}, 2000);
+			} else {
+				$('.modal-footer').show();
+				reload_thread();
+			}
+		});
 	});
 }

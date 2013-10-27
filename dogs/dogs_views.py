@@ -221,7 +221,7 @@ def send_message(request):
 	elif request.user.id == dog.in_adoption_by.user.id:
 
 		if deny:
-			dog.adopted_by = None
+			# dog.adopted_by = None
 			dog.adopted = False
 			dog.in_adoption_process = False
 			dog.save()
