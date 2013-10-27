@@ -119,14 +119,14 @@ class MessageThread(models.Model):
     person1 = models.ForeignKey(Person,related_name="person1")
     person2 = models.ForeignKey(Person,related_name="person2")
     related_dog = models.ForeignKey(Dog, related_name="related_dog", null=True)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     
 
 class Message(models.Model):
     thread = models.ForeignKey(MessageThread)
     sender = models.ForeignKey(Person,related_name="sender")
     content = models.TextField(max_length=500)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
 
 class MessageForm(ModelForm):
 
