@@ -21,6 +21,9 @@ footer .medias{margin:15px 0}footer .medias a{width:40px !important;border-radiu
 .partner{width:250px;box-shadow:0 0 4px #555;-webkit-box-shadow:0 0 4px #555;-moz-box-shadow:0 0 4px #555;-ms-box-shadow:0 0 4px #555;-o-box-shadow:0 0 4px #555}
 body{margin:0;padding:0;margin-bottom:350px !important}body.modal-open{margin-right:0 !important}
 .modal textarea{resize:none;height:100px !important;margin-top:20px}
+.modal .panel-heading small{float:right}
+.badge ul{margin:0;padding:0 10px}
+.badge li{list-style:square;list-style-position:inside}
 header{width:100%;height:600px;position:relative;overflow:hidden;z-index:10;background-color:#fff}header.basic{min-height:150px;height:auto}header.basic #mask{height:100%;width:100%;background:url(../../img/b.jpg);background-size:100% auto;background-position-y:-500px}
 header.basic ul{margin:45px 0 0 -40px;float:none}header.basic ul li a{width:150px;height:50px;font:bold 15px/50px sans-serif}header.basic ul li a:hover{border-bottom:solid 3px #fff}
 header.basic #logo{width:300px;float:none}header.basic #logo img{width:80px}

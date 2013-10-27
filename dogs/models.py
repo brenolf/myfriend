@@ -107,24 +107,19 @@ class Dog(models.Model):
     # ficar sincronizados
     photo = models.ImageField(null=True, upload_to="dog_images/")
     adopted = models.BooleanField() # ja foi adotado
-    adopted_by = models.ForeignKey(
-        Person, related_name="adopted_by", null=True) # quem adotou
+    adopted_by = models.ForeignKey(Person, related_name="adopted_by", null=True) # quem adotou
     in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by") # quem pos para adocao
     in_adoption_process = models.BooleanField() # em estado de adocao
 
     def __unicode__(self):
         return self.name
 
-# Classe usada para processo de adocao
-class InAdoption(models.Model):
-    adopter = models.ForeignKey(Person,related_name="adopter")
-    dog = models.ForeignKey(Dog)
-
 class MessageThread(models.Model):
     subject = models.CharField(max_length=50)
     person1 = models.ForeignKey(Person,related_name="person1")
     person2 = models.ForeignKey(Person,related_name="person2")
     related_dog = models.ForeignKey(Dog, related_name="related_dog", null=True)
+    date = models.DateField(auto_now_add=True)
     
 
 class Message(models.Model):

@@ -25,10 +25,10 @@
 					<div class="row tac">
 						<div class="col-sm-12">
 
-							{% if adoptionAvailable %}
+							{% if dogIsAvailable %}
 							<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
-							{% elif dog.in_adoption_process%}
-							<a class="btn btn-default disabled"><i class="icon icon-comments"></i> Em processo de adoção</a>
+							{% elif dog.in_adoption_process and dog.adopted_by = request.user.person%}
+							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de adoção</a>
 							{% endif %}
 						</div>
 					</div>
@@ -41,10 +41,8 @@
 					<div><strong>Raça: </strong> {{dog.breed}}</div>
 					<div><strong>Porte: </strong> {{size}}</div>
 					<div><strong>Data de nascimento: </strong> {{dog.birth_date}} </div>
-					<div>
-						<strong>Sobre mim: </strong>
-						{{dog.description}}
-					</div>
+					<div><strong>Sobre mim: </strong> {{dog.description}}</div>
+
 					{% if dog.adopted %}
 					<div><strong>Adotado por: </strong> {{dog.adopted_by}}</div>
 					{% else %}

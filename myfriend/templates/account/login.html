@@ -20,12 +20,18 @@
 				{% endif %}
 				<div class="form-group">
 					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form.login.errors }}</span></div>
+					</div>
+					<div class="row">
 						<div class="col-sm-6">Usuário:</div>
 						<div class="col-sm-6"><input type="text" name="login" placeholder="Seu usuário" class="form-control"/></div>
 					</div>
 				</div>
 
 				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form.password.errors }}</span></div>
+					</div>
 					<div class="row">
 						<div class="col-sm-6">Senha:</div>
 						<div class="col-sm-6"><input type="password" name="password" placeholder="Sua senha" class="form-control"/></div>
@@ -42,15 +48,15 @@
 					<a class="btn btn-primary btn-lg" href="{% provider_login_url "facebook" method="oauth2" %}"><i class="icon icon-facebook-sign"></i> Entrar com Facebook</a>
 				</div>
 
-		</div>
-
-		<div class="col-sm-6">
-			<h1>Registrar</h1>
-			<i class="hr"></i>
-
-			<div class="tac">
-				<a class="btn btn-primary btn-lg" href="{{ signup_url }}"><i class="icon icon-plus-sign"></i> Clique aqui para se cadastrar</a> 
 			</div>
+
+			<div class="col-sm-6">
+				<h1>Registrar</h1>
+				<i class="hr"></i>
+
+				<div class="tac">
+					<a class="btn btn-primary btn-lg" href="{{ signup_url }}"><i class="icon icon-plus-sign"></i> Clique aqui para se cadastrar</a> 
+				</div>
 
 			<!-- <form name="signup" action="">
 				<div class="form-group">

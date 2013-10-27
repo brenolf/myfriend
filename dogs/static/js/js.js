@@ -56,3 +56,25 @@ if(adoptionButton.length !== 0){
 		$('#adoptionModal').modal();
 	});
 }
+
+var process = $('#processModal');
+if(process.length !== 0){
+
+	var retrieve_messages = function(data){
+		console.log(data);
+	};
+
+	var send_message = function(data){
+	};
+
+	$.ajax({
+		type: 'POST',
+		url: '/thread/',
+		data: {csrfmiddlewaretoken: safecode, nome: 'BRENO'},
+		success: retrieve_messages
+	});
+
+	$('.dogprocess').click(function(){
+		var id = $(this).attr('data-id');
+	})
+}

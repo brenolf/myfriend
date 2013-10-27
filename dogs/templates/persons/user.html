@@ -35,26 +35,88 @@
 				{% for dog in dogs %}
 				<tr>
 					<td><a href="{% url 'detail-dog' dog.id %}">{{dog.name}}</a></td>
-					<td>{% if dog.adopted %} Adotado {% else %} Para adoção {% endif %}</td>
-					<td>{% if user.id == dog.in_adoption_by.user.id %} Você {% else %}
-						{{dog.in_adoption_by.user.firstname}} {% endif %}</td>
-						<td>
-							<form name="adopt" action="" method="post">{% csrf_token %}
-								<div class="btn-group">
-									<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
-									<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
-									<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
-								</div>
-							</form>
-						</td>
-					</tr>
-					{% endfor %}
+					<td>
+						{% if dog.adopted %}
+						<i class="icon icon-smile"></i> Adotado
+						{% elif dog.in_adoption_process %}
+						<i class="icon icon-comments"></i> Em processo de adoção
+						{% else %}
+						<i class="icon icon-heart"></i> Em adoção
+						{% endif %}
+					</td>
 
-				</table>
+					<td>{% if user.id == dog.in_adoption_by.user.id %} Você {% else %} <strong>{{dog.in_adoption_by.user}}</strong> {% endif %}</td>
+					<td>
+						<form name="adopt" action="" method="post">{% csrf_token %}
 
-			</div>
+							<div class="btn-group">
+								{% if dog.in_adoption_process %}
+								<a class="btn btn-default dogprocess" data-id="{{dog.id}}"><i class="icon icon-comments"></i> Avaliar adoção</a>
+
+								{% else %}
+
+								<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+								<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
+								<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
+								{% endif %}
+							</div>
+
+						</form>
+					</td>
+				</tr>
+				{% endfor %}
+
+			</table>
 
 		</div>
-	</section>
 
-	{% endblock %}
+	</div>
+</section>
+
+
+<div class="modal fade" id="processModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Avaliar adoção</h4>
+			</div>
+			<form name="adoptionMessageForm" action="" method="post">{% csrf_token %}
+				<div class="modal-body">
+
+					<div id="processThread"></div>
+
+					<!-- <div class="panel panel-default">
+						<div class="panel-heading"><strong>Pessoa</strong> diz: <small>10/10/2010 às 13:10</small><div class="clear"></div></div>
+						<div class="panel-body">
+							Panel content
+						</div>
+					</div>
+
+
+					<div class="panel panel-info">
+						<div class="panel-heading"><strong>Você</strong> diz: <small>10/10/2010 às 13:10</small><div class="clear"></div></div>
+						<div class="panel-body">
+							Panel content
+						</div>
+					</div> -->
+
+					<span class="badge" style="display: none;" id="adoptionMessageError">Você deve escrever uma mensagem!</span>
+					<textarea name="content" placeholder="Escreva aqui sua mensagem" class="form-control" id="adoptionMessage" maxlength="500"></textarea>
+
+					<div class="tar" style="margin-top: 20px;"><a class="btn btn-primary" data-dismiss="modal"><i class="icon icon-reply"></i> Enviar mensagem</a></div>
+
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+					<a class="btn btn-danger" id="denyAdoption"><i class="icon icon-remove"></i> Negar Adoção</a>
+					<a class="btn btn-success" id="confirmAdoption"><i class="icon icon-heart"></i> Confirmar Adoção</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">var safecode = '{{ csrf_token }}';</script>
+
+{% endblock %}

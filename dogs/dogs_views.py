@@ -3,19 +3,28 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
+from django.core import serializers
+from django.shortcuts import render_to_response
 
 
 from dogs.models import *
 
+# python manage.py schemamigration dogs --auto
+# python manage.py migrate dogs
+
 
 @login_required(login_url='/accounts/login/')
 def user(request):
-    dogs = request.user.person.in_adoption_by.all()
+    dogs = request.user.person.in_adoption_by.all().order_by('name') | request.user.person.adopted_by.all().order_by('name')
+
     context = {'user': request.user, 'dogs': dogs}
     if request.method == 'POST' and 'remove' in request.POST:
         dogid = request.POST['remove']
         d = Dog.objects.get(pk=dogid)
         d.delete()
+
     return render(request, 'persons/user.html', context)
 
 
@@ -40,14 +49,14 @@ def detail(request, dog_id):
             thread = MessageThread(subject = 'subject', person1 = request.user.person, person2 = dog.in_adoption_by, related_dog = dog)
             thread.save()
 
-            message = message_form.save(commit=False)
+            message = message_form.save(commit = False)
             message.thread = thread
             message.sender = request.user.person
             message.save()
 
-            process = InAdoption(request.user.person, dog)
-
+            dog.adopted_by = request.user.person
             dog.in_adoption_process = True
+            dog.adopted = False
             dog.save()
         else:
             print '----------------- Erro tentando adotar cachorro!'
@@ -56,7 +65,7 @@ def detail(request, dog_id):
     size = dict(Dog.SIZE_CHOICES)[dog.size]
     letter = 'o' if dog.gender == 'M' else 'a'
     
-    available = not dog.adopted and dog.in_adoption_by.user.id != request.user.id and request.user.is_authenticated and not dog.in_adoption_process
+    available = (not dog.adopted and not dog.in_adoption_process) and (request.user.is_authenticated() and dog.in_adoption_by.user.id != request.user.id) 
 
     return render(request, 'dogs/dog.html', {'dog': dog, 'user': request.user, 'color': color, 'size': size, 'genderLetter': letter, 'dogIsAvailable': available})
 
@@ -66,7 +75,7 @@ def search(request):
         return render(request, 'dogs/search.html', {'breeds': Breed.objects.all()})
 
     else:
-        dogs = Dog.objects.all().filter(adopted = False)
+        dogs = Dog.objects.all().filter(adopted = False, in_adoption_process = False)
         
         if request.user.is_authenticated():
             dogs = dogs.exclude(in_adoption_by = request.user.person)
@@ -145,3 +154,19 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
     return render(request, 'dogs/newdog.html', {
         'form_dog': form_dog,
     })
+
+
+def get_thread(request):
+    if not request.user.is_authenticated():
+        return HttpResponse('This thread is blocked for you', mimetype='text/plain')
+
+    msg = MessageThread.objects.all().filter(person1 = request.user.person)
+
+    retorno = serializers.serialize('json', msg)
+    return HttpResponse(retorno, mimetype='text/javascript')
+
+def send_message(request):
+    if not request.user.is_authenticated():
+        return HttpResponse('This thread is blocked for you', mimetype='text/plain')
+
+    return HttpResponse('Hello World!', mimetype='text/plain')
