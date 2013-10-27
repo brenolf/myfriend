@@ -120,7 +120,8 @@ class MessageThread(models.Model):
     person2 = models.ForeignKey(Person,related_name="person2")
     related_dog = models.ForeignKey(Dog, related_name="related_dog", null=True)
     date = models.DateTimeField(auto_now_add=True)
-    
+    closed = models.BooleanField()
+
 
 class Message(models.Model):
     thread = models.ForeignKey(MessageThread)

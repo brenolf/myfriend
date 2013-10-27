@@ -53,6 +53,7 @@ def detail(request, dog_id):
 			message = message_form.save(commit = False)
 			message.thread = thread
 			message.sender = request.user.person
+			message.closed = False
 			message.save()
 
 			dog.adopted_by = request.user.person
@@ -164,17 +165,17 @@ def get_thread(request):
 	dog = Dog.objects.get(pk = int(request.POST['dog']))
 
 	if dog.adopted_by.user.id == request.user.id:
-		thread = MessageThread.objects.all().filter(related_dog = dog, person1 = request.user.person)
+		thread = MessageThread.objects.all().filter(related_dog = dog, person1 = request.user.person, closed = False)
 
 		if not thread:
-			raise Exception('Thread inexistente')
+			raise Exception('Thread error')
 		else:
 			thread = thread.latest('date')
 	else:
-		thread = MessageThread.objects.all().filter(related_dog = dog, person2 = request.user.person)
+		thread = MessageThread.objects.all().filter(related_dog = dog, person2 = request.user.person, closed = False)
 
 		if not thread:
-			raise Exception('Thread inexistente')
+			raise Exception('Thread error')
 		else:
 			thread = thread.latest('date')
 
@@ -211,28 +212,29 @@ def send_message(request):
 	allow = getBool(request.POST['allow'])
 	dog = Dog.objects.get(pk = int(request.POST['dog']))
 
-	if not deny and not allow:
+	if dog.adopted_by.user.id == request.user.id:
+		thread = MessageThread.objects.all().filter(related_dog = dog, person1 = request.user.person, closed = False)
 
-		if dog.adopted_by.user.id == request.user.id:
-			thread = MessageThread.objects.all().filter(related_dog = dog, person1 = request.user.person)
-
-			if not thread:
-				response = False
-			else:
-				thread = thread.latest('date')
+		if not thread:
+			response = False
 		else:
-			thread = MessageThread.objects.all().filter(related_dog = dog, person2 = request.user.person)
+			thread = thread.latest('date')
+	else:
+		thread = MessageThread.objects.all().filter(related_dog = dog, person2 = request.user.person, closed = False)
 
-			if not thread:
-				response = False
-			else:
-				thread = thread.latest('date')
+		if not thread:
+			response = False
+		else:
+			thread = thread.latest('date')
 
-		if response:
+	if not deny and not allow and response:
 			message = Message(thread = thread, sender = request.user.person, content = request.POST['content'])
 			message.save()
 
 	elif request.user.id == dog.in_adoption_by.user.id:
+		if deny or allow:
+			thread.closed = True
+			thread.save()
 
 		if deny:
 			# dog.adopted_by = None
