@@ -59,7 +59,7 @@
 
 								<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar adoção</a>
 
-								{% else %}
+								{% elif not dog.adopted %}
 
 								<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
 								<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
