@@ -161,9 +161,23 @@ def get_thread(request):
 	if not request.user.is_authenticated():
 		return HttpResponse('This thread is blocked for you', mimetype='text/plain')
 
-	dog = request.POST['dog']
+	dog = Dog.objects.get(pk = int(request.POST['dog']))
 
-	thread = MessageThread.objects.get(related_dog = dog)
+	if dog.adopted_by.user.id == request.user.id:
+		thread = MessageThread.objects.all().filter(related_dog = dog, person1 = request.user.person)
+
+		if not thread:
+			raise Exception('Thread inexistente')
+		else:
+			thread = thread.latest('date')
+	else:
+		thread = MessageThread.objects.all().filter(related_dog = dog, person2 = request.user.person)
+
+		if not thread:
+			raise Exception('Thread inexistente')
+		else:
+			thread = thread.latest('date')
+
 	msg = Message.objects.all().filter(thread = thread)
 
 	lista = []
