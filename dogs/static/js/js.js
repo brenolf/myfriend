@@ -59,22 +59,103 @@ if(adoptionButton.length !== 0){
 
 var process = $('#processModal');
 if(process.length !== 0){
+	window.dog = null;
 
-	var retrieve_messages = function(data){
-		console.log(data);
-	};
-
-	var send_message = function(data){
-	};
-
-	$.ajax({
-		type: 'POST',
-		url: '/thread/',
-		data: {csrfmiddlewaretoken: safecode, nome: 'BRENO'},
-		success: retrieve_messages
+	$('#processModal').on('hide.bs.modal', function(){
+		window.dog = null;
 	});
 
+
+	var retrieve_messages = function(data){
+		$('#loader').hide();
+		var canvas = $('#processThread');
+
+		for(var i = 0, l = data.length; i < l; i++){
+			var e = data[i];
+
+			var nome = e.user === null ? 'Você' : e.user;
+			style = e.user == null ? 'info' : 'default';
+
+			canvas.append('<div class="panel panel-' + style + '">\
+				<div class="panel-heading"><strong>' + nome + '</strong> diz: <small>' + e.date + '</small><div class="clear"></div></div>\
+				<div class="panel-body">\
+				' + e.content + '\
+				</div>\
+				</div>');
+		}
+
+		$('#formMessage').show();
+	};
+
 	$('.dogprocess').click(function(){
-		var id = $(this).attr('data-id');
-	})
+		$('#loader').show();
+		$('#formMessage').hide();
+		$('#formMessage textarea').val('');
+		$('#processModal').modal();
+		$('#processThread').empty();
+
+		window.dog = $(this).attr('data-id');
+
+		if($(this).attr('data-adopter') === '0')
+			$('#denyAdoption, #confirmAdoption').css({display: 'inline-block'});
+		else
+			$('#denyAdoption, #confirmAdoption').hide();
+
+		$.ajax({
+			type: 'POST',
+			url: '/thread/',
+			data: {csrfmiddlewaretoken: safecode, dog: window.dog},
+			success: retrieve_messages,
+			dataType: 'json'
+		});
+	});
+
+	var communication = function(deny, allow, success){
+		if(success == undefined){
+			success = function(){
+				$('#formMessage').hide();
+				$('#formMessage textarea').val('');
+				$('#processModal').modal();
+				$('#processThread').empty();
+
+				$.ajax({
+					type: 'POST',
+					url: '/thread/',
+					data: {csrfmiddlewaretoken: safecode, dog: window.dog},
+					success: retrieve_messages,
+					dataType: 'json'
+				});
+			};
+		}
+
+		$.ajax({
+			type: 'POST',
+			url: '/send_message/',
+			data: {csrfmiddlewaretoken: safecode, content: $('#adoptionMessage').val(), dog: window.dog, deny: deny, allow: allow},
+			success: success,
+			dataType: 'json'
+		});
+	};
+
+	$('#sendMessage').click(function(){
+		var errb = $('#adoptionMessageError');
+
+		errb.hide();
+
+		if($('#adoptionMessage').val() === '')
+			errb.show();
+
+		else {
+			$('#formMessage').hide();
+			$('#processThread').empty();
+			$('#loader').show();
+
+			communication(false, false);
+		}
+	});
+
+	$('#denyAdoption, #confirmAdoption').click(function(){
+		var isConfirm = $(this).attr('id') === 'confirmAdoption';
+		communication(!isConfirm, isConfirm, function(){alert('Sucesso')});
+	});
 }

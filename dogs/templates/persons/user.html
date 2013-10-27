@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 
 
@@ -50,8 +51,13 @@
 						<form name="adopt" action="" method="post">{% csrf_token %}
 
 							<div class="btn-group">
-								{% if dog.in_adoption_process %}
-								<a class="btn btn-default dogprocess" data-id="{{dog.id}}"><i class="icon icon-comments"></i> Avaliar adoção</a>
+								{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
+
+								<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de adoção</a>
+
+								{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
+
+								<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar adoção</a>
 
 								{% else %}
 
@@ -79,40 +85,28 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Avaliar adoção</h4>
+				<h4 class="modal-title">Mensagens para adoção</h4>
 			</div>
-			<form name="adoptionMessageForm" action="" method="post">{% csrf_token %}
-				<div class="modal-body">
+			<div class="modal-body">
 
-					<div id="processThread"></div>
+				<div class="tac" id="loader">
+					<img src={% static "img/loader.gif" %} alt="loading"/>
+				</div>
 
-					<!-- <div class="panel panel-default">
-						<div class="panel-heading"><strong>Pessoa</strong> diz: <small>10/10/2010 às 13:10</small><div class="clear"></div></div>
-						<div class="panel-body">
-							Panel content
-						</div>
-					</div>
+				<div id="processThread"></div>
 
-
-					<div class="panel panel-info">
-						<div class="panel-heading"><strong>Você</strong> diz: <small>10/10/2010 às 13:10</small><div class="clear"></div></div>
-						<div class="panel-body">
-							Panel content
-						</div>
-					</div> -->
-
+				<div id="formMessage">
 					<span class="badge" style="display: none;" id="adoptionMessageError">Você deve escrever uma mensagem!</span>
 					<textarea name="content" placeholder="Escreva aqui sua mensagem" class="form-control" id="adoptionMessage" maxlength="500"></textarea>
-
-					<div class="tar" style="margin-top: 20px;"><a class="btn btn-primary" data-dismiss="modal"><i class="icon icon-reply"></i> Enviar mensagem</a></div>
-
+					<div class="tar" style="margin-top: 20px;"><a class="btn btn-primary" id="sendMessage"><i class="icon icon-reply"></i> Enviar mensagem</a></div>
 				</div>
-				<div class="modal-footer">
-					<a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-					<a class="btn btn-danger" id="denyAdoption"><i class="icon icon-remove"></i> Negar Adoção</a>
-					<a class="btn btn-success" id="confirmAdoption"><i class="icon icon-heart"></i> Confirmar Adoção</a>
-				</div>
-			</form>
+
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+				<a class="btn btn-danger" id="denyAdoption"><i class="icon icon-remove"></i> Negar Adoção</a>
+				<a class="btn btn-success" id="confirmAdoption"><i class="icon icon-heart"></i> Confirmar Adoção</a>
+			</div>
 		</div>
 	</div>
 </div>

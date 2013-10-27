@@ -27,8 +27,10 @@
 
 							{% if dogIsAvailable %}
 							<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
-							{% elif dog.in_adoption_process and dog.adopted_by = request.user.person%}
+							{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
 							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de adoção</a>
+							{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
+							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar adoção</a>
 							{% endif %}
 						</div>
 					</div>
@@ -72,6 +74,7 @@
 					<div>Adotar um animal representa muito mais do que um gesto de solidariedade; é um gesto de amor. Existem pessoas que, por tanto amar, acabam se tornando protetores. Mande uma mensagem para <strong>{{dog.in_adoption_by}}</strong> para mostrar interesse na adoção d{{genderLetter}} <strong>{{dog.name}}</strong>.</div>
 
 					<span class="badge" style="display: none;" id="adoptionMessageError">Você deve escrever uma mensagem!</span>
+					
 					<textarea name="content" placeholder="Escreva aqui sua mensagem" class="form-control" id="adoptionMessage" maxlength="500"></textarea>
 
 				</div>
