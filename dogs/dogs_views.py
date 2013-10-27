@@ -237,7 +237,7 @@ def send_message(request):
 			thread.save()
 
 		if deny:
-			# dog.adopted_by = None
+			dog.adopted_by = None
 			dog.adopted = False
 			dog.in_adoption_process = False
 			dog.save()
