@@ -1,4 +1,4 @@
-@import "_fonts.less";
+@import "fonts.css";
 @import "_utils.less";
 @import "_footer.less";
 @import "_home.less";
@@ -7,34 +7,6 @@ body {
 	margin: 0;
 	padding: 0;
 	margin-bottom: 350px !important;
-
-	&.modal-open {
-		margin-right: 0 !important;
-	}
-}
-
-.modal {
-	textarea {
-		resize: none;
-		height: 100px !important;
-		margin-top: 20px;
-	}
-
-	.panel-heading small {
-		float: right;
-	}
-}
-
-.badge {
-	ul {
-		margin: 0;
-		padding: 0 10px;
-	}
-
-	li {
-		list-style: square;
-		list-style-position: inside;
-	}
 }
 
 header {
@@ -43,7 +15,6 @@ header {
 	position: relative;
 	overflow: hidden;
 	z-index: 10;
-	background-color: #fff;
 
 	&.basic {
 		min-height: 150px;
@@ -52,7 +23,7 @@ header {
 		#mask {
 			height: 100%;
 			width: 100%;
-			background: url(../../img/b.jpg);
+			background: url(../img/b.jpg);
 			background-size: 100% auto;
 			background-position-y: -500px;
 		}
@@ -98,11 +69,10 @@ header {
 		top: 0;
 		left: 0;
 		z-index: 0;
-		width: 100%;
 
 		div {
 			background-color: rgba(140, 140, 140, 0.3);
-			background-image: url(../../img/cross.png);
+			background-image: url(../img/cross.png);
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -153,11 +123,6 @@ header {
 		padding: 30px 0;
 		float: left;
 
-		a, a:hover {
-			text-decoration: none !important;
-			color: #fff !important;
-		}
-
 		img {
 			width: 150px;
 			float: left;
@@ -181,7 +146,7 @@ section {
 
 	&.red {
 		.sectionGet(#C9464E);
-		background-image: url(../../img/square.png);
+		background-image: url(../img/square.png);
 	}
 
 	&.yellow {
@@ -216,7 +181,8 @@ section {
 	.radius(100%);
 	padding: 10px;
 	.box_shadow(0, 0, 10px, #333);
-	.size(200px, 200px);
+	width: 200px;
+	max-height: 200px;
 
 	&.square {
 		.radius(0) !important;
@@ -267,6 +233,7 @@ section {
 	text-align: center;
 
 	.colour {
+		background: #97751D;
 		width: 100px;
 		height: 100px;
 		position: absolute;
@@ -275,21 +242,5 @@ section {
 		bottom: 0;
 		right: 0;
 		margin: auto;
-
-		img {
-			height: inherit;
-		}
-	}
-}
-
-.gender {
-	&.F {
-		font-weight: bold;
-		color: #FF1F24;
-	}
-
-	&.M {
-		font-weight: bold;
-		color: #1F46FF;
 	}
 }
