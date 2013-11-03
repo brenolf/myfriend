@@ -248,3 +248,50 @@ def send_message(request):
 			dog.save()
 
 	return HttpResponse(json.dumps({'ok': response}), mimetype='text/javascript; charset=utf-8')
+
+
+
+def similar_dogs(request):
+	answer = request.user.person.answer
+	dogs = Dog.objects.all()
+	dogs = [(modified_jaccard(answer,dog.characteristics,dog.size),dog) for dog in dogs]
+	dogs.sort(key=lambda tup: tup[0]) 
+	return dogs[:10]
+
+
+
+def compare_jaccard(v1, v2, total, equal):
+	if v1 is None:
+		return total, equal
+	if v2 is None:
+		return total+0.5, equal
+	if v1==v2:
+		return total+1, equal+1
+	if v1!=v2:
+		return total+1, equal
+
+def modified_jaccard(a, c, size): #answer and characteristics
+	total = 0
+	equal = 0
+	total, equal = compare_jaccard(apartment, likeinside, total, equal)
+	total, equal = compare_jaccard(backyard, likeoutside, total, equal)
+	total, equal = compare_jaccard(insidehouse, likeinside, total, equal)
+	if size='xs' or size='s' then size=True else size=False
+	total, equal = compare_jaccard(smalldogs, size, total, equal)
+	total, equal = compare_jaccard(not manyguests, jealousperson, total, equal)
+	#total, equal = compare_jaccard(priorexperience, , total, equal)
+	total, equal = compare_jaccard(time, needexercise, total, equal)
+	total, equal = compare_jaccard(training, stubborn, total, equal)
+	total, equal = compare_jaccard(physicallyactive, needexercise, total, equal)
+	total, equal = compare_jaccard(calmness, calm, total, equal)
+	total, equal = compare_jaccard(likebarks, barker, total, equal)
+	total, equal = compare_jaccard(likeaggressiveness, aggressive, total, equal)
+	total, equal = compare_jaccard(likewalking, needexercise, total, equal)
+	total, equal = compare_jaccard(havemoney, expensive, total, equal)
+	total, equal = compare_jaccard(havemoney, medicalcare, total, equal)
+	total, equal = compare_jaccard(allergy, longhair, total, equal)
+	total, equal = compare_jaccard(allergy, hairfall, total, equal)
+	total, equal = compare_jaccard(not smallanimals, hunter, total, equal)
+	total, equal = compare_jaccard(not otheranimals, jealousanimal, total, equal)
+	total, equal = compare_jaccard(kids, likekids, total, equal)
+	return equal/total

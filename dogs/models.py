@@ -78,8 +78,30 @@ class Person(models.Model):
 
     def __unicode__(self):
         return self.user.username
-    #answers = models.OneToOneField(Answer)
+    answers = models.OneToOneField(Answer)
 
+class Answer(models.Model):
+    #no index, se algo daqui for null, só desconsiderar o campo na hora de dividir pelo total
+    #ja se algo do cão for null, talvez somar 0.5 no total pra dividir (pra representar que
+    #null é "mais fraco" que "no", ou seja, vai diminuir menos o indice
+    apartment = models.NullBooleanField() #mora em apartamento/problema de espaço?
+    backyard = models.NullBooleanField() #tem um quintal de tamanho decente?
+    insidehouse = models.NullBooleanField() #prefere cães que vão ficar dentro de casa?
+    smalldogs = models.NullBooleanField() #prefere cachorros pequenos?
+    manyguests = models.NullBooleanField() #vai receber muitas visitas?
+    priorexperience = models.NullBooleanField() #experiencia anterior?
+    time = models.NullBooleanField() #tem tempo disponivel? para grooming e tal /pelos grandes
+    training = models.NullBooleanField() #pretende treinar o cão?
+    physicallyactive = models.NullBooleanField() #é ativo fisicamente?
+    calmness = models.NullBooleanField() #é calmo? Para cuidar de cães que dão trabalho
+    likebarks = models.NullBooleanField() #não liga para cães que gostam de latir?
+    likeaggressiveness = models.NullBooleanField() #não liga pra cães mais agressivos?
+    likewalking = models.NullBooleanField() #gosta de passear com o cão?
+    havemoney = models.NullBooleanField() #não liga de gastar com o cão?
+    allergy = models.NullBooleanField() #tem problemas com pelos?
+    smallanimals = models.NullBooleanField() #tem outros animais pequenos?
+    otheranimals = models.NullBooleanField() #tem outros animais
+    kids = models.NullBooleanField()  #tem crianças?
 
 class Dog(models.Model):
     name = models.CharField(max_length=50)
@@ -110,9 +132,30 @@ class Dog(models.Model):
     adopted_by = models.ForeignKey(Person, related_name="adopted_by", null=True) # quem adotou
     in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by") # quem pos para adocao
     in_adoption_process = models.BooleanField() # em estado de adocao
+    characteristics= models.OneToOneField(Characteristics)
 
     def __unicode__(self):
         return self.name
+
+class Characteristics(models.Model):
+    active = models.NullBooleanField() #muito ativo
+    calm = models.NullBooleanField() #bem calmo
+    barker = models.NullBooleanField() #gosta de latir
+    longhair = models.NullBooleanField() #tem muitos cabelos
+    needexercise = models.NullBooleanField() #precisa/gosta de exercícios
+    stubborn = models.NullBooleanField() #teimoso/precisa de treino
+    #young = models.NullBooleanField() #bom setar dependendo da data
+    expensive = models.NullBooleanField() #precisa de comida cara/atenção
+    medicalcare = models.NullBooleanField() #tem algum problema e precisa de cuidados médicos
+    aggressive = models.NullBooleanField() #é agressivo
+    jealousanimal = models.NullBooleanField() #tem ciumes de outros cães/animais
+    jealousperson = models.NullBooleanField()  #ciumes de pessoas
+    hunter = models.NullBooleanField() #gosta de caçar outros animais
+    likekids = models.NullBooleanField() #gosta de crianças
+    hairfall = models.NullBooleanField() #os pelos caem
+    likeoutside = models.NullBooleanField() #gosta de ar livre
+    likeinside = models.NullBooleanField() #gosta de ficar dentro do apartamento
+
 
 class MessageThread(models.Model):
     subject = models.CharField(max_length=50)
