@@ -7,6 +7,8 @@ urlpatterns = patterns('',
  url(r'^$', dogs_views.index, name='index'),
  url(r'^persons/create$',
    persons_views.create, name='create-person'),
+  url(r'^persons/answer$',
+   persons_views.createanswers, name='create-answer'),
  url(r'^persons/edit/$',
    persons_views.create, name='edit-person'),
 

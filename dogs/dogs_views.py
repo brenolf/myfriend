@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.core import serializers
 from django.shortcuts import render_to_response
 import json
+from django.contrib import messages
 
 
 from dogs.models import *
@@ -110,6 +111,15 @@ def create(request):  # depois mudar pra ficar restful
 	if request.method == 'POST':  # If the form has been submitted...
 		# A form bound to the POST data
 		form_dog = DogForm(request.POST, request.FILES)
+		form_characteristics = CharacteristicsForm(request.POST, request.FILES)
+		if form_characteristics.is_valid():
+			form_characteristics.save()
+		else:
+			return render(request, 'dogs/newdog.html', {
+				'form_dog': form_dog,
+				'form_characteristics': form_characteristics,
+				'error': True
+			})
 		if form_dog.is_valid():
 			dog = form_dog.save(commit=False)
 			x = request.user
@@ -118,17 +128,20 @@ def create(request):  # depois mudar pra ficar restful
 		else:
 			return render(request, 'dogs/newdog.html', {
 				'form_dog': form_dog,
+				'form_characteristics': form_characteristics,
 				'error': True
 			})
-		return HttpResponseRedirect('/')  # Redirect after POST
+		return HttpResponseRedirect('/search')  # Redirect after POST
 	else:
 		form_dog = DogForm()  # An unbound form
+		form_characteristics = CharacteristicsForm()
 
 	return render(request, 'dogs/newdog.html', {
 		'form_dog': form_dog,
+		'form_characteristics': form_characteristics,
 	})
 
-
+#pegar caracteristicas do dog_id tambem
 @login_required(login_url='/accounts/login/')
 def edit(request, dog_id):  # depois mudar pra ficar restful
 	dog = get_object_or_404(Dog, pk=dog_id)
@@ -140,6 +153,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		if form_dog.is_valid():
 			dog = form_dog.save(commit=False)
 			dog.id = dog_id
+			dog.characteristics = Characteristics()
 			x = request.user
 			dog.in_adoption_by = request.user.person
 			dog.save()
@@ -151,10 +165,38 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		return HttpResponseRedirect('/')  # Redirect after POST
 	else:
 		# An unbound form
-		form_dog = DogForm(instance=get_object_or_404(Dog, pk=dog_id))
+		dog = get_object_or_404(Dog, pk=dog_id)
+		form_dog = DogForm(instance=dog)
 
 	return render(request, 'dogs/newdog.html', {
 		'form_dog': form_dog,
+	})
+
+@login_required(login_url='/accounts/login/')
+def edit(request, dog_id):  # depois mudar pra ficar restful
+	dog = get_object_or_404(Dog, pk=dog_id)
+	if dog.in_adoption_by != request.user.person:
+		return render(request, 'index.html', {})
+	if request.method == 'POST':  # If the form has been submitted...
+		# A form bound to the POST data
+		form_characteristics = CharacteristicsForm(request.POST, request.FILES)
+		if form_characteristics.is_valid():
+			c = form_characteristics.save()
+			dog.characteristics=c
+			dog.save()
+		else:
+			return render(request, 'dogs/newdog.html', {
+				'form_characteristics': form_characteristics,
+				'error': True
+			})
+		return HttpResponseRedirect('/')  # Redirect after POST
+	else:
+		# An unbound form
+		dog = get_object_or_404(Dog, pk=dog_id)
+		form_characteristics = CharacteristicsForm(instance=dog.characteristics)
+
+	return render(request, 'dogs/newdog.html', {
+		'form_characteristics': form_characteristics,
 	})
 
 
@@ -276,7 +318,10 @@ def modified_jaccard(a, c, size): #answer and characteristics
 	total, equal = compare_jaccard(apartment, likeinside, total, equal)
 	total, equal = compare_jaccard(backyard, likeoutside, total, equal)
 	total, equal = compare_jaccard(insidehouse, likeinside, total, equal)
-	if size='xs' or size='s' then size=True else size=False
+	if size=='xs' or size=='s':
+		size=True
+	else:
+		size=False
 	total, equal = compare_jaccard(smalldogs, size, total, equal)
 	total, equal = compare_jaccard(not manyguests, jealousperson, total, equal)
 	#total, equal = compare_jaccard(priorexperience, , total, equal)

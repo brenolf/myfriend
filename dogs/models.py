@@ -9,6 +9,10 @@ from django.forms import ModelForm
 # tentar achar lugar melhor
 from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
+from django.contrib import messages
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
 
 @receiver(user_signed_up)
@@ -18,8 +22,19 @@ def after_sign_up(sender, **kwargs):
     p = Person()
     user.person = p
     user.save()
+    if 'first_name' in request:
+        p.first_name = request['first_name']
+    if 'last_name' in request:
+        p.last_name = request['last_name']
     p.user = user
+    a = Answer()
+    a.save()
+    p.answers=a
     p.save()
+    user.save()
+    print 'passou aquiiiiii'
+    messages.warning(request, "Você pode completar o cadastro agora, ou mais tarde acessando sua página de usuário e clicando em editar")
+    return HttpResponseRedirect('persons/create.html')
 
 
 class Address(models.Model):
@@ -67,19 +82,6 @@ class Breed(models.Model):
         return self.breed_name
     # aqui precisa ser limitado
 
-
-class Person(models.Model):
-    user = models.OneToOneField(User)
-    birth_date = models.DateField(null=True)
-    GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
-    gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True)
-    address = models.ForeignKey(Address, null=True)
-    tel = models.CharField(max_length=20, null=True)
-
-    def __unicode__(self):
-        return self.user.username
-    answers = models.OneToOneField(Answer)
-
 class Answer(models.Model):
     #no index, se algo daqui for null, só desconsiderar o campo na hora de dividir pelo total
     #ja se algo do cão for null, talvez somar 0.5 no total pra dividir (pra representar que
@@ -102,6 +104,40 @@ class Answer(models.Model):
     smallanimals = models.NullBooleanField() #tem outros animais pequenos?
     otheranimals = models.NullBooleanField() #tem outros animais
     kids = models.NullBooleanField()  #tem crianças?
+
+class Person(models.Model):
+    user = models.OneToOneField(User)
+    birth_date = models.DateField(null=True)
+    GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
+    gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True)
+    address = models.ForeignKey(Address, null=True)
+    tel = models.CharField(max_length=20, null=True)
+
+    def __unicode__(self):
+        return self.user.username
+    answers = models.OneToOneField(Answer, default=Answer(), null=True)
+
+
+
+class Characteristics(models.Model):
+    active = models.NullBooleanField() #muito ativo
+    calm = models.NullBooleanField() #bem calmo
+    barker = models.NullBooleanField() #gosta de latir
+    longhair = models.NullBooleanField() #tem muitos cabelos
+    needexercise = models.NullBooleanField() #precisa/gosta de exercícios
+    stubborn = models.NullBooleanField() #teimoso/precisa de treino
+    #young = models.NullBooleanField() #bom setar dependendo da data
+    expensive = models.NullBooleanField() #precisa de comida cara/atenção
+    medicalcare = models.NullBooleanField() #tem algum problema e precisa de cuidados médicos
+    aggressive = models.NullBooleanField() #é agressivo
+    jealousanimal = models.NullBooleanField() #tem ciumes de outros cães/animais
+    jealousperson = models.NullBooleanField()  #ciumes de pessoas
+    hunter = models.NullBooleanField() #gosta de caçar outros animais
+    likekids = models.NullBooleanField() #gosta de crianças
+    hairfall = models.NullBooleanField() #os pelos caem
+    likeoutside = models.NullBooleanField() #gosta de ar livre
+    likeinside = models.NullBooleanField() #gosta de ficar dentro do apartamento
+
 
 class Dog(models.Model):
     name = models.CharField(max_length=50)
@@ -132,29 +168,10 @@ class Dog(models.Model):
     adopted_by = models.ForeignKey(Person, related_name="adopted_by", null=True) # quem adotou
     in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by") # quem pos para adocao
     in_adoption_process = models.BooleanField() # em estado de adocao
-    characteristics= models.OneToOneField(Characteristics)
+    characteristics= models.OneToOneField(Characteristics, default=Characteristics(), null=True)
 
     def __unicode__(self):
         return self.name
-
-class Characteristics(models.Model):
-    active = models.NullBooleanField() #muito ativo
-    calm = models.NullBooleanField() #bem calmo
-    barker = models.NullBooleanField() #gosta de latir
-    longhair = models.NullBooleanField() #tem muitos cabelos
-    needexercise = models.NullBooleanField() #precisa/gosta de exercícios
-    stubborn = models.NullBooleanField() #teimoso/precisa de treino
-    #young = models.NullBooleanField() #bom setar dependendo da data
-    expensive = models.NullBooleanField() #precisa de comida cara/atenção
-    medicalcare = models.NullBooleanField() #tem algum problema e precisa de cuidados médicos
-    aggressive = models.NullBooleanField() #é agressivo
-    jealousanimal = models.NullBooleanField() #tem ciumes de outros cães/animais
-    jealousperson = models.NullBooleanField()  #ciumes de pessoas
-    hunter = models.NullBooleanField() #gosta de caçar outros animais
-    likekids = models.NullBooleanField() #gosta de crianças
-    hairfall = models.NullBooleanField() #os pelos caem
-    likeoutside = models.NullBooleanField() #gosta de ar livre
-    likeinside = models.NullBooleanField() #gosta de ficar dentro do apartamento
 
 
 class MessageThread(models.Model):
@@ -203,6 +220,16 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name']
+
+class AnswerForm(ModelForm):
+
+    class Meta:
+        model = Answer
+
+class CharacteristicsForm(ModelForm):
+
+    class Meta:
+        model = Characteristics
 
 
 

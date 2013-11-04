@@ -6,6 +6,30 @@ from django.contrib.auth.decorators import login_required
 
 from dogs.models import *
 from django.contrib.auth.models import User
+from django.contrib import messages
+
+@login_required(login_url='/accounts/login/')
+def createanswers(request):
+    user = request.user
+    if request.method == 'POST':
+        form_answer = AnswerForm(request.POST)
+        if form_answer.is_valid():
+            a = form_answer.save()
+            user.person.answers = a
+            user.person.save()
+        else:
+            return render(request, 'persons/createanswers.html', {
+                    'form_answer': form_answer,
+                    'user': request.user,
+                })
+        return HttpResponseRedirect('/')
+    form_answer = AnswerForm(instance=request.user.person.answers)
+    return render(request, 'persons/createanswers.html', {
+                'form_answer': form_answer,
+                'user': request.user,
+            })
+
+
 
 
 @login_required(login_url='/accounts/login/')
