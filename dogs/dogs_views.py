@@ -70,7 +70,8 @@ def detail(request, dog_id):
 	letter = 'o' if dog.gender == 'M' else 'a'
 	
 	available = (not dog.adopted and not dog.in_adoption_process) and (request.user.is_authenticated() and dog.in_adoption_by.user.id != request.user.id) 
-	char = CharacteristicsForm(data=model_to_dict(c))
+	if c != None:
+		c = CharacteristicsForm(data=model_to_dict(c))
 
 	return render(request, 'dogs/dog.html', {'dog': dog,
 	 'user': request.user, 
@@ -78,7 +79,7 @@ def detail(request, dog_id):
 	 'size': size,
 	 'genderLetter': letter, 
 	 'dogIsAvailable': available, 
-	 'char': char})
+	 'char': c})
 
 
 def search(request):
