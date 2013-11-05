@@ -49,6 +49,7 @@ def create(request):  # depois mudar pra ficar restful
                 person = form_person.save(commit=False)
                 person.address = address
                 person.id = user.person.id
+                person.answers = user.person.answers
                 user.person = person
                 person.save()
                 user.save()

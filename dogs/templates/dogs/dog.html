@@ -53,6 +53,16 @@
 
 				</div>
 
+				<h1>Características</h1>
+				<div class="col-sm-9 tal">
+					{% for f in char %}
+						<div><strong>{{f.label}} </strong> {% if f.data == True %} Sim {% elif f.data == False %} Não {% else %} Desconhecido {% endif %}</div>
+
+
+					{% endfor %}
+
+				</div>
+
 			</div>
 
 		</div>

@@ -39,11 +39,11 @@ def after_sign_up(sender, **kwargs):
 
 class Address(models.Model):
     # precisa ter telefone de contato também
-    street = models.CharField(max_length=200)
-    number = models.CharField(max_length=20)
-    apartment = models.CharField(max_length=50, null=True)
-    neighbourhood = models.CharField(max_length=100)
-    city = models.CharField(max_length=50)
+    street = models.CharField(max_length=200, null=True, blank=True)
+    number = models.CharField(max_length=20, null=True, blank=True)
+    apartment = models.CharField(max_length=50, null=True, blank=True)
+    neighbourhood = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
     STATE_CHOICES = (("AC", "Acre"),
                     ("AL", "Alagoas"),
                     ("AP", "Amapá"),
@@ -71,8 +71,8 @@ class Address(models.Model):
                     ("SP", "São Paulo"),
                     ("SE", "Sergipe"),
                     ("TO", "Tocantins"))
-    state = models.CharField(max_length=2, choices=STATE_CHOICES)
-    postal_code = models.CharField(max_length=9)  # colocar validação
+    state = models.CharField(max_length=2, choices=STATE_CHOICES, null=True, blank=True)
+    postal_code = models.CharField(max_length=9, null=True, blank=True)  # colocar validação
 
 
 class Breed(models.Model):
@@ -86,57 +86,57 @@ class Answer(models.Model):
     #no index, se algo daqui for null, só desconsiderar o campo na hora de dividir pelo total
     #ja se algo do cão for null, talvez somar 0.5 no total pra dividir (pra representar que
     #null é "mais fraco" que "no", ou seja, vai diminuir menos o indice
-    apartment = models.NullBooleanField() #mora em apartamento/problema de espaço?
-    backyard = models.NullBooleanField() #tem um quintal de tamanho decente?
-    insidehouse = models.NullBooleanField() #prefere cães que vão ficar dentro de casa?
-    smalldogs = models.NullBooleanField() #prefere cachorros pequenos?
-    manyguests = models.NullBooleanField() #vai receber muitas visitas?
-    priorexperience = models.NullBooleanField() #experiencia anterior?
-    time = models.NullBooleanField() #tem tempo disponivel? para grooming e tal /pelos grandes
-    training = models.NullBooleanField() #pretende treinar o cão?
-    physicallyactive = models.NullBooleanField() #é ativo fisicamente?
-    calmness = models.NullBooleanField() #é calmo? Para cuidar de cães que dão trabalho
-    likebarks = models.NullBooleanField() #não liga para cães que gostam de latir?
-    likeaggressiveness = models.NullBooleanField() #não liga pra cães mais agressivos?
-    likewalking = models.NullBooleanField() #gosta de passear com o cão?
-    havemoney = models.NullBooleanField() #não liga de gastar com o cão?
-    allergy = models.NullBooleanField() #tem problemas com pelos?
-    smallanimals = models.NullBooleanField() #tem outros animais pequenos?
-    otheranimals = models.NullBooleanField() #tem outros animais
-    kids = models.NullBooleanField()  #tem crianças?
+    apartment = models.NullBooleanField(verbose_name='Mora em apartamento, ou tem problema com espaço?') #mora em apartamento/problema de espaço?
+    backyard = models.NullBooleanField(verbose_name='Tem um quintal onde o cão possa ficar?') #tem um quintal de tamanho decente?
+    insidehouse = models.NullBooleanField(verbose_name='Permite que o cão fique dentro de sua casa?') #prefere cães que vão ficar dentro de casa?
+    smalldogs = models.NullBooleanField(verbose_name='Prefere cães pequenos?') #prefere cachorros pequenos?
+    manyguests = models.NullBooleanField(verbose_name='Recebe muitas visitas?') #vai receber muitas visitas?
+    priorexperience = models.NullBooleanField(verbose_name='Tem experiência anterior?') #experiencia anterior?
+    time = models.NullBooleanField(verbose_name='Tem tempo livre para cuidar do cão?') #tem tempo disponivel? para grooming e tal /pelos grandes
+    training = models.NullBooleanField(verbose_name='Pretende treinar o cão?') #pretende treinar o cão?
+    physicallyactive = models.NullBooleanField(verbose_name='Você é fisicamente ativo? Gosta de fazer exercícios?') #é ativo fisicamente?
+    calmness = models.NullBooleanField(verbose_name='Você é calmo? Tem paciência?') #é calmo? Para cuidar de cães que dão trabalho
+    likebarks = models.NullBooleanField(verbose_name='Você gosta de cães que gostam de latir?') #não liga para cães que gostam de latir?
+    likeaggressiveness = models.NullBooleanField(verbose_name='Você é indiferente ou gosta de ter cães mais agressivos?') #não liga pra cães mais agressivos?
+    likewalking = models.NullBooleanField(verbose_name='Você gosta de passear? Passearia com o cão?') #gosta de passear com o cão?
+    havemoney = models.NullBooleanField(verbose_name='Você tem dinheiro para gastar com o cão?') #não liga de gastar com o cão?
+    allergy = models.NullBooleanField(verbose_name='Você tem alergia ou outros problemas com pelos?') #tem problemas com pelos?
+    smallanimals = models.NullBooleanField(verbose_name='Você tem animais pequenos?') #tem outros animais pequenos?
+    otheranimals = models.NullBooleanField(verbose_name='Você tem outros cães?') #tem outros animais
+    kids = models.NullBooleanField(verbose_name='Você tem crianças na sua casa?')  #tem crianças?
 
 class Person(models.Model):
     user = models.OneToOneField(User)
-    birth_date = models.DateField(null=True)
+    birth_date = models.DateField(null=True, blank=True)
     GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
-    gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True)
-    address = models.ForeignKey(Address, null=True)
-    tel = models.CharField(max_length=20, null=True)
+    gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True, blank=True)
+    address = models.ForeignKey(Address, null=True, blank=True)
+    tel = models.CharField(max_length=20, null=True, blank=True)
 
     def __unicode__(self):
         return self.user.username
-    answers = models.OneToOneField(Answer, default=Answer(), null=True)
+    answers = models.OneToOneField(Answer, default=Answer(), null=True, blank=True)
 
 
 
 class Characteristics(models.Model):
-    active = models.NullBooleanField() #muito ativo
-    calm = models.NullBooleanField() #bem calmo
-    barker = models.NullBooleanField() #gosta de latir
-    longhair = models.NullBooleanField() #tem muitos cabelos
-    needexercise = models.NullBooleanField() #precisa/gosta de exercícios
-    stubborn = models.NullBooleanField() #teimoso/precisa de treino
-    #young = models.NullBooleanField() #bom setar dependendo da data
-    expensive = models.NullBooleanField() #precisa de comida cara/atenção
-    medicalcare = models.NullBooleanField() #tem algum problema e precisa de cuidados médicos
-    aggressive = models.NullBooleanField() #é agressivo
-    jealousanimal = models.NullBooleanField() #tem ciumes de outros cães/animais
-    jealousperson = models.NullBooleanField()  #ciumes de pessoas
-    hunter = models.NullBooleanField() #gosta de caçar outros animais
-    likekids = models.NullBooleanField() #gosta de crianças
-    hairfall = models.NullBooleanField() #os pelos caem
-    likeoutside = models.NullBooleanField() #gosta de ar livre
-    likeinside = models.NullBooleanField() #gosta de ficar dentro do apartamento
+    active = models.NullBooleanField(verbose_name='O cão é ativo fisicamente?') #muito ativo
+    calm = models.NullBooleanField(verbose_name='O cão é calmo?') #bem calmo
+    barker = models.NullBooleanField(verbose_name='O cão gosta de latir?') #gosta de latir
+    longhair = models.NullBooleanField(verbose_name='O cão tem pelos longos?') #tem muitos cabelos
+    needexercise = models.NullBooleanField(verbose_name='O cão precisa se exercitar constantemente?') #precisa/gosta de exercícios
+    stubborn = models.NullBooleanField(verbose_name='O cão é teimoso?') #teimoso/precisa de treino
+    #young = models.NullBooleanField(verbose_name='') #bom setar dependendo da data
+    expensive = models.NullBooleanField(verbose_name='O cão custa muito financeiramente para cuidar?') #precisa de comida cara/atenção
+    medicalcare = models.NullBooleanField(verbose_name='O cão tem algum problema de saúde que precisa de cuidado constante?') #tem algum problema e precisa de cuidados médicos
+    aggressive = models.NullBooleanField(verbose_name='O cão é agressivo, ou tem histórico de agressividade?') #é agressivo
+    jealousanimal = models.NullBooleanField(verbose_name='O cão tem ciúmes de outros animais?') #tem ciumes de outros cães/animais
+    jealousperson = models.NullBooleanField(verbose_name='O cão tem ciúmes de pessoas?')  #ciumes de pessoas
+    hunter = models.NullBooleanField(verbose_name='O cão gosta de caçar outros animais?') #gosta de caçar outros animais
+    likekids = models.NullBooleanField(verbose_name='O cão gosta de crianças?') #gosta de crianças
+    hairfall = models.NullBooleanField(verbose_name='O cão solta muitos pelos?') #os pelos caem
+    likeoutside = models.NullBooleanField(verbose_name='O cão prefere ar livre?') #gosta de ar livre
+    likeinside = models.NullBooleanField(verbose_name='O cão gosta de ficar dentro de casa?') #gosta de ficar dentro do apartamento
 
 
 class Dog(models.Model):
@@ -163,12 +163,12 @@ class Dog(models.Model):
     # e não à pessoa. Se quiser ser associada a ela, é só
     # colocar que o endereço do cachorro é o mesmo que o dela, e eles vão
     # ficar sincronizados
-    photo = models.ImageField(null=True, upload_to="dog_images/")
+    photo = models.ImageField(null=True, blank=True, upload_to="dog_images/")
     adopted = models.BooleanField() # ja foi adotado
-    adopted_by = models.ForeignKey(Person, related_name="adopted_by", null=True) # quem adotou
+    adopted_by = models.ForeignKey(Person, related_name="adopted_by", null=True, blank=True) # quem adotou
     in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by") # quem pos para adocao
     in_adoption_process = models.BooleanField() # em estado de adocao
-    characteristics= models.OneToOneField(Characteristics, default=Characteristics(), null=True)
+    characteristics= models.OneToOneField(Characteristics, default=Characteristics(), null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -178,7 +178,7 @@ class MessageThread(models.Model):
     subject = models.CharField(max_length=50)
     person1 = models.ForeignKey(Person,related_name="person1")
     person2 = models.ForeignKey(Person,related_name="person2")
-    related_dog = models.ForeignKey(Dog, related_name="related_dog", null=True)
+    related_dog = models.ForeignKey(Dog, related_name="related_dog", null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     closed = models.BooleanField()
 
@@ -199,14 +199,14 @@ class PersonForm(ModelForm):
 
     class Meta:
         model = Person
-        exclude = ['address', 'user']
+        exclude = ['address', 'user','answers']
 
 class DogForm(ModelForm):
 
     class Meta:
         model = Dog
         #photo = models.ImageField(upload_to = 'dog_images/', default = 'dog_images/None/no-img.jpg')
-        exclude = ['address', 'adopted', 'adopted_by', 'in_adoption_by', 'in_adoption_process']
+        exclude = ['address', 'adopted', 'adopted_by', 'in_adoption_by', 'in_adoption_process','characteristics']
 
 
 class AddressForm(ModelForm):

@@ -50,7 +50,7 @@
 
 			<div class="row tac">
 
-			
+				
 				{% for dog in dogs %}
 
 				<div class="col-sm-3">
@@ -61,10 +61,25 @@
 					{% else %}
 					<a href="{% url 'detail-dog' dog.id %}"><img src="{% static "img/logo.png" %}" alt="{{dog.name}}" title="{{dog.name}}" class="frame"/></a>
 					{% endif %} 
+
 					<div>{{dog.name}}</div>
 
 				</div>
 				{% endfor %}
+
+				{% if indexes %}
+				{% for index in indexes %}
+
+				<div class="col-sm-3">
+					
+					<div>{{index}}</div>
+
+				</div>
+				{% endfor %}
+
+
+				{% endif %}
+
 
 			</div>
 			{% comment %}
