@@ -82,6 +82,13 @@ def detail(request, dog_id):
 	available = (not dog.adopted and not dog.in_adoption_process) and (request.user.is_authenticated() and dog.in_adoption_by.user.id != request.user.id) 
 	if c != None:
 		c = CharacteristicsForm(data=model_to_dict(c))
+	jaccard = False
+	if request.user.is_authenticated():
+		jaccard = similarity_dog(request, dog)
+		if jaccard != -1:
+			jaccard=jaccard*100;
+			jaccard=int(jaccard)
+
 
 	return render(request, 'dogs/dog.html', {'dog': dog,
 	 'user': request.user, 
@@ -89,7 +96,8 @@ def detail(request, dog_id):
 	 'size': size,
 	 'genderLetter': letter, 
 	 'dogIsAvailable': available, 
-	 'char': c})
+	 'char': c,
+	 'jaccard': jaccard})
 
 
 def search(request):
@@ -340,6 +348,9 @@ def send_message(request):
 
 	return HttpResponse(json.dumps({'ok': response}), mimetype='text/javascript; charset=utf-8')
 
+def similarity_dog(request, dog):
+	answer = request.user.person.answers
+	return modified_jaccard(answer,dog.characteristics,dog.size)
 
 
 def similar_dogs(request):
