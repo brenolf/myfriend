@@ -75,6 +75,16 @@
 
 				<div class="form-group">
 					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_dog.abandoned.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Abandonado?</div>
+						<div class="col-sm-6">{{ form_dog.abandoned|attr:"class:form-control"}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
 						<div class="col-sm-12"><span class="badge">{{ form_dog.breed.errors }}</span></div>
 					</div>
 					<div class="row">

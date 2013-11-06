@@ -37,12 +37,22 @@
 				<tr>
 					<td><a href="{% url 'detail-dog' dog.id %}">{{dog.name}}</a></td>
 					<td>
-						{% if dog.adopted %}
-						<i class="icon icon-smile"></i> Adotado
-						{% elif dog.in_adoption_process %}
-						<i class="icon icon-comments"></i> Em processo de adoção
+						{% if dog.abandoned == False %}
+							{% if dog.adopted %}
+							<i class="icon icon-smile"></i> Adotado
+							{% elif dog.in_adoption_process %}
+							<i class="icon icon-comments"></i> Em processo de adoção
+							{% else %}
+							<i class="icon icon-heart"></i> Colocado para adoção
+							{% endif %}
 						{% else %}
-						<i class="icon icon-heart"></i> Colocado para adoção
+							{% if dog.adopted %}
+							<i class="icon icon-smile"></i> Encontrado!
+							{% elif dog.in_adoption_process %}
+							<i class="icon icon-comments"></i> Aparentemente encontrado
+							{% else %}
+							<i class="icon icon-heart"></i> Abandonado
+							{% endif %}
 						{% endif %}
 					</td>
 
@@ -51,19 +61,40 @@
 						<form name="adopt" action="" method="post">{% csrf_token %}
 
 							<div class="btn-group">
-								{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
+								{% if dog.abandoned == False %}
+									{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
 
-								<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de adoção</a>
+									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de adoção</a>
 
-								{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
+									{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
 
-								<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar adoção</a>
+									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar adoção</a>
 
-								{% elif not dog.adopted %}
+									{% elif not dog.adopted %}
 
-								<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
-								<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
-								<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
+									<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+									<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
+									<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
+									{% endif %}
+								{% else %}
+									{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
+
+									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de abandono</a>
+
+									{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
+
+									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar abandono</a>
+
+									{% elif not dog.adopted %}
+
+									<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+									<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
+									<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
+
+									{% elif dog.adopted and dog.adopted_by.user.id == user.id %}
+										<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="abadocao"><i class="icon icon-remove"></i> Colocar para adoção</button>
+
+									{% endif %}
 								{% endif %}
 							</div>
 

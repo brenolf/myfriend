@@ -27,6 +27,16 @@ def user(request):
 		d = Dog.objects.get(pk=dogid)
 		d.delete()
 
+	if request.method == 'POST' and 'abadocao' in request.POST:
+		dogid = request.POST['abadocao']
+		d = Dog.objects.get(pk=dogid)
+		d.in_adoption_by = request.user.person
+		d.in_adoption_process = False
+		d.abandoned = False
+		d.adopted = False
+		d.adopted_by = None
+		d.save()
+
 	return render(request, 'persons/user.html', context)
 
 
@@ -86,7 +96,7 @@ def search(request):
 	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET or request.GET['breed'] == '' or request.GET['size'] == '' or request.GET['color'] == '':
 		return render(request, 'dogs/search.html', {'breeds': Breed.objects.all()})
 
-	elif 'enviar' in request.GET and request.GET['enviar'] == 'personalidade':
+	elif 'personalidade' in request.GET:
 		if not request.user.is_authenticated():
 			return HttpResponseRedirect('/accounts/login/')
 		color = 'Todas'
@@ -106,6 +116,10 @@ def search(request):
 		
 	else:
 		dogs = Dog.objects.all().filter(adopted = False, in_adoption_process = False)
+		if 'abandonado' in request.GET:
+			dogs=dogs.filter(abandoned = True)
+		else:
+			dogs=dogs.filter(abandoned = False)
 		
 		if request.user.is_authenticated():
 			dogs = dogs.exclude(in_adoption_by = request.user.person)

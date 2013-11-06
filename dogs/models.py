@@ -140,15 +140,15 @@ class Characteristics(models.Model):
 
 
 class Dog(models.Model):
-    name = models.CharField(max_length=50)
-    birth_date = models.DateField('data de nascimento aproximada')
+    name = models.CharField(max_length=50, null=True)
+    birth_date = models.DateField('data de nascimento aproximada', null=True)
     # complementar
     SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"),
                     ("m", "Médio"), ("l", "Grande"), ("xl", "Muito Grande"))
     size = models.CharField(max_length=2, choices=SIZE_CHOICES)
     description = models.TextField()
     GENDER_CHOICES = (("M", "Macho"), ("F", "Fêmea"))
-    gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True)
     COLOR_CHOICES = (
         ("bl", "Preto"),
         ("ma", "Marrom"),
@@ -158,7 +158,7 @@ class Dog(models.Model):
         ("bw", "Preto/Branco"),
     )
     color = models.CharField(max_length=50, choices=COLOR_CHOICES)
-    breed = models.ForeignKey(Breed)
+    breed = models.ForeignKey(Breed, null=True)
     # A ideia é que um cachorro seja associado a um endereço da pessoa,
     # e não à pessoa. Se quiser ser associada a ela, é só
     # colocar que o endereço do cachorro é o mesmo que o dela, e eles vão
@@ -169,6 +169,7 @@ class Dog(models.Model):
     in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by") # quem pos para adocao
     in_adoption_process = models.BooleanField() # em estado de adocao
     characteristics= models.OneToOneField(Characteristics, default=Characteristics(), null=True, blank=True)
+    abandoned = models.BooleanField()
 
     def __unicode__(self):
         return self.name
@@ -207,6 +208,7 @@ class DogForm(ModelForm):
         model = Dog
         #photo = models.ImageField(upload_to = 'dog_images/', default = 'dog_images/None/no-img.jpg')
         exclude = ['address', 'adopted', 'adopted_by', 'in_adoption_by', 'in_adoption_process','characteristics']
+
 
 
 class AddressForm(ModelForm):

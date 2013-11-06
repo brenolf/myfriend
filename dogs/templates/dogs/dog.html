@@ -24,19 +24,31 @@
 
 					<div class="row tac">
 						<div class="col-sm-12">
-
-							{% if dogIsAvailable %}
-							<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
-							{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
-							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de adoção</a>
-							{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
-							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar adoção</a>
+							{% if dog.abandoned == False %}
+								{% if dogIsAvailable %}
+								<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
+								{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de adoção</a>
+								{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar adoção</a>
+								{% endif %}
+							{% else %}
+								{% if dogIsAvailable %}
+								<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Achei!</a>
+								{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de abandonado</a>
+								{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar abandonamento</a>
+								{% endif %}
 							{% endif %}
 						</div>
 					</div>
 
 				</div>
 				<div class="col-sm-9 tal">
+					{% if dog.abandoned %}
+						<div><strong>Este cão está abandonado!</strong></div>
+					{% endif %}
 					<div><strong>Nome: </strong> {{dog.name}}</div>
 					<div><strong>Sexo: </strong> <span class="gender {{dog.gender}}">{% ifequal dog.gender "M" %}Masculino &#9794; {% else %}Feminino &#9792;{% endifequal %}</span></div>
 					<div><strong>Cor: </strong> {{color}}</div>
