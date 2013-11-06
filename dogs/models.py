@@ -116,6 +116,7 @@ class Person(models.Model):
     def __unicode__(self):
         return self.user.username
     answers = models.OneToOneField(Answer, default=Answer(), null=True, blank=True)
+    emaildog = models.CharField(max_length=3,null=True, blank=True)
 
 
 

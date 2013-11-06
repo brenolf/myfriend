@@ -49,6 +49,16 @@
 
 				<div class="form-group">
 					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ form_person.emaildog.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Se um cão com alto grau de compatibilidade for cadastrado, deseja receber email? Se sim, coloque a % de compatibilidade abaixo:</div>
+						<div class="col-sm-6">{{ form_person.emaildog|attr:"class:form-control"|attr:"placeholder:Numero"}}</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
 						<div class="col-sm-12"><span class="badge">{{ form_person.gender.errors }}</span></div>
 					</div>
 					<div class="row">

@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import *
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -9,9 +12,11 @@ from django.core import serializers
 from django.shortcuts import render_to_response
 import json
 from django.contrib import messages
+from django.core.mail import send_mail
 
 
 from dogs.models import *
+from allauth.account.models import *
 
 # python manage.py schemamigration dogs --auto
 # python manage.py migrate dogs
@@ -187,6 +192,7 @@ def create(request):  # depois mudar pra ficar restful
 			dog.characteristics.save()
 			dog.save()
 			print 'salvo! id '+str(dog.id)
+			sendemails(request,dog)
 			return HttpResponseRedirect('/dogs/'+str(dog.id)+"/") 
 		else:
 			print "erro2"
@@ -349,7 +355,10 @@ def send_message(request):
 	return HttpResponse(json.dumps({'ok': response}), mimetype='text/javascript; charset=utf-8')
 
 def similarity_dog(request, dog):
-	answer = request.user.person.answers
+	return similarity_doguser(request.user, dog)
+
+def similarity_doguser(user, dog):
+	answer = user.person.answers
 	return modified_jaccard(answer,dog.characteristics,dog.size)
 
 
@@ -410,3 +419,25 @@ def modified_jaccard(a, c, size): #answer and characteristics
 	total, equal = compare_jaccard(a.kids, c.likekids, total, equal)
 	print "total: ",total, " equal: ",equal
 	return equal/float(total)
+
+
+def sendemails(request, dog):
+	print 'entrou send'
+	users = User.objects.all()
+	emails=[]
+	for u in users:
+		try:
+			if u.person.emaildog != None:
+				s=similarity_doguser(u,dog)*100
+				print s,' x ',u.person.emaildog
+				if s>=int(u.person.emaildog):
+					print 'aqui2'
+					e=EmailAddress.objects.get(user=u)
+					if e.verified:
+						emails.append(e.email)
+						print 'vai mandar email'
+		except:
+			print 'except'
+					
+	send_mail('Novo cão similar a você!', 'Olá! Temos um cão similar a você em ' + request.build_absolute_uri('/dogs/'+str(dog.id)+'/'),
+		'myfriend.teste@gmail.com',	emails, fail_silently=True)
