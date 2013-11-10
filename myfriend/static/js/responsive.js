@@ -2,20 +2,10 @@ function windowResponsive(){
 	var isHome = $('#main_video').length !== 0;
 	var W = $(window).width();
 	var maxW = isHome ? 870 : 645;
-
-	if(isHome){
-		if(W < 1010){
-			$('section.red').hide();
-		} else {
-			$('section.red').show();	
-		}
-	}
-
+	
 	if(W < maxW){
 		$('header ul').hide();
 		$('header select').show();
-		$('header .static_bg').show();
-		$('header video').hide();
 		$('footer ul').hide();
 
 		$('footer ul').hide();
@@ -29,8 +19,6 @@ function windowResponsive(){
 	} else {
 		$('header ul').show();
 		$('header select').hide();
-		$('header .static_bg').hide();
-		$('header video').show();
 
 		$('footer ul').show();
 		$('footer div:first-child').css({marginTop: 0});
