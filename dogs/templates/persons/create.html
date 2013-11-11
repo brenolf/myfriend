@@ -10,7 +10,9 @@
 	<div class="row">
 		<div class="col-sm-12">
 
-			<a href="{% url 'create-answer' %}"><h1>Realizar questionário de personalidade</h1></a>
+			<h1>Sua personalidade</h1>
+			<i class="hr"></i>
+			<div class="tac" style="margin-bottom: 30px;"><a class="btn btn-primary" href="{% url 'create-answer' %}"><i class="icon icon-user"></i> Fazer para questionário de personalidade</a></div>
 
 			<h1>Seus dados</h1>
 			<i class="hr"></i>
@@ -52,8 +54,8 @@
 						<div class="col-sm-12"><span class="badge">{{ form_person.emaildog.errors }}</span></div>
 					</div>
 					<div class="row">
-						<div class="col-sm-6">Se um cão com alto grau de compatibilidade for cadastrado, deseja receber email? Se sim, coloque a % de compatibilidade abaixo:</div>
-						<div class="col-sm-6">{{ form_person.emaildog|attr:"class:form-control"|attr:"placeholder:Numero"}}</div>
+						<div class="col-sm-6">Qual a porcentagem de semelhança entre você e um cão que você quer receber notificações?</div>
+						<div class="col-sm-6">{{ form_person.emaildog|attr:"class:form-control"|attr:"placeholder:Numero"|attr:"type:number"}}</div>
 					</div>
 				</div>
 

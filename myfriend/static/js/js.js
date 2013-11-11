@@ -65,6 +65,15 @@ if(adoptionButton.length !== 0){
 	});
 }
 
+var btnewdog_c = $('#btnewdog_c');
+if(btnewdog_c.length !== 0){
+	btnewdog_c.click(function(){
+		$('#newdog_c').toggle();
+		$('#btnewdog_c i').toggleClass('icon-caret-down');
+		$('#btnewdog_c i').toggleClass('icon-caret-up');
+	});
+}
+
 var process = $('#processModal');
 if(process.length !== 0){
 	window.dog = null;
