@@ -192,12 +192,12 @@ class Message(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 class Testimonial(models.Model):
-    dog = models.ForeignKey(Dog, related_name="dog")
-    adopter = models.ForeignKey(Person,related_name="adopter", null=True, blank=True)
-    giver = models.ForeignKey(Person,related_name="giver", null=True, blank=True)
-    title = models.TextField(max_length=50)
-    content = models.TextField(max_length=500)
-    date = models.DateTimeField(auto_now_add=True)
+    dog = models.ForeignKey(Dog, related_name="dog",verbose_name='Cão')
+    adopter = models.ForeignKey(Person,related_name="adopter", null=True, blank=True,verbose_name='Adotador')
+    giver = models.ForeignKey(Person,related_name="giver", null=True, blank=True,verbose_name='Doador')
+    title = models.TextField(max_length=50,verbose_name='Título')
+    content = models.TextField(max_length=500,verbose_name='Sua história')
+    date = models.DateTimeField(auto_now_add=True,verbose_name='Data')
 
 class MessageForm(ModelForm):
 
