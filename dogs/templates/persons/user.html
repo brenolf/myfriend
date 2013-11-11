@@ -105,6 +105,34 @@
 
 			</table>
 
+
+			<h1>Suas histórias</h1>
+			<i class="hr"></i>
+
+			<table class="table table-hover table-testimonials">
+					<tr class="active">
+						<th>Data do encontro</th>
+						<th>Dono</th>
+						<th>Cão</th>
+						<th>Editar</th>
+						<th>Remover</th>
+					</tr>
+					{% for t in testimonials %}
+					<tr data-id=""> 
+						<td>{{t.date}}</td>
+						<td>{{t.adopter}}</td>
+						<td>{{t.dog.name}}</td>
+						<td><a href="{% url 'edit-testimonial' t.id %}" class="btn btn-default"><i class="icon icon-external-link"></i> Editar</a></td>
+						<td>
+							<form name="removetest" action="" method="post">{% csrf_token %}
+								<button  class="btn btn-danger" type="submit" value="{{t.id}}" name="removet"><i class="icon icon-remove"></i> Excluir</button>
+							</form>
+						</td>
+					</tr>
+					{% endfor %}
+
+				</table>
+
 		</div>
 
 	</div>

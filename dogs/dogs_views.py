@@ -25,11 +25,17 @@ from allauth.account.models import *
 @login_required(login_url='/accounts/login/')
 def user(request):
 	dogs = request.user.person.in_adoption_by.all().order_by('name') | request.user.person.adopted_by.all().order_by('name')
+	testimonials = request.user.person.adopter.all()
 
-	context = {'user': request.user, 'dogs': dogs}
+	context = {'user': request.user, 'dogs': dogs, 'testimonials': testimonials}
 	if request.method == 'POST' and 'remove' in request.POST:
 		dogid = request.POST['remove']
 		d = Dog.objects.get(pk=dogid)
+		d.delete()
+
+	if request.method == 'POST' and 'removet' in request.POST:
+		tid = request.POST['removet']
+		d = Testimonial.objects.get(pk=tid)
 		d.delete()
 
 	if request.method == 'POST' and 'abadocao' in request.POST:
@@ -53,6 +59,11 @@ def index(request):
 	dogs = Dog.objects.all()[:10]
 	context = {'dogs': dogs}
 	return render(request, 'dogs/index.html', context)
+
+def detailtestimonial(request, t_id):
+	t = get_object_or_404(Testimonial, pk=t_id)
+	return render(request, 'dogs/testimonial.html', {'t':t})
+
 
 
 def detail(request, dog_id):
@@ -103,6 +114,12 @@ def detail(request, dog_id):
 	 'dogIsAvailable': available, 
 	 'char': c,
 	 'jaccard': jaccard})
+
+
+def searchTestimonial(request):
+	x=Testimonial.objects.all()
+	context={'testimonials':x}
+	return render(request, 'dogs/list-testimonials.html', context)
 
 
 def search(request):
@@ -165,7 +182,31 @@ def search(request):
 
 
 
+#form.rate.queryset = Rate.objects.filter(company_id=the_company.id)
+@login_required(login_url='/accounts/login/')
+def createtestimonial(request):  # depois mudar pra ficar restful
+	if request.method == 'POST':  # If the form has been submitted...
+		# A form bound to the POST data
+		form_testimonial = TestimonialForm(request.POST, request.FILES)
+		if form_testimonial.is_valid():
+			t = form_testimonial.save(commit=False)
+			t.adopter = t.dog.adopted_by
+			t.giver = t.dog.in_adoption_by
+			t.save()
+			return HttpResponseRedirect('/testimonials/'+str(t.id)+"/") 
+		else:
+			return render(request, 'dogs/newtestimonial.html', {
+				'form_testimonial': form_testimonial,
+				'error': True
+			})
+		return HttpResponseRedirect('/testimonials')  # Redirect after POST
+	else:
+		form_testimonial = TestimonialForm()
+		form_testimonial.fields['dog'].queryset = Dog.objects.filter(adopted_by=request.user.person)
 
+	return render(request, 'dogs/newtestimonial.html', {
+		'form_testimonial': form_testimonial,
+	})
 
 @login_required(login_url='/accounts/login/')
 def create(request):  # depois mudar pra ficar restful
@@ -209,6 +250,32 @@ def create(request):  # depois mudar pra ficar restful
 	return render(request, 'dogs/newdog.html', {
 		'form_dog': form_dog,
 		'form_characteristics': form_characteristics,
+	})
+
+@login_required(login_url='/accounts/login/')
+def edittestimonial(request, t_id):
+	t = get_object_or_404(Testimonial, pk=t_id)
+	if request.method == 'POST':  # If the form has been submitted...
+		# A form bound to the POST data
+		form_testimonial = TestimonialForm(request.POST, request.FILES)
+		if form_dog.is_valid():
+			t = form_testimonial.save(commit=False)
+			t.adopter = t.dog.adopted_by
+			t.giver = t.dog.in_adoption_by
+			t.save()
+			return HttpResponseRedirect('/testimonials/'+str(t.id)+"/") 
+		else:
+			return render(request, 'dogs/newtestimonial.html', {
+				'form_testimonial': form_testimonial,
+				'error': True
+			})
+		return HttpResponseRedirect('/testimonials')  # Redirect after POST
+	else:
+		form_testimonial = TestimonialForm(instance=t)
+		form_testimonial.fields['dog'].queryset = Dog.objects.filter(adopted_by=request.user.person)
+
+	return render(request, 'dogs/newtestimonial.html', {
+		'form_testimonial': form_testimonial,
 	})
 
 #pegar caracteristicas do dog_id tambem

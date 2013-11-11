@@ -5,31 +5,25 @@
 		<div class="row">
 			<div class="col-sm-12">
 
-				<h1><span>Carl</span> e seu novo dono!</h1>
+				<h1><span>{{t.dog.name}}</span> e seu novo dono!</h1>
 
 
 				<div class="row">
 					<div class="col-sm-9 tal">
 						<div>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							{{t.content}}
 						</div>
 					</div>
 
 					<div class="col-sm-3">
 						<div class="row">
 							<div class="col-sm-12">
-								<img src={% static "img/dogs/9.jpg" %} alt="Carl" title="Carl" class="frame"/>
+								<img src="{{t.dog.photo.url}}" alt="{{t.dog.name}}" title="{{t.dog.name}}" class="frame"/>
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-sm-12">
-								<button type="button" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</button>
 								<button type="button" class="btn btn-danger"><i class="icon icon-remove"></i> Remover</button>
 							</div>
 						</div>

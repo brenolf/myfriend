@@ -191,6 +191,14 @@ class Message(models.Model):
     content = models.TextField(max_length=500)
     date = models.DateTimeField(auto_now_add=True)
 
+class Testimonial(models.Model):
+    dog = models.ForeignKey(Dog, related_name="dog")
+    adopter = models.ForeignKey(Person,related_name="adopter", null=True, blank=True)
+    giver = models.ForeignKey(Person,related_name="giver", null=True, blank=True)
+    title = models.TextField(max_length=50)
+    content = models.TextField(max_length=500)
+    date = models.DateTimeField(auto_now_add=True)
+
 class MessageForm(ModelForm):
 
     class Meta:
@@ -228,6 +236,12 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
+
+class TestimonialForm(ModelForm):
+
+    class Meta:
+        model = Testimonial
+        exclude = ['adopter','giver']
 
 class CharacteristicsForm(ModelForm):
 
