@@ -2,11 +2,12 @@
 @import "_utils.less";
 @import "_footer.less";
 @import "_home.less";
+@import "_medias.less";
 
 body {
 	margin: 0;
 	padding: 0;
-	margin-bottom: 350px !important;
+	margin-bottom: 350px;
 
 	&.modal-open {
 		margin-right: 0 !important;
@@ -23,6 +24,10 @@ body {
 	.panel-heading small {
 		float: right;
 	}
+}
+
+#footer-opts {
+	display: inline-block;
 }
 
 .badge {
@@ -52,7 +57,7 @@ header {
 		#mask {
 			height: 100%;
 			width: 100%;
-			background: url(../../img/b.jpg);
+			background: url(../img/b.jpg);
 			background-size: 100% auto;
 			background-position-y: -500px;
 		}
@@ -89,7 +94,8 @@ header {
 	}
 
 	select {
-		margin-top: 50px;
+		margin-top: 10% !important;
+		height: 50px !important;
 		position: relative;
 	}
 
@@ -102,7 +108,7 @@ header {
 
 		div {
 			background-color: rgba(140, 140, 140, 0.3);
-			background-image: url(../../img/cross.png);
+			background-image: url(../img/cross.png);
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -181,7 +187,7 @@ section {
 
 	&.red {
 		.sectionGet(#C9464E);
-		background-image: url(../../img/square.png);
+		background-image: url(../img/square.png);
 	}
 
 	&.yellow {
@@ -225,31 +231,6 @@ section {
 
 .row {
 	margin-bottom: 20px;
-}
-
-@media only screen and (max-width: 790px) {
-	.table-owner td:nth-child(3), 
-	.table-owner th:nth-child(3) {display: none;}
-}
-
-@media only screen and (max-width: 640px) {
-	.table-owner td:nth-child(4), 
-	.table-owner th:nth-child(4) {display: none;}
-}
-
-@media only screen and (max-width: 440px) {
-	.table-testimonials td:nth-child(1), 
-	.table-testimonials th:nth-child(1) {display: none;}
-}
-
-@media only screen and (max-width: 710px) {
-	.table-events td:nth-child(4), 
-	.table-events th:nth-child(4) {display: none;}
-}
-
-@media only screen and (max-width: 560px) {
-	.table-events td:nth-child(3), 
-	.table-events th:nth-child(3) {display: none;}
 }
 
 .table-testimonials {

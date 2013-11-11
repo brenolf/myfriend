@@ -15,14 +15,14 @@
 </head>
 <body>
 	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-45158998-1', 'myfriend-2.herokuapp.com');
-  ga('send', 'pageview');
-  </script>
+		ga('create', 'UA-45158998-1', 'myfriend-2.herokuapp.com');
+		ga('send', 'pageview');
+	</script>
 
 	<header class="home">
 		<div class="row">
@@ -80,9 +80,7 @@
 		</div>
 	</section>
 
-	<section class="imgholder">
-		
-	</section>
+	<section class="imgholder" id="imgholder"></section>
 
 	<section class="red">
 		<div class="row">
@@ -110,41 +108,23 @@
 		</div>
 	</section>
 
-	<section class="silver content">
+	<section class="silver content patrocinio">
 		<div class="row">
 
-			<div class="col-sm-6">
-				<h1>Eventos</h1>
-
-				<div class="event">
-					<div class="date">09<span>set</span></div>
-					<div class="ctt"><span>A nice title</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-					<div class="clear"></div>
-				</div>
-
-				<div class="event">
-					<div class="date">09<span>set</span></div>
-					<div class="ctt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-					<div class="clear"></div>
-				</div>
-
-				<div class="event">
-					<div class="date">09<span>set</span></div>
-					<div class="ctt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-					<div class="clear"></div>
-				</div>
-
-				<div class="event">
-					<div class="date">09<span>set</span></div>
-					<div class="ctt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-					<div class="clear"></div>
-				</div>
-			</div>
-
-			<div class="col-sm-6 tac">
+			<div class="col-sm-12 tac">
 				<h1>Patrocínio</h1>
 
-				<a href="#"><img class="partner" src={% static "img/parceiros/pedigree.jpg" %} alt="Pedigree"/></a>
+				<div class="row">
+					<div class="col-sm-4 partner">
+						<a href="#"><img class="partner" src={% static "img/parceiros/pedigree.jpg" %} alt="Pedigree"/></a>
+					</div>
+					<div class="col-sm-4 partner">
+						<a href="#"><img class="partner" src={% static "img/parceiros/pedigree.jpg" %} alt="Pedigree"/></a>
+					</div>
+					<div class="col-sm-4 partner">
+						<a href="#"><img class="partner" src={% static "img/parceiros/pedigree.jpg" %} alt="Pedigree"/></a>
+					</div>
+				</div>
 			</div>
 
 			<div class="clear"></div>

@@ -31,7 +31,15 @@ if(adopted_dogs.length !== 0){
 }
 
 var mnhSelect = $('header select');
+
 if(mnhSelect.length !== 0){
+
+	var maps = {home: '/', search: '/dogs/search/', testimonials: '/testimonials/', login: '/accounts/login/'};
+
+	for(var i in maps)
+		if(window.location.pathname == maps[i])
+			mnhSelect.val(i);
+
 	mnhSelect.change(function(){
 		var e = $(this);
 		var maps = {home: '/', search: '/dogs/search/', testimonials: '/', login: '/accounts/login/'};

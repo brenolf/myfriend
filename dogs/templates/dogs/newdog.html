@@ -78,8 +78,14 @@
 						<div class="col-sm-12"><span class="badge">{{ form_dog.abandoned.errors }}</span></div>
 					</div>
 					<div class="row">
-						<div class="col-sm-6">Abandonado?</div>
-						<div class="col-sm-6">{{ form_dog.abandoned|attr:"class:form-control"}}</div>
+						<div class="col-sm-6">O cão é abandonado?</div>
+						<div class="col-sm-6">
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default">
+									<input id="id_abandoned" name="abandoned" type="checkbox"/> Sim
+								</label>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -167,18 +173,18 @@
 
 				
 				{% for field in form_characteristics %}
-			    	
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ field.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">{{ field.label_tag }}:</div>
-							<div class="col-sm-6">{{ field|attr:"class:form-control"|attr:"placeholder:Resposta"}}</div>
-						</div>
-					</div>
 
-			    {% endfor %}
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ field.errors }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">{{ field.label }}</div>
+						<div class="col-sm-6">{{ field|attr:"class:form-control" }}</div>
+					</div>
+				</div>
+
+				{% endfor %}
 
 				<div class="tar">
 					<button type="submit" class="btn btn-primary" value="Submit">Concluir registro</button>
