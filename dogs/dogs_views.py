@@ -13,13 +13,35 @@ from django.shortcuts import render_to_response
 import json
 from django.contrib import messages
 from django.core.mail import send_mail
-
+import os
+from django.conf import settings
+from django.utils._os import safe_join
+from database_storage import DatabaseStorage
+from django.core.exceptions import ObjectDoesNotExist
+import mimetypes
 
 from dogs.models import *
 from allauth.account.models import *
 
 # python manage.py schemamigration dogs --auto
 # python manage.py migrate dogs
+
+
+def image_view(request, filename):
+     # Read file from database
+    storage = DatabaseStorage(DBS_OPTIONS)
+    image_file = storage.open(filename, 'rb')
+    if not image_file:
+        raise Http404
+    file_content = image_file.read()
+   
+    # Prepare response
+    content_type, content_encoding = mimetypes.guess_type(filename)
+    response = HttpResponse(content=file_content, mimetype=content_type)
+    response['Content-Disposition'] = 'inline; filename=%s' % filename
+    if content_encoding:
+        response['Content-Encoding'] = content_encoding
+    return response
 
 
 @login_required(login_url='/accounts/login/')

@@ -39,5 +39,6 @@ urlpatterns = patterns('',
  url(r'^about/$', dogs_views.about, name='about'),
  url(r'^user/$', dogs_views.user, name='user'),
  url(r'^thread/$', dogs_views.get_thread),
- url(r'^send_message/$', dogs_views.send_message)
+ url(r'^send_message/$', dogs_views.send_message),
+ url(r'^dog_images/(?P<filename>.+)$',dogs_views.image_view, name='image_view'),
  )

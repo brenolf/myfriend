@@ -4,6 +4,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from database_storage import DatabaseStorage
 
 # segundo o próprio site do python, é o melhor lugar pra colocar signals, mas wtf hein?
 # tentar achar lugar melhor
@@ -139,6 +140,17 @@ class Characteristics(models.Model):
     likeoutside = models.NullBooleanField(verbose_name='O cão prefere ar livre?') #gosta de ar livre
     likeinside = models.NullBooleanField(verbose_name='O cão gosta de ficar dentro de casa?') #gosta de ficar dentro do apartamento
 
+DB_FILES = {
+    'db_table': 'FILES',
+    'fname_column':  'FILE_NAME',
+    'blob_column': 'BLOB',
+    'size_column': 'SIZE',
+    'base_url': '/dog_images/',
+}
+DBS_OPTIONS = {
+        'table': 'FILES',
+        'base_url': '/dog_images/',
+    }
 
 class Dog(models.Model):
     name = models.CharField(max_length=50, null=True)
@@ -164,7 +176,7 @@ class Dog(models.Model):
     # e não à pessoa. Se quiser ser associada a ela, é só
     # colocar que o endereço do cachorro é o mesmo que o dela, e eles vão
     # ficar sincronizados
-    photo = models.ImageField(null=True, blank=True, upload_to="dog_images/")
+    photo = models.ImageField(null=True, blank=True, upload_to="dog_images/", storage=DatabaseStorage(DBS_OPTIONS))
     adopted = models.BooleanField() # ja foi adotado
     adopted_by = models.ForeignKey(Person, related_name="adopted_by", null=True, blank=True) # quem adotou
     in_adoption_by = models.ForeignKey(Person, related_name="in_adoption_by") # quem pos para adocao
