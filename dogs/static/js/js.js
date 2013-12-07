@@ -57,6 +57,11 @@ if(adoptionButton.length !== 0){
 	});
 }
 
+var breedselect = $('#breedselect');
+if(breedselect.length !== 0){
+	alert();
+}
+
 var process = $('#processModal');
 if(process.length !== 0){
 	window.dog = null;

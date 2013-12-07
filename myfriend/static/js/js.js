@@ -65,6 +65,28 @@ if(adoptionButton.length !== 0){
 	});
 }
 
+var breedselect = $('#breedselect');
+if(breedselect.length !== 0){
+	if(!window.breeds){
+		var lista = $('select[name="breed"]').children();
+		window.breeds = [];
+
+		for(int i = 0, l = lista.length; i < l; i++)
+			window.breeds.push($(list[i]).html());
+	}
+
+
+	breedselect.typeahead({
+		source: ['amora', 'beterraba'],
+
+		updater: function (item) {
+			alert(item);
+			return '';
+		}
+
+	});
+}
+
 var btnewdog_c = $('#btnewdog_c');
 if(btnewdog_c.length !== 0){
 	btnewdog_c.click(function(){

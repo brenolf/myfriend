@@ -56,6 +56,8 @@ def about(request):
 
 
 def index(request):
+	# racas = ["Akita Inu", "Beagle", "Beagle Harrier", "Bobtail", "Boiadeiro de Berna", "Boxer", "Braco Alemão", "Braco Francês", "Bull Terrier Inglês", "Bulldog Americano", "Bulldog Inglês", "Cairn Terrier", "Cane Corso", "Caniche", "Cão de Crista Chinês", "Cão d’Água Espanhol", "Cão Lobo Checoslovaco", "Cavalier King Charles Spaniel", "Chihuahua", "Chow-Chow", "Cocker Americano", "Cocker Spaniel Inglês", "Collie", "Dálmata", "Doberman", "Dogue Alemão", "Dogue de Bordéus", "Epagneul Bretão", "Fila Brasileiro", "Fox Terrier", "Galgo Afegão", "Golden Retriever", "Husky Siberiano", "Ibizan Hound", "Jack Russel Terrier", "Lhasa Apso", "Mastiff", "Mastim dos Pirenéus", "Mastim Espanhol", "Mastim Napolitano", "Norfolk Terrier", "Papillon", "Pastor Alemão", "Pastor de Beauce", "Pequeno Basset Griffon", "Pequeno Brabançon", "Pequeno Cão Leão", "Pequinês", "Perdigueiro Português", "Pinscher Anão", "Pitbull", "Rottweiler", "Samoiedo", "São Bernardo", "Schnauzer", "Setter Inglês", "Setter Irlandês", "Shar Pei", "Shih Tzu", "Spaniel Japonês", "Spitz Alemão", "Staffordshire Bull Terrier", "Teckel", "Terranova", "Terrier Brasileiro", "Vizsla", "Waimaraner", "West Highland White Terrier", "Yorkshire Terrier"]
+
 	dogs = Dog.objects.all()[:10]
 	context = {'dogs': dogs}
 	return render(request, 'dogs/index.html', context)

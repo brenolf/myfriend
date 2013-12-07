@@ -14,7 +14,7 @@
 
 					<div class="preview">
 						<div class="colour" id="dog-mask" style="background: #333333;">
-							<img src={% static "img/mask.png" %} id="dog-img">
+							<img src={% static "img/mask.png" %} id="dog-img"/>
 						</div>
 					</div>
 
@@ -24,7 +24,8 @@
 						<div class="row">
 							<div class="col-sm-6">Raça:</div>
 							<div class="col-sm-6">
-								<select name="breed" class="form-control">
+								<input id="breedselect" type="text" class="form-control" adata-provide="typeahead" autocomplete="off"/>
+								<select name="breed" class="form-control" style="display: none;">
 									<option value="Todas" selected="selected">Todas</option>
 									{% for b in breeds %}
 									<option value="{{b}}">{{b}}</option>
@@ -76,9 +77,12 @@
 
 
 					</div>
-				</div>
+				</form>
 			</div>
-
 		</div>
-	</section>
-	{% endblock %}
+
+	</div>
+</section>
+
+
+{% endblock %}
