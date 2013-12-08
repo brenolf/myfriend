@@ -150,6 +150,7 @@ def searchTestimonial(request):
 
 
 def search(request):
+	messages.info(request, 'Three credits remain in your account.')
 	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET or request.GET['breed'] == '' or request.GET['size'] == '' or request.GET['color'] == '':
 		r = Breed.objects.all()
 		rn = len(r)
@@ -171,7 +172,7 @@ def search(request):
 			'breed': request.GET['breed'],
 			'dogs': dogs,
 			'indexes': indexes,
-			'results': rn
+			'results': rn,
 		}
 
 		return render(request, 'dogs/list-dogs.html', context)

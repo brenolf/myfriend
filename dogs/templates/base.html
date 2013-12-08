@@ -56,6 +56,17 @@
 					<option value="testimonials">Histórias</option>
 					<option value="login">Entrar</option>
 				</select>	
+				
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 			</div>
 		</div>
 	</header>
@@ -90,6 +101,8 @@
 				<li><a href="/dogs/search/">Buscar</a></li>
 				<li><a href="/testimonials/">Histórias</a></li>
 			</ul>
+			
+
 
 			<div class="clear"></div>			
 
