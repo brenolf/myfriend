@@ -10,140 +10,217 @@
 	<div class="row">
 		<div class="col-sm-12">
 
-			<h1>Sua personalidade</h1>
-			<i class="hr"></i>
-			<div class="tac" style="margin-bottom: 30px;"><a class="btn btn-primary" href="{% url 'create-answer' %}"><i class="icon icon-user"></i> Fazer para questionário de personalidade</a></div>
-
 			<h1>Seus dados</h1>
 			<i class="hr"></i>
 
+			<div class="alert alert-info">
+				Campos marcados com <span class="mandatory">*</span> são obrigatórios
+			</div>
+
 			<form action="" method="post">
 				{% csrf_token %}
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_user.first_name.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form_person.first_name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Nome:</div>
 						<div class="col-sm-6">{{ form_user.first_name|attr:"class:form-control"|attr:"placeholder:Seu nome"}}</div>
 					</div>
+					{% if form_person.first_name.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_person.first_name.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_user.last_name.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form_person.last_name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Sobrenome:</div>
 						<div class="col-sm-6">{{ form_user.last_name|attr:"class:form-control"|attr:"placeholder:Seu sobrenome"}}</div>
 					</div>
+					{% if form_person.last_name.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_person.last_name.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
+				<div class="form-group {% if form_person.birth_date.errors %}has-error{% endif %}">
 					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_person.birth_date.errors }}</span></div>
+						<div class="col-sm-6"><span class="mandatory">* </span>Data de nascimento:</div>
+						<div class="col-sm-6">{{ form_person.birth_date|attr:"class:form-control"|attr:"placeholder:Sua data de nascimento xx/xx/xxxx"|attr:"data-mask:99/99/9999"}}</div>
 					</div>
+					{% if form_person.birth_date.errors %}
 					<div class="row">
-						<div class="col-sm-6">Data de nascimento:</div>
-						<div class="col-sm-6">{{ form_person.birth_date|attr:"class:form-control"|attr:"placeholder:Sua data de nascimento"|attr:"type:date"}}</div>
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_person.birth_date.errors }}
+							</div>
+						</div>
 					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_person.emaildog.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form_person.emaildog.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Qual a porcentagem de semelhança entre você e um cão que você quer receber notificações?</div>
-						<div class="col-sm-6">{{ form_person.emaildog|attr:"class:form-control"|attr:"placeholder:Numero"|attr:"type:number"}}</div>
+						<div class="col-sm-6">{{ form_person.emaildog|attr:"class:form-control"|attr:"placeholder:Um número entre 0-100"|attr:"placeholder:Numero"|attr:"type:number"}}</div>
 					</div>
+					{% if form_person.emaildog.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_person.emaildog.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_person.gender.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form_person.gender.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Sexo:</div>
 						<div class="col-sm-6">{{ form_person.gender|attr:"class:form-control"|attr:"placeholder:Seu sexo"}}</div>
 					</div>
+					{% if form_person.gender.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_person.gender.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_address.postal_code.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form_address.postal_code.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">CEP:</div>
-						<div class="col-sm-6">{{ form_address.postal_code|attr:"class:form-control"|attr:"placeholder:Seu CEP"}}</div>
+						<div class="col-sm-6">{{ form_address.postal_code|attr:"class:form-control"|attr:"placeholder:Seu CEP"|attr:"data-mask:99.999-999"}}</div>
 					</div>
+					{% if form_address.postal_code.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_address.postal_code.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
 
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_address.street.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form_address.street.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Rua:</div>
 						<div class="col-sm-6">{{ form_address.street|attr:"class:form-control"|attr:"placeholder:Sua rua "}}</div>
 					</div>
-				</div>
-
-				<div class="form-group">
+					{% if form_address.street.errors %}
 					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_address.number.errors }}</span></div>
-					</div>
-					<div class="row">
-						<div class="col-sm-6">Número:</div>
-						<div class="col-sm-6">{{ form_address.number|attr:"class:form-control"|attr:"placeholder:Seu número"}}</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_address.apartment.errors }}</span></div>
-					</div>
-					<div class="row">
-						<div class="col-sm-6">Apartamento:</div>
-						<div class="col-sm-6">{{ form_address.apartment|attr:"class:form-control"|attr:"placeholder:Seu apartamento"}}
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_address.street.errors }}
+							</div>
 						</div>
 					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
+				<div class="form-group {% if form_address.number.errors %}has-error{% endif %}">
 					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_address.neighbourhood.errors }}</span></div>
+						<div class="col-sm-6">Número:</div>
+						<div class="col-sm-6">{{ form_address.number|attr:"class:form-control"|attr:"placeholder:Número da sua casa"|attr:"type:number"}}</div>
 					</div>
+					{% if form_address.number.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_address.number.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+
+				<div class="form-group {% if form_address.apartment.errors %}has-error{% endif %}">
+					<div class="row">
+						<div class="col-sm-6">Apartamento:</div>
+						<div class="col-sm-6">{{ form_address.apartment|attr:"class:form-control"|attr:"placeholder:Se você mora em apartamento, bloco, número, etc."}}
+						</div>
+					</div>
+					{% if form_address.apartment.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_address.apartment.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+
+				<div class="form-group {% if form_address.neighbourhood.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Bairro:</div>
 						<div class="col-sm-6">{{ form_address.neighbourhood|attr:"class:form-control"|attr:"placeholder:Seu bairro"}}
 						</div>
 					</div>
+					{% if form_address.neighbourhood.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_address.neighbourhood.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_address.city.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form_address.city.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Cidade:</div>
 						<div class="col-sm-6">{{ form_address.city|attr:"class:form-control"|attr:"placeholder:Sua cidade"}}</div>
 					</div>
+					{% if form_address.city.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_address.city.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
+				<div class="form-group {% if form_address.state.errors %}has-error{% endif %}">
 					<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form_address.state.errors }}</span></div>
-					</div>
-					<div class="row">
-						<div class="col-sm-6">Estado:</div>
+						<div class="col-sm-6"><span class="mandatory">* </span>Estado:</div>
 						<div class="col-sm-6">{{ form_address.state|attr:"class:form-control"|attr:"placeholder:Seu estado"}}</div>
 					</div>
+					{% if form_address.state.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form_address.state.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
 
-				<button type="submit" class="btn btn-primary"  value="Submit">Concluir registro</button>
+				<div class="tar">
+					<div class="btn-group">
+						<a href="/user/" class="btn btn-lg btn-danger"><i class="icon icon-arrow-left"></i> Cancelar alterações</a>
+						<button type="submit" class="btn btn-lg btn-success" value="Submit"><i class="icon icon-check"></i> Concluir registro</button>
+					</div>
+				</div>
 			</form>
 		</div>
 

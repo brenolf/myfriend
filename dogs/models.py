@@ -78,7 +78,7 @@ class Address(models.Model):
 					("SP", "São Paulo"),
 					("SE", "Sergipe"),
 					("TO", "Tocantins"))
-	state = models.CharField(max_length=2, choices=STATE_CHOICES, null=True, blank=True)
+	state = models.CharField(max_length=2, choices=STATE_CHOICES, null=True)
 	postal_code = models.CharField(max_length=9, null=True, blank=True)  # colocar validação
 
 
@@ -114,7 +114,7 @@ class Answer(models.Model):
 
 class Person(models.Model):
 	user = models.OneToOneField(User)
-	birth_date = models.DateField(null=True, blank=True)
+	birth_date = models.DateField(null=True)
 	GENDER_CHOICES = (("M", "Masculino"), ("F", "Feminino"))
 	gender = models.CharField(max_length=2, choices=GENDER_CHOICES, null=True, blank=True)
 	address = models.ForeignKey(Address, null=True, blank=True)
@@ -228,10 +228,31 @@ class PersonForm(ModelForm):
 	def clean_password(self):
 		print 'testing'
 
+	def clean_birth_date(self):
+		date = self.cleaned_data['birth_date']
+
+		if date is not None and date > datetime.date.today():
+			raise ValidationError("A data de nascimento não pode ser no futuro")
+		return date
+
+	def clean_emaildog(self):
+		try:
+			if self.cleaned_data['emaildog'] == '':
+				return ''
+
+			emaildog = int(self.cleaned_data['emaildog'])
+
+			if emaildog < 0:
+				raise ValidationError("Você deve inserir um número entre 0 e 100")	
+
+			return emaildog
+		except:
+			raise ValidationError("Você deve inserir um número entre 0 e 100")
+
 
 	class Meta:
 		model = Person
-		exclude = ['address', 'user','answers']
+		exclude = ['address', 'user', 'answers']
 
 class DogForm(ModelForm):
 
@@ -256,15 +277,31 @@ class DogForm(ModelForm):
 
 class AddressForm(ModelForm):
 
+	def clean_number(self):
+		try:
+			if self.cleaned_data['number'] == '':
+				return ''
+
+			number = int(self.cleaned_data['number'])
+
+			if number < 1:
+				raise ValidationError("Você deve inserir um número maior que 0")	
+
+			return number
+		except:
+			raise ValidationError("Você deve inserir um número maior que 0")
+
 	class Meta:
 		model = Address
 
 
 class UserForm(ModelForm):
 
+	# first_name = models.CharField(max_length=30, blank=False, null=False)
+	# last_name = models.CharField(max_length=30, blank=False, null=False)
+
 	class Meta:
 		model = User
-		fields = ['first_name', 'last_name']
 
 class AnswerForm(ModelForm):
 

@@ -54,7 +54,7 @@ def create(request):  # depois mudar pra ficar restful
                 user.person = person
                 person.save()
                 user.save()
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/user/')
 
             else:
                 return render(request, 'persons/create.html', {

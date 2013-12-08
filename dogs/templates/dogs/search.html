@@ -5,27 +5,27 @@
 <section class="silver content text search-list">
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-md-6">
 
-			<h1>Busca</h1>
+			<h1>Busca Comum</h1>
 
 			<div class="row tac">
-				<div class="col-sm-6">
-
+				<div class="col-sm-5">
 					<div class="preview">
 						<div class="colour" id="dog-mask" style="background: #333333;">
 							<img src={% static "img/mask.png" %} id="dog-img"/>
 						</div>
 					</div>
-
 				</div>
-				<form name="search" id="wysiwyg-form" action="" method="get">
-					<div class="col-sm-6 tal">
+
+				<div class="col-sm-7 tal">
+					<form name="search" id="wysiwyg-form" action="" method="get">
+
 						<div class="row">
-							<div class="col-sm-6">Raça:</div>
-							<div class="col-sm-6">
-								<input id="breedselect" type="text" class="form-control" adata-provide="typeahead" autocomplete="off"/>
-								<select name="breed" class="form-control" style="display: none;">
+							<div class="col-sm-4">Raça:</div>
+							<div class="col-sm-8">
+								<!--<input id="breedselect" type="text" class="form-control" adata-provide="typeahead" autocomplete="off"/>-->
+								<select name="breed" class="form-control">
 									<option value="Todas" selected="selected">Todas</option>
 									{% for b in breeds %}
 									<option value="{{b}}">{{b}}</option>
@@ -35,8 +35,8 @@
 						</div>
 
 						<div class="row">
-							<div class="col-sm-6">Tamanho:</div>
-							<div class="col-sm-6">
+							<div class="col-sm-4">Tamanho:</div>
+							<div class="col-sm-8">
 								<select name="size" class="form-control">
 									<option value="Todas" selected="selected">Todas</option>
 									<option value="xs">Muito pequeno</option>
@@ -49,8 +49,8 @@
 						</div>
 
 						<div class="row">
-							<div class="col-sm-6">Cor:</div>
-							<div class="col-sm-6">
+							<div class="col-sm-4">Cor:</div>
+							<div class="col-sm-8">
 								<select name="color" class="form-control">
 									<option value="Todas" selected="selected">Todas</option>
 									<option value="bl">Preto</option>
@@ -63,28 +63,36 @@
 							</div>
 						</div>
 
-						<div class="row tar">
+						<div class="row tac">
 							<div class="btn-group">
-								<button name="buscar" type="submit" class="btn btn-primary" value="submit"><i class="icon icon-search"></i> Buscar todos os cães</button>
-								<button name="abandonado" type="submit" class="btn btn-primary" value="abandonado"><i class="icon icon-search"></i> Buscar somente cães abandonados</button>
+								<button name="buscar" type="submit" class="btn btn-primary" value="submit"><i class="icon icon-search"></i> Todos os cães</button>
+								<button name="abandonado" type="submit" class="btn btn-primary" value="abandonado"><i class="icon icon-search"></i> Somente cães abandonados</button>
 							</div>
 						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
-						{% if request.user.is_authenticated %}
-						<div class="row tar">
-							<button name="personalidade" type="submit" class="btn btn-primary" value="personalidade"><i class="icon icon-search"></i> Buscar cães por personalidade</button>
-						</div>
-						{% endif %}
+		<div class="col-md-5 col-md-offset-1">
+			<h1>Busca por personalidade</h1>
 
-						
+			Teste uma busca por personalidade: com base nas suas respotas de perfil você consegue achar o cão que mais combina com você!
+			<div class="row tac" style="margin-top: 20px;">
+				{% if request.user.is_authenticated %}
+				<form name="search" id="wysiwyg-form" action="" method="get">
 
+					<button name="personalidade" type="submit" class="btn btn-primary" value="personalidade"><i class="icon icon-search"></i> Buscar cães por personalidade</button>
 
-					</div>
 				</form>
+				{% else %}
+				<a href="{% url 'account_login' %}" class="btn btn-primary" ><i class="icon icon-user"></i> Entre para buscar</a>
+				{% endif %}
 			</div>
 		</div>
 
 	</div>
+
 </section>
 
 

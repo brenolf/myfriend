@@ -28,51 +28,74 @@
 
 			<form name="signup_form" method="post" action="{% url 'account_signup' %}">
 				{% csrf_token %}
-				<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form.non_field_errors }}</span></div>
-					</div>
-				<div class="form-group">
-				<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form.username.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form.username.errors %}has-error{% endif %}">
 					<div class="row">
-					
 						<div class="col-sm-6">Usuário:</div>
 						<div class="col-sm-6">{{ form.username|attr:"placeholder:Seu usuário"|attr:"class:form-control" }}</div>
 					</div>
+					{% if form.username.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form.username.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-				<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form.email.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form.email.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">E-mail:</div>
 						<div class="col-sm-6">{{ form.email|attr:"placeholder:Seu email"|attr:"class:form-control" }}</div>
 					</div>
+					{% if form.email.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form.email.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-				<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form.password1.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form.password1.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Senha:</div>
 						<div class="col-sm-6">{{ form.password1|attr:"placeholder:Sua senha"|attr:"class:form-control" }}</div>
 					</div>
+					{% if form.password1.errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form.password1.errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<div class="form-group">
-				<div class="row">
-						<div class="col-sm-12"><span class="badge">{{ form.password2.errors }}</span></div>
-					</div>
+				<div class="form-group {% if form.password2.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Repita a Senha:</div>
 						<div class="col-sm-6">{{ form.password2|attr:"placeholder:Repita a senha"|attr:"class:form-control" }}</div>
 					</div>
+					{% if form.password2.errors or form.non_field_errors %}
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-6">
+							<div class="alert alert-danger">
+								{{ form.password2.errors }}
+								{{ form.non_field_errors }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 
-				<button type="submit" class="btn btn-primary">Registrar</button>
+				<div class="tar">
+					<button type="submit" class="btn btn-lg btn-success" value="Submit"><i class="icon icon-check"></i> Concluir registro</button>
+				</div>
 			</form>
 		</div>
 	</div>
