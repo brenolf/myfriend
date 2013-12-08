@@ -21,12 +21,14 @@
 								<img src="{{t.dog.photo.url}}" alt="{{t.dog.name}}" title="{{t.dog.name}}" class="frame"/>
 							</div>
 						</div>
-
+						
+						{% if request.user and t.adopter.user.id == request.user.id %}
 						<div class="row">
 							<div class="col-sm-12">
-								<button type="button" class="btn btn-danger"><i class="icon icon-remove"></i> Remover</button>
+								<a href="{% url 'remove-testimonial' t.id %}" class="btn btn-danger"><i class="icon icon-remove"></i> Excluir</a>
 							</div>
 						</div>
+						{% endif %}
 					</div>
 
 				</div>
