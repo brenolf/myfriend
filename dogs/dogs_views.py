@@ -304,7 +304,7 @@ def edittestimonial(request, t_id):
 	if request.method == 'POST':  # If the form has been submitted...
 		# A form bound to the POST data
 		form_testimonial = TestimonialForm(request.POST, request.FILES)
-		if form_dog.is_valid():
+		if form_testimonial.is_valid():
 			t = form_testimonial.save(commit=False)
 			t.adopter = t.dog.adopted_by
 			t.giver = t.dog.in_adoption_by
