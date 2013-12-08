@@ -124,13 +124,19 @@
 					</div>
 
 					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.photo.errors }}</span></div>
-						</div>
-						<div class="row">
+						<div class="row" id="dogphoto">
 							<div class="col-sm-6">Foto do cão:</div>
 							<div class="col-sm-6">{{ form_dog.photo|attr:"class:form-control" }}</div>
 							<!--<div class="col-sm-6"><input type="file" name="photo" placeholder="Foto do cachorro" class="form-control"/></div>-->
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-6">
+								{% if photo %}
+								<div class="alert alert-warning">
+									<strong>Atenção!</strong> Se escolher outra imagem, a atual será removida.
+								</div>
+								{% endif %}
+							</div>
 						</div>
 					</div>
 				</div>

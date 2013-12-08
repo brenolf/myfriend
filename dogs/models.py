@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.forms import TypedChoiceField
 from django.forms import RadioSelect
+from django.forms import ImageField
 from database_storage import DatabaseStorage
 
 # segundo o próprio site do python, é o melhor lugar pra colocar signals, mas wtf hein?
@@ -19,6 +20,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
 import datetime
 import inspect
+from django import forms
 from django.core.exceptions import ValidationError
 
 @receiver(user_signed_up)
@@ -242,6 +244,8 @@ class DogForm(ModelForm):
 
 	def clean_abandoned(self):
 		return self.cleaned_data['abandoned'] == 'y'
+
+	photo = forms.ImageField(required=False, widget=forms.FileInput)
 
 	class Meta:
 		model = Dog
