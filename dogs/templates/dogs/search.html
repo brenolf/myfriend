@@ -39,7 +39,7 @@
 							<div class="col-sm-6">
 								<select name="size" class="form-control">
 									<option value="Todas" selected="selected">Todas</option>
-									<option value="xs">Toy</option>
+									<option value="xs">Muito pequeno</option>
 									<option value="s">Pequeno</option>
 									<option value="m">Médio</option>
 									<option value="l">Grande</option>
@@ -64,16 +64,19 @@
 						</div>
 
 						<div class="row tar">
-							<button name="buscar" type="submit" class="btn btn-primary" value="submit"><i class="icon icon-search"></i> Buscar</button>
+							<div class="btn-group">
+								<button name="buscar" type="submit" class="btn btn-primary" value="submit"><i class="icon icon-search"></i> Buscar todos os cães</button>
+								<button name="abandonado" type="submit" class="btn btn-primary" value="abandonado"><i class="icon icon-search"></i> Buscar somente cães abandonados</button>
+							</div>
 						</div>
 
+						{% if request.user.is_authenticated %}
 						<div class="row tar">
-							<button name="personalidade" type="submit" class="btn btn-primary" value="personalidade"><i class="icon icon-search"></i> Buscar por personalidade</button>
+							<button name="personalidade" type="submit" class="btn btn-primary" value="personalidade"><i class="icon icon-search"></i> Buscar cães por personalidade</button>
 						</div>
+						{% endif %}
 
-						<div class="row tar">
-							<button name="abandonado" type="submit" class="btn btn-primary" value="abandonado"><i class="icon icon-search"></i> Buscar cães abandonados</button>
-						</div>
+						
 
 
 					</div>

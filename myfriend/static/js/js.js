@@ -71,7 +71,7 @@ if(breedselect.length !== 0){
 		var lista = $('select[name="breed"]').children();
 		window.breeds = [];
 
-		for(int i = 0, l = lista.length; i < l; i++)
+		for(var i = 0, l = lista.length; i < l; i++)
 			window.breeds.push($(list[i]).html());
 	}
 

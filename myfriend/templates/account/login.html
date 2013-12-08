@@ -10,9 +10,15 @@
 
 <section class="silver content text">
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-md-6 col-md-offset-3">
 			<h1>Entrar</h1>
-			<i class="hr"></i>
+			<i class="hr"></i>	
+
+			<div class="tac" style="margin-top: 20px;">
+				<a class="btn btn-primary btn-lg" href="{% provider_login_url "facebook" method="oauth2" %}"><i class="icon icon-facebook-sign"></i> Entrar com Facebook</a>
+			</div>
+
+			<i class="hr"></i>	
 
 			<form name="login" action="" method="POST">{% csrf_token %}
 				{% if redirect_field_value %}
@@ -40,60 +46,24 @@
 				
 				<!-- {{form.remember}} -->
 
-				<button type="submit" class="btn btn-primary">Entrar</button>
-
-				<div class="tac">Ou</div>
-
-				<div class="tac" style="margin-top: 20px;">
-					<a class="btn btn-primary btn-lg" href="{% provider_login_url "facebook" method="oauth2" %}"><i class="icon icon-facebook-sign"></i> Entrar com Facebook</a>
+				<div class="tar">
+					<button type="submit" class="btn btn-lg btn-primary">Entrar</button>
 				</div>
 
+			</form>
+			<i class="hr"></i>
+
+			<div class="tac">
+				<a href="{{ signup_url }}">Não é registrado? Clique aqui</a> 
 			</div>
 
-			<div class="col-sm-6 register-quick">
-				<h1>Registrar</h1>
-				<i class="hr"></i>
-
-				<div class="tac">
-					<a class="btn btn-primary btn-lg" href="{{ signup_url }}"><i class="icon icon-plus-sign"></i> Clique aqui para se cadastrar</a> 
-				</div>
-
-			<!-- <form name="signup" action="">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-6">Nome:</div>
-						<div class="col-sm-6"><input type="text" name="name" placeholder="Seu nome" class="form-control"/></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-6">Usuário:</div>
-						<div class="col-sm-6"><input type="text" name="user" placeholder="Seu usuário" class="form-control"/></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-6">Senha:</div>
-						<div class="col-sm-6"><input type="text" name="user" placeholder="Sua senha" class="form-control"/></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-6">Repita a Senha:</div>
-						<div class="col-sm-6"><input type="text" name="passr" placeholder="Repita a senha" class="form-control"/></div>
-					</div>
-				</div>
-
-				<button type="submit" class="btn btn-primary">Registrar</button>
-			</form> -->
+			<i class="hr"></i>
 		</div>
-
-		<div class="clear"></div>
-
 	</div>
+
+	<div class="clear"></div>
+
+</div>
 </section>
 
 <!-- <section class="silver content text">

@@ -9,6 +9,24 @@
 			<h1>Dados do cão</h1>
 			<i class="hr"></i>
 
+			<div class="alert alert-info">
+				Campos marcados com <span class="mandatory">*</span> são obrigatórios
+			</div>
+
+			<!-- {% for field in form_dog %}
+			    	
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-12"><span class="badge">{{ field.errors }}</span></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">{{ field.label }}</div>
+							<div class="col-sm-6">{{ field}}</div>
+						</div>
+					</div>
+
+			    {% endfor %} -->
+
 			<form name="signup" action="" enctype="multipart/form-data" method="post">{% csrf_token %}
 				<div id="newdog_d">
 					<div class="form-group">
@@ -16,8 +34,8 @@
 							<div class="col-sm-12"><span class="badge">{{ form_dog.name.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Nome:</div>
-							<div class="col-sm-6">{{ form_dog.name|attr:"class:form-control"}}</div>
+							<div class="col-sm-6"><span class="mandatory">* </span>Nome:</div>
+							<div class="col-sm-6">{{ form_dog.name|attr:"class:form-control"|attr:"placeholder:Nome do cão"}}</div>
 						</div>
 					</div>
 
@@ -26,8 +44,8 @@
 							<div class="col-sm-12"><span class="badge">{{ form_dog.description.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Descrição:</div>
-							<div class="col-sm-6">{{ form_dog.description|attr:"class:form-control"}}</div>
+							<div class="col-sm-6"><span class="mandatory">* </span>Descrição:</div>
+							<div class="col-sm-6">{{ form_dog.description|attr:"class:form-control"|attr:"placeholder:Descreva como é o cão"}}</div>
 						</div>
 					</div>
 
@@ -37,7 +55,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-6">Data de nascimento:</div>
-							<div class="col-sm-6">{{ form_dog.birth_date|attr:"type:date"|attr:"class:form-control"|attr:"type:date"}}</div>
+							<div class="col-sm-6">{{ form_dog.birth_date|attr:"class:form-control"|attr:"data-mask:99/99/9999"|attr:"placeholder:Data de nascimento do cão xx/xx/xxxx"}}</div>
 						</div>
 					</div>
 
@@ -46,7 +64,7 @@
 							<div class="col-sm-12"><span class="badge">{{ form_dog.size.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Porte:</div>
+							<div class="col-sm-6"><span class="mandatory">* </span>Porte:</div>
 							<div class="col-sm-6">{{ form_dog.size|attr:"class:form-control"}}</div>
 						</div>
 					</div>
@@ -57,7 +75,7 @@
 							<div class="col-sm-12"><span class="badge">{{ form_dog.gender.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Sexo:</div>
+							<div class="col-sm-6"><span class="mandatory">* </span>Sexo:</div>
 							<div class="col-sm-6">{{ form_dog.gender|attr:"class:form-control"}}</div>
 						</div>
 					</div>
@@ -67,7 +85,7 @@
 							<div class="col-sm-12"><span class="badge">{{ form_dog.color.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Cor:</div>
+							<div class="col-sm-6"><span class="mandatory">* </span>Cor:</div>
 							<div class="col-sm-6">
 								{{ form_dog.color|attr:"class:form-control"}}
 							</div>
@@ -82,9 +100,12 @@
 							<div class="col-sm-6">O cão é abandonado?</div>
 							<div class="col-sm-6">
 								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-default">
-										<input id="id_abandoned" name="abandoned" type="checkbox"/> Sim
-									</label>
+										<label class="btn btn-primary">
+											<input value="y" id="id_abandoned1" name="abandoned" type="radio"/> Sim
+										</label>
+										<label class="btn btn-primary active">
+											<input value="n" checked="checked" id="id_abandoned1" name="abandoned" type="radio"/> Não
+										</label>
 								</div>
 							</div>
 						</div>
@@ -95,7 +116,7 @@
 							<div class="col-sm-12"><span class="badge">{{ form_dog.breed.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Raça:</div>
+							<div class="col-sm-6"><span class="mandatory">* </span>Raça:</div>
 							<div class="col-sm-6">
 								{{ form_dog.breed|attr:"class:form-control" }}
 							</div>
@@ -107,7 +128,7 @@
 							<div class="col-sm-12"><span class="badge">{{ form_dog.photo.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Foto:</div>
+							<div class="col-sm-6">Foto do cão:</div>
 							<div class="col-sm-6">{{ form_dog.photo|attr:"class:form-control" }}</div>
 							<!--<div class="col-sm-6"><input type="file" name="photo" placeholder="Foto do cachorro" class="form-control"/></div>-->
 						</div>
@@ -176,6 +197,10 @@
 				<i class="hr"></i>
 
 				<div id="newdog_c" style="display: none;">
+					<div class="alert alert-info">
+						Esses são os dados de características do cão, você não é obrigado a responder nenhuma das questões, elas apenas definem como é o comportamento do cão e permitem buscas por personalidade.
+					</div>
+
 					{% for field in form_characteristics %}
 
 					<div class="form-group">

@@ -148,7 +148,9 @@ def searchTestimonial(request):
 
 def search(request):
 	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET or request.GET['breed'] == '' or request.GET['size'] == '' or request.GET['color'] == '':
-		return render(request, 'dogs/search.html', {'breeds': Breed.objects.all()})
+		r = Breed.objects.all()
+		rn = len(r)
+		return render(request, 'dogs/search.html', {'breeds': r, 'results': rn})
 
 	elif 'personalidade' in request.GET:
 		if not request.user.is_authenticated():
@@ -158,12 +160,15 @@ def search(request):
 		breed = 'Todas'
 		dogs, indexes = similar_dogs(request)
 
+		rn = len(dogs)
+
 		context = {
 			'color': color,
 			'size': size,
 			'breed': request.GET['breed'],
 			'dogs': dogs,
 			'indexes': indexes,
+			'results': rn
 		}
 
 		return render(request, 'dogs/list-dogs.html', context)
@@ -191,12 +196,15 @@ def search(request):
 		if request.GET['breed'] != 'Todas':
 			dogs = dogs.filter(breed__breed_name=request.GET['breed'])
 
+		rn = len(dogs)
+
 		context = {
 			'color': color,
 			'size': size,
 			'breed': request.GET['breed'],
 			'dogs': dogs,
 			'indexes': False,
+			'results': rn
 		}
 
 		return render(request, 'dogs/list-dogs.html', context)

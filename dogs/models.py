@@ -4,6 +4,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django.forms import TypedChoiceField
+from django.forms import RadioSelect
 from database_storage import DatabaseStorage
 
 # segundo o próprio site do python, é o melhor lugar pra colocar signals, mas wtf hein?
@@ -15,6 +17,8 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
+import datetime
+from django.core.exceptions import ValidationError
 
 @receiver(user_signed_up)
 def after_sign_up(sender, **kwargs):
@@ -154,7 +158,7 @@ DBS_OPTIONS = {
 
 class Dog(models.Model):
     name = models.CharField(max_length=50, null=True)
-    birth_date = models.DateField('data de nascimento aproximada', null=True)
+    birth_date = models.DateField('data de nascimento aproximada', null=True, blank=True)
     # complementar
     SIZE_CHOICES = (("xs", "Muito Pequeno"), ("s", "Pequeno"),
                     ("m", "Médio"), ("l", "Grande"), ("xl", "Muito Grande"))
@@ -218,12 +222,24 @@ class MessageForm(ModelForm):
         exclude = ['thread', 'sender', 'date']
 
 class PersonForm(ModelForm):
+    def clean_password(self):
+        print 'testing'
+
 
     class Meta:
         model = Person
         exclude = ['address', 'user','answers']
 
 class DogForm(ModelForm):
+
+    def clean_birth_date(self):
+        date = self.cleaned_data['birth_date']
+
+        if date is not None and date > datetime.date.today():
+            raise ValidationError("A data de nascimento não pode ser no futuro")
+        return date
+
+    abandoned = TypedChoiceField(coerce=lambda x: x == 'True', choices=((False, 'n'), (True, 'y')), widget=RadioSelect)
 
     class Meta:
         model = Dog
