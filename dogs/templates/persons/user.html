@@ -6,11 +6,22 @@
 <section class="silver content text">
 
 	{% if messages %}
-	<ul class="messages">
-		{% for message in messages %}
-		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-		{% endfor %}
-	</ul>
+	{% for message in messages %}
+	{% if message.tags %}
+		
+		{% if message.tags == 'debug' %}
+		<div{% if message.tags %} class="alert alert-info"{% endif %}>{{ message }}</div>
+		{% elif message.tags == 'critical' or message.tags == 'error' %}
+		<div{% if message.tags %} class="alert alert-danger"{% endif %}>{{ message }}</div>
+		{% else %}
+		<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+		{% endif %}
+
+	{% else %}
+		<div class="well">{{ message }}</div>
+	{% endif %}
+
+	{% endfor %}
 	{% endif %}
 
 	<div class="row" style="margin-bottom: 40px;">
