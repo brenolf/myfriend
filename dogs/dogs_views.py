@@ -264,6 +264,7 @@ def create(request):  # depois mudar pra ficar restful
 		else:
 			print "erro1"
 			return render(request, 'dogs/newdog.html', {
+				'photo': False,
 				'form_dog': form_dog,
 				'form_characteristics': form_characteristics,
 				'error': True
@@ -281,6 +282,7 @@ def create(request):  # depois mudar pra ficar restful
 		else:
 			print "erro2"
 			return render(request, 'dogs/newdog.html', {
+				'photo': False,
 				'form_dog': form_dog,
 				'form_characteristics': form_characteristics,
 				'error': True
@@ -291,6 +293,7 @@ def create(request):  # depois mudar pra ficar restful
 		form_characteristics = CharacteristicsForm()
 
 	return render(request, 'dogs/newdog.html', {
+		'photo': False,
 		'form_dog': form_dog,
 		'form_characteristics': form_characteristics,
 	})
@@ -346,7 +349,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 	c = dog.characteristics
 	if dog.in_adoption_by != request.user.person:
 			return render(request, 'index.html', {})
-	
+
 	if request.method == 'POST':	
 		form_dog = DogForm(request.POST, request.FILES)
 		form_characteristics = CharacteristicsForm(request.POST, request.FILES)	
@@ -355,6 +358,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		else:
 			print "erro1"
 			return render(request, 'dogs/newdog.html', {
+				'photo': dog.photo,
 				'form_dog': form_dog,
 				'form_characteristics': form_characteristics,
 				'error': True
@@ -362,15 +366,26 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		if request.method == 'POST':  # If the form has been submitted...
 			# A form bound to the POST data
 			form_dog = DogForm(request.POST, request.FILES)
+
+			photourl = dog.photo
+
+			if 'photo' in request.FILES:
+				photourl = None
+
 			if form_dog.is_valid():
 				dog = form_dog.save(commit=False)
 				dog.id = dog_id
 				dog.characteristics = c
 				dog.characteristics.save()
 				dog.in_adoption_by = request.user.person
+
+				if photourl != None:
+					dog.photo = photourl
+
 				dog.save()
 			else:
 				return render(request, 'dogs/newdog.html', {
+					'photo': dog.photo,
 					'form_dog': form_dog,
 					'form_characteristics': form_characteristics,
 					'error': True
@@ -383,6 +398,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		form_characteristics = CharacteristicsForm(instance=c)
 		print 'aqui get'
 	return render(request, 'dogs/newdog.html', {
+		'photo': dog.photo,
 		'form_dog': form_dog,
 		'form_characteristics': form_characteristics,
 		'error': False,

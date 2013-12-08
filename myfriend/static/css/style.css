@@ -54,3 +54,5 @@ section.silver h1{color:#333;text-align:center}section.silver h1 span{color:#e47
 .gender.M{font-weight:bold;color:#1f46ff}
 .mandatory{font-weight:bold;color:#000b59 !important}
 .alert{padding:10px !important;font-size:19px !important}
+.alert.alert-warning,.alert.alert-danger{padding:8px !important;font-size:15px !important}
+#dogphoto a{display:none}
