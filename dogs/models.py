@@ -38,7 +38,6 @@ def after_sign_up(sender, **kwargs):
 	p.answers=a
 	p.save()
 	user.save()
-	print 'passou aquiiiiii'
 	messages.warning(request, "Você pode completar o cadastro agora, ou mais tarde acessando sua página de usuário e clicando em editar")
 	return HttpResponseRedirect('persons/create.html')
 
