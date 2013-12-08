@@ -130,6 +130,12 @@ def detail(request, dog_id):
 			jaccard=int(jaccard)
 
 
+	charsList = dog.characteristics.__dict__
+	hasChars = False
+	
+	for c in charsList:
+		hasChars = c[0] != '_' and c != 'id' and charsList[c] != None
+
 	return render(request, 'dogs/dog.html', {'dog': dog,
 	 'user': request.user, 
 	 'color': color,
@@ -137,6 +143,7 @@ def detail(request, dog_id):
 	 'genderLetter': letter, 
 	 'dogIsAvailable': available, 
 	 'char': c,
+	 'hasChars': hasChars,
 	 'jaccard': jaccard})
 
 
