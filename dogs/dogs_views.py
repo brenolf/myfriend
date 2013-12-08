@@ -50,10 +50,6 @@ def user(request):
 	testimonials = request.user.person.adopter.all()
 
 	context = {'user': request.user, 'dogs': dogs, 'testimonials': testimonials}
-	if request.method == 'POST' and 'remove' in request.POST:
-		dogid = request.POST['remove']
-		d = Dog.objects.get(pk=dogid)
-		d.delete()
 
 	if request.method == 'POST' and 'removet' in request.POST:
 		tid = request.POST['removet']
@@ -316,6 +312,23 @@ def edittestimonial(request, t_id):
 	return render(request, 'dogs/newtestimonial.html', {
 		'form_testimonial': form_testimonial,
 	})
+
+
+@login_required(login_url='/accounts/login/')
+def removeDog(request, dog_id):
+	print 'remover cao'
+	dog = get_object_or_404(Dog, pk=dog_id)
+
+	if dog.in_adoption_by != request.user.person:
+		return render(request, 'index.html', {})
+
+	if request.method == 'POST':
+		dog.delete()
+		return HttpResponseRedirect('/user/')
+
+	letter = 'o' if dog.gender == 'M' else 'a'
+	
+	return render(request, 'dogs/deletedog.html', {'dog': dog, 'genderLetter': letter})
 
 #pegar caracteristicas do dog_id tambem
 @login_required(login_url='/accounts/login/')

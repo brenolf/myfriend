@@ -16,6 +16,8 @@ urlpatterns = patterns('',
    dogs_views.create, name='create-dog'),
  url(r'^dogs/(?P<dog_id>\d+)/edit/$',
    dogs_views.edit, name='edit-dog'),
+ url(r'^dogs/(?P<dog_id>\d+)/remove/$',
+   dogs_views.removeDog, name='remove-dog'),
  url(r'^dogs/(?P<dog_id>\d+)/$',
    dogs_views.detail, name='detail-dog'),
 

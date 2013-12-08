@@ -24,22 +24,32 @@
 
 					<div class="row tac">
 						<div class="col-sm-12">
+
+							{% if not dog.adopted and dog.in_adoption_by.user.id == user.person.user.id %}
+							<div class="btn-group" style="margin-bottom: 20px">
+								<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+								<a href="{% url 'remove-dog' dog.id %}" class="btn btn-danger"><i class="icon icon-remove"></i> Excluir</a>							
+							</div>
+							{% endif %}
+
 							{% if dog.abandoned == False %}
-							{% if dogIsAvailable %}
-							<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
-							{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
-							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de adoção</a>
-							{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
-							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar adoção</a>
-							{% endif %}
+							
+								{% if dogIsAvailable %}
+								<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
+								{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de adoção</a>
+								{% elif dog.in_adoption_process and dog.in_adoption_by.user.id == user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar adoção</a>
+								{% endif %}
+
 							{% else %}
-							{% if dogIsAvailable %}
-							<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Achei!</a>
-							{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
-							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de abandonado</a>
-							{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
-							<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar abandonamento</a>
-							{% endif %}
+								{% if dogIsAvailable %}
+								<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Achei!</a>
+								{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de encontro</a>
+								{% elif dog.in_adoption_process and dog.in_adoption_by.user.id == user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar encontro</a>
+								{% endif %}
 							{% endif %}
 						</div>
 					</div>
