@@ -142,9 +142,7 @@
 						<td>{{t.adopter}}</td>
 						<td>{{t.dog.name}}</td>
 						<td><a href="{% url 'edit-testimonial' t.id %}" class="btn btn-default"><i class="icon icon-external-link"></i> Editar</a></td>
-						<td>
-							<form name="removetest" action="" method="post">{% csrf_token %}
-								<button  class="btn btn-danger" type="submit" value="{{t.id}}" name="removet"><i class="icon icon-remove"></i> Excluir</button>
+						<td><a href="{% url 'remove-testimonial' t.id %}" class="btn btn-danger"><i class="icon icon-remove"></i> Excluir</a>
 							</form>
 						</td>
 					</tr>

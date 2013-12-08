@@ -337,6 +337,22 @@ def removeDog(request, dog_id):
 	letter = 'o' if dog.gender == 'M' else 'a'
 
 	return render(request, 'dogs/deletedog.html', {'dog': dog, 'genderLetter': letter})
+	
+
+@login_required(login_url='/accounts/login/')
+def removetestimonial(request, t_id):
+	print 'remover cao'
+	t = get_object_or_404(Testimonial, pk=t_id)
+
+	if t.adopter != request.user.person:
+		return render(request, 'index.html', {})
+
+	if request.method == 'POST':
+		t.delete()
+		return HttpResponseRedirect('/user/')
+
+
+	return render(request, 'dogs/deletetestimonial.html', {})
 
 #pegar caracteristicas do dog_id tambem
 @login_required(login_url='/accounts/login/')
