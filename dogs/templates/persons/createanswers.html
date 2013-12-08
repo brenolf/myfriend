@@ -10,28 +10,36 @@
 	<div class="row">
 		<div class="col-sm-12">
 
-	
-			<h1>Suas respostas</h1>
+
+			<h1>Questionário de personalidade</h1>
 			<i class="hr"></i>
+
+			<div class="alert alert-info">
+				Essas perguntas ajudam a definir sua personalidade. Você não é obrigado a responder nenhuma das questões, elas apenas permitem que você faça buscas por personalidade.
+			</div>
 
 			<form action="" method="post">
 				{% csrf_token %}
 				{% for field in form_answer %}
-			    	
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ field.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">{{ field.label }}</div>
-							<div class="col-sm-6">{{ field|attr:"class:form-control"|attr:"placeholder:Resposta"}}</div>
-						</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12"><span class="badge">{{ field.errors }}</span></div>
 					</div>
+					<div class="row">
+						<div class="col-sm-6">{{ field.label }}</div>
+						<div class="col-sm-6">{{ field|attr:"class:form-control"|attr:"placeholder:Resposta"}}</div>
+					</div>
+				</div>
 
-			    {% endfor %}
+				{% endfor %}
 
-
-				<button type="submit" class="btn btn-primary"  value="Submit">Concluir questionario</button>
+				<div class="tar">
+					<div class="btn-group">
+						<a href="/user/" class="btn btn-lg btn-danger"><i class="icon icon-arrow-left"></i> Cancelar questionário</a>
+						<button type="submit" class="btn btn-lg btn-success" value="Submit"><i class="icon icon-check"></i> Concluir questionário</button>
+					</div>
+				</div>
 			</form>
 		</div>
 

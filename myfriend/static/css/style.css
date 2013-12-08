@@ -20,6 +20,7 @@ footer .medias{margin:15px 0}footer .medias a{width:40px !important;border-radiu
 .image_carousel{padding:15px 0 15px 40px}.image_carousel img{border:2px solid #8b242a;background-color:#fff;border-radius:100%;-moz-border-radius:100%;-ms-border-radius:100%;-o-border-radius:100%;-webkit-border-radius:100%;padding:9px;margin:7px;display:block;float:left}
 .partner{width:250px}.partner img{box-shadow:0 0 4px #555;-webkit-box-shadow:0 0 4px #555;-moz-box-shadow:0 0 4px #555;-ms-box-shadow:0 0 4px #555;-o-box-shadow:0 0 4px #555}
 @media only screen and (max-width:440px){.table-testimonials td:nth-child(1),.table-testimonials th:nth-child(1){display:none}}@media only screen and (max-width:560px){.table-events td:nth-child(3),.table-events th:nth-child(3){display:none}}@media only screen and (max-width:640px){.table-owner td:nth-child(4),.table-owner th:nth-child(4){display:none} #logo img{width:80px !important} #logo h1{font-size:50px !important;line-height:80px !important;float:left;margin-left:20px}}@media only screen and (max-width:710px){.table-events td:nth-child(4),.table-events th:nth-child(4){display:none}}@media only screen and (max-width:767px){.table-owner td:nth-child(3),.table-owner th:nth-child(3){display:none} section.patrocinio{display:none !important} .register-quick{margin-top:30px}}@media only screen and (max-width:900px){.partner{width:200px} section h1{font-size:30px !important} section h2{font-size:15px !important}}@media only screen and (max-width:1060px){#imgholder{display:none !important} section.red{display:none !important} header video{display:none} header .static_bg{display:block !important} body{margin-bottom:0 !important} footer{position:relative;height:430px}footer div>a{margin-bottom:10px !important;margin-top:10px !important;line-height:50px}}body{margin:0;padding:0;margin-bottom:350px}body.modal-open{margin-right:0 !important}
+.font-blue{color:#2a2583 !important}
 .modal textarea{resize:none;height:100px !important;margin-top:20px}
 .modal .panel-heading small{float:right}
 #footer-opts{display:inline-block}
@@ -51,3 +52,7 @@ section.silver h1{color:#333;text-align:center}section.silver h1 span{color:#e47
 .preview{width:196px;height:196px;background:#000;box-shadow:0 0 10px #333;-webkit-box-shadow:0 0 10px #333;-moz-box-shadow:0 0 10px #333;-ms-box-shadow:0 0 10px #333;-o-box-shadow:0 0 10px #333;display:inline-block;position:relative;text-align:center}.preview .colour{width:100px;height:100px;position:absolute;top:0;left:0;bottom:0;right:0;margin:auto}.preview .colour img{height:inherit}
 .gender.F{font-weight:bold;color:#ff1f24}
 .gender.M{font-weight:bold;color:#1f46ff}
+.mandatory{font-weight:bold;color:#000b59 !important}
+.alert{padding:10px !important;font-size:19px !important}
+.alert.alert-warning,.alert.alert-danger{padding:8px !important;font-size:15px !important}
+#dogphoto a{display:none}

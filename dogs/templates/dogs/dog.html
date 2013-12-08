@@ -24,21 +24,31 @@
 
 					<div class="row tac">
 						<div class="col-sm-12">
+
+							{% if not dog.adopted and dog.in_adoption_by.user.id == user.person.user.id %}
+							<div class="btn-group" style="margin-bottom: 20px">
+								<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+								<a href="{% url 'remove-dog' dog.id %}" class="btn btn-danger"><i class="icon icon-remove"></i> Excluir</a>							
+							</div>
+							{% endif %}
+
 							{% if dog.abandoned == False %}
+							
 								{% if dogIsAvailable %}
 								<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Adotar</a>
 								{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
 								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de adoção</a>
-								{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
+								{% elif dog.in_adoption_process and dog.in_adoption_by.user.id == user.person.user.id %}
 								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar adoção</a>
 								{% endif %}
+
 							{% else %}
 								{% if dogIsAvailable %}
 								<a class="btn btn-success" id="adoptionButton"><i class="icon icon-heart"></i> Achei!</a>
 								{% elif dog.in_adoption_process and dog.adopted_by.user.id == user.person.user.id %}
-								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de abandonado</a>
-								{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.person.user.id %}
-								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar abandonamento</a>
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Processo de encontro</a>
+								{% elif dog.in_adoption_process and dog.in_adoption_by.user.id == user.person.user.id %}
+								<a class="btn btn-primary" href="#"><i class="icon icon-comments"></i> Avaliar encontro</a>
 								{% endif %}
 							{% endif %}
 						</div>
@@ -47,52 +57,76 @@
 				</div>
 				<div class="col-sm-9 tal">
 					{% if dog.abandoned %}
+					<div class="alert alert-warning">
 						<div><strong>Este cão está abandonado!</strong></div>
-					{% endif %}
-					<div><strong>Nome: </strong> {{dog.name}}</div>
-					<div><strong>Sexo: </strong> <span class="gender {{dog.gender}}">{% ifequal dog.gender "M" %}Masculino &#9794; {% else %}Feminino &#9792;{% endifequal %}</span></div>
-					<div><strong>Cor: </strong> {{color}}</div>
-					<div><strong>Raça: </strong> {{dog.breed}}</div>
-					<div><strong>Porte: </strong> {{size}}</div>
-					<div><strong>Data de nascimento: </strong> {{dog.birth_date}} </div>
-					<div><strong>Sobre mim: </strong> {{dog.description}}</div>
-
-					{% if dog.adopted %}
-					<div><strong>Adotado por: </strong> {{dog.adopted_by}}</div>
-					{% else %}
-					<div><strong>Colocado em adoção por: </strong> {{dog.in_adoption_by}} </div>
+					</div>
 					{% endif %}
 
-					<div><strong>Similaridade:  </strong> 
+					<div class="well">
+						<div><strong>Sexo: </strong> <span class="gender {{dog.gender}}">{% ifequal dog.gender "M" %}Masculino &#9794; {% else %}Feminino &#9792;{% endifequal %}</span></div>
+						<div><strong>Cor: </strong> {{color}}</div>
+						<div><strong>Raça: </strong> {{dog.breed}}</div>
+						<div><strong>Porte: </strong> {{size}}</div>
+						{% if dog.birth_date != None %}
+						<div><strong>Data de nascimento: </strong> {{dog.birth_date}} </div>
+						{% endif %}
+					</div>
+
+					<div class="well">
+						{% if dog.adopted %}
+						<div><strong>Adotado por: </strong> {{dog.adopted_by}}</div>
+						{% else %}
+						<div><strong>Colocado em adoção por: </strong> {{dog.in_adoption_by}} </div>
+						{% endif %}
+					</div>
+					
+					<div class="well">
+						<div><strong>Sobre mim: </strong> {{dog.description}}</div>
+					</div>
+
+					<div class="well">
+						<strong>Similaridade:  </strong> 
 						{% if jaccard %}
-							{% if jaccard == -1%}
-								Não há dados suficientes para computar
-							{% else %}
-								<div class="progress">
-								  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{jaccard}}" aria-valuemin="0" aria-valuemax="100" style="width: {{jaccard}}%;">
-								    <span class="sr-only">{{jaccard}}% de similaridade</span>
-								  </div>
-								</div>
-								{{jaccard}}% de similaridade
+						{% if jaccard == -1%}
+						Não há dados suficientes para ver compatibilidade
+						{% else %}
+						<div class="progress">
+							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{jaccard}}" aria-valuemin="0" aria-valuemax="100" style="width: {{jaccard}}%;">
+								<span class="sr-only">{{jaccard}}% de similaridade</span>
+							</div>
+						</div>
+						{{jaccard}}% de similaridade
 
-							{% endif %}
+						{% endif %}
 
 						{% endif %}
 					</div>
 
 				</div>
-
-				<h1>Características</h1>
-				<div class="col-sm-9 tal">
-					{% for f in char %}
-						<div><strong>{{f.label}} </strong> {% if f.data == True %} Sim {% elif f.data == False %} Não {% else %} Desconhecido {% endif %}</div>
-
-
-					{% endfor %}
-
-				</div>
-
 			</div>
+
+			{% if hasChars %}
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Características d{{ genderLetter }} {{ dog.name }}</h3>
+						</div>
+						<div class="panel-body">
+							{% for f in char %}
+
+							{% if f.data == False or f.data == True %}
+
+							<div><strong>{{f.label}} </strong> {% if f.data == True %} Sim {% elif f.data == False %} Não {% else %} Desconhecido {% endif %}</div>
+
+							{% endif %}
+
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
 
 		</div>
 

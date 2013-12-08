@@ -48,7 +48,7 @@
 				<ul>
 
 					<li class="r"><a href="{% url 'index' %}"><i class="icon icon-home"></i> home</a></li>
-					<li class="p"><a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> procurar</a></li>
+					<li class="p"><a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> buscar</a></li>
 					<li class="g"><a href="/testimonials/"><i class="icon icon-comment"></i> histórias</a></li>
 					{% if request.user.is_authenticated %}
 					<li class="b"><a href="{% url 'user' %}"><i class="icon icon-user"></i> sua conta</a></li>
@@ -60,7 +60,7 @@
 
 				<select name="mnh" class="form-control" style="display: none;">
 					<option value="home">Home</option>
-					<option value="search">Procurar</option>
+					<option value="search">Buscar</option>
 					<option value="testimonials">Histórias</option>
 					<option value="login">Entrar</option>
 				</select>
@@ -139,9 +139,9 @@
 	<footer>
 
 		<div>
-			<a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> Procurar</a>
+			<a href="{% url 'search-dog' %}"><i class="icon icon-search"></i> Buscar</a>
 			{% if request.user.is_authenticated %}
-			<a href="{% url 'account_logout' %}"><i class="icon icon-power-off"></i> Sair</a>
+			<!-- <a href="{% url 'account_logout' %}"><i class="icon icon-power-off"></i> Sair</a> -->
 			{% else %}
 			<a href="{% url 'account_login' %}"><i class="icon icon-user"></i> Entrar</a>
 			<a href="{% url 'account_signup' %}"><i class="icon icon-plus"></i> Registrar</a>
@@ -155,7 +155,7 @@
 			<ul>
 				<li><a href="/">Home</a></li>
 				<li><a href="/about/">Sobre</a></li>
-				<li><a href="/dogs/search/">Procurar</a></li>
+				<li><a href="/dogs/search/">Buscar</a></li>
 				<li><a href="/testimonials/">Histórias</a></li>
 			</ul>
 

@@ -8,6 +8,7 @@ from dogs.models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+# From com as respostas
 @login_required(login_url='/accounts/login/')
 def createanswers(request):
     user = request.user
@@ -22,7 +23,7 @@ def createanswers(request):
                     'form_answer': form_answer,
                     'user': request.user,
                 })
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/user/')
     form_answer = AnswerForm(instance=request.user.person.answers)
     return render(request, 'persons/createanswers.html', {
                 'form_answer': form_answer,
@@ -31,7 +32,7 @@ def createanswers(request):
 
 
 
-
+# Form de completar registro
 @login_required(login_url='/accounts/login/')
 def create(request):  # depois mudar pra ficar restful
     user = request.user
@@ -53,7 +54,7 @@ def create(request):  # depois mudar pra ficar restful
                 user.person = person
                 person.save()
                 user.save()
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/user/')
 
             else:
                 return render(request, 'persons/create.html', {
@@ -69,7 +70,7 @@ def create(request):  # depois mudar pra ficar restful
                 'form_user': form_user,
                 'user': request.user,
             })
-            return HttpResponseRedirect('/')  # Redirect after POST
+            return HttpResponseRedirect('/user/')  # Redirect after POST
     else:
         form_person = PersonForm(instance=request.user.person)
         form_address = AddressForm(instance=request.user.person.address)

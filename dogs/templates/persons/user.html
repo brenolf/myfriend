@@ -4,19 +4,38 @@
 
 
 <section class="silver content text">
-	<div class="row">
+	<div class="row" style="margin-bottom: 40px;">
 		<div class="col-sm-12">
 
-			<h1>Sua conta</h1>
-			<i class="hr"></i>
-			<div class="tac">
-				<div class="btn-group">
-					<a href="{% url 'edit-person' %}" class="btn btn-lg btn-primary"><i class="icon icon-edit"></i> Editar seus dados</a>
-					<a href="{% url 'create-dog' %}" class="btn btn-lg btn-success"><i class="icon icon-plus"></i> Registrar cachorro</a>
-					<a href="{% url 'create-testimonial' %}" class="btn btn-lg btn-success"><i class="icon icon-plus"></i> Criar história</a>
-					<a href="{% url 'account_logout' %}" class="btn btn-lg btn-danger"><i class="icon icon-power-off"></i> Sair</a>
+			<nav class="navbar navbar-default" role="navigation" style="border: solid 1px #333;">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#" style="color: #222;"><strong>{{ user }}</strong></a>
 				</div>
-			</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="{% url 'edit-person' %}"><i class="icon icon-edit"></i> Editar seus dados</a></li>
+						<li><a href="{% url 'create-answer' %}"><i class="icon icon-user"></i> Questionário de personalidade</a></li>
+						<li><a href="{% url 'create-dog' %}"><i class="icon icon-plus"></i> Novo cão</a></li>
+
+						{% if canWrite %}
+						<li><a href="{% url 'create-testimonial' %}"><i class="icon icon-plus"></i> Criar história</a></li>
+						{% endif %}
+					</ul>
+					<ul class="nav navbar-right">
+						<li><a href="{% url 'account_logout' %}"><i class="icon icon-power-off"></i> Sair</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</nav>
+
 		</div>
 
 	</div>
@@ -33,73 +52,72 @@
 					<th>Situação</th>
 					<th>Dono original</th>
 					<th>Controle</th>
+					<th>Remover cão</th>
 				</tr>
 				{% for dog in dogs %}
 				<tr>
 					<td><a href="{% url 'detail-dog' dog.id %}">{{dog.name}}</a></td>
 					<td>
 						{% if dog.abandoned == False %}
-							{% if dog.adopted %}
-							<i class="icon icon-smile"></i> Adotado
-							{% elif dog.in_adoption_process %}
-							<i class="icon icon-comments"></i> Em processo de adoção
-							{% else %}
-							<i class="icon icon-heart"></i> Colocado para adoção
-							{% endif %}
+						{% if dog.adopted %}
+						<i class="icon icon-smile"></i> Adotado
+						{% elif dog.in_adoption_process %}
+						<i class="icon icon-comments"></i> Em processo de adoção
 						{% else %}
-							{% if dog.adopted %}
-							<i class="icon icon-smile"></i> Encontrado!
-							{% elif dog.in_adoption_process %}
-							<i class="icon icon-comments"></i> Aparentemente encontrado
-							{% else %}
-							<i class="icon icon-heart"></i> Abandonado
-							{% endif %}
+						<i class="icon icon-heart"></i> Colocado para adoção
+						{% endif %}
+						{% else %}
+						{% if dog.adopted %}
+						<i class="icon icon-smile"></i> Encontrado!
+						{% elif dog.in_adoption_process %}
+						<i class="icon icon-comments"></i> Aparentemente encontrado
+						{% else %}
+						<i class="icon icon-heart"></i> Abandonado
+						{% endif %}
 						{% endif %}
 					</td>
 
 					<td>{% if user.id == dog.in_adoption_by.user.id %} Você {% else %} <strong>{{dog.in_adoption_by.user}}</strong> {% endif %}</td>
 					<td>
-						<form name="adopt" action="" method="post">{% csrf_token %}
+						<div class="btn-group">
+							{% if dog.abandoned == False %}
+							{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
 
-							<div class="btn-group">
-								{% if dog.abandoned == False %}
-									{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
+							<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de adoção</a>
 
-									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de adoção</a>
+							{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
 
-									{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
+							<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar adoção</a>
 
-									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar adoção</a>
+							{% elif not dog.adopted %}
 
-									{% elif not dog.adopted %}
+							<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+							<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
+							{% endif %}
+							{% else %}
+							{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
 
-									<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
-									<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
-									<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
-									{% endif %}
-								{% else %}
-									{% if dog.in_adoption_process and dog.adopted_by.user.id == user.id %}
+							<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de abandono</a>
 
-									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="1"><i class="icon icon-comments"></i> Processo de abandono</a>
+							{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
 
-									{% elif dog.in_adoption_process and dog.adopted_by.user.id != user.id %}
+							<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar abandono</a>
 
-									<a class="btn btn-default dogprocess" data-id="{{dog.id}}" data-adopter="0"><i class="icon icon-comments"></i> Avaliar abandono</a>
+							{% elif not dog.adopted %}
 
-									{% elif not dog.adopted %}
+							<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
+							<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
 
-									<a href="{% url 'edit-dog' dog.id %}" class="btn btn-primary"><i class="icon icon-edit"></i> Editar</a>
-									<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="remove"><i class="icon icon-remove"></i> Excluir</button>
-									<!--<a href="#" class="btn btn-success"><i class="icon icon-comment"></i> Depoimento</a>-->
+							{% elif dog.adopted and dog.adopted_by.user.id == user.id %}
+							<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="abadocao"><i class="icon icon-remove"></i> Colocar para adoção</button>
 
-									{% elif dog.adopted and dog.adopted_by.user.id == user.id %}
-										<button  class="btn btn-danger" type="submit" value="{{dog.id}}" name="abadocao"><i class="icon icon-remove"></i> Colocar para adoção</button>
+							{% endif %}
+							{% endif %}
+						</div>
+					</td>
 
-									{% endif %}
-								{% endif %}
-							</div>
-
-						</form>
+					<td>
+						<a href="{% url 'remove-dog' dog.id %}" class="btn btn-danger"><i class="icon icon-remove"></i> Remover</a>
 					</td>
 				</tr>
 				{% endfor %}
@@ -111,28 +129,25 @@
 			<i class="hr"></i>
 
 			<table class="table table-hover table-testimonials">
-					<tr class="active">
-						<th>Data do encontro</th>
-						<th>Dono</th>
-						<th>Cão</th>
-						<th>Editar</th>
-						<th>Remover</th>
-					</tr>
-					{% for t in testimonials %}
-					<tr data-id=""> 
-						<td>{{t.date}}</td>
-						<td>{{t.adopter}}</td>
-						<td>{{t.dog.name}}</td>
-						<td><a href="{% url 'edit-testimonial' t.id %}" class="btn btn-default"><i class="icon icon-external-link"></i> Editar</a></td>
-						<td>
-							<form name="removetest" action="" method="post">{% csrf_token %}
-								<button  class="btn btn-danger" type="submit" value="{{t.id}}" name="removet"><i class="icon icon-remove"></i> Excluir</button>
-							</form>
-						</td>
-					</tr>
-					{% endfor %}
+				<tr class="active">
+					<th>Data do encontro</th>
+					<th>Dono</th>
+					<th>Cão</th>
+					<th>Editar</th>
+					<th>Remover</th>
+				</tr>
+				{% for t in testimonials %}
+				<tr data-id=""> 
+					<td>{{t.date}}</td>
+					<td>{{t.adopter}}</td>
+					<td>{{t.dog.name}}</td>
+					<td><a href="{% url 'edit-testimonial' t.id %}" class="btn btn-default"><i class="icon icon-external-link"></i> Editar</a></td>
+					<td><a href="{% url 'remove-testimonial' t.id %}" class="btn btn-danger"><i class="icon icon-remove"></i> Excluir</a>
+					</td>
+				</tr>
+				{% endfor %}
 
-				</table>
+			</table>
 
 		</div>
 

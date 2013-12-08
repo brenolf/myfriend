@@ -9,117 +9,201 @@
 			<h1>Dados do cão</h1>
 			<i class="hr"></i>
 
-			<form name="signup" action="" enctype="multipart/form-data" method="post">{% csrf_token %}
-				<div id="newdog_d">
-					<div class="form-group">
+			<div class="alert alert-info">
+				Campos marcados com <span class="mandatory">*</span> são obrigatórios
+			</div>
+
+			<!-- {% for field in form_dog %}
+			    	
+					<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.name.errors }}</span></div>
+							<div class="col-sm-12"><span class="badge">{{ field.errors }}</span></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6">Nome:</div>
-							<div class="col-sm-6">{{ form_dog.name|attr:"class:form-control"}}</div>
+							<div class="col-sm-6">{{ field.label }}</div>
+							<div class="col-sm-6">{{ field}}</div>
 						</div>
 					</div>
 
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.description.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">Descrição:</div>
-							<div class="col-sm-6">{{ form_dog.description|attr:"class:form-control"}}</div>
-						</div>
-					</div>
+					{% endfor %} -->
 
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.birth_date.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">Data de nascimento:</div>
-							<div class="col-sm-6">{{ form_dog.birth_date|attr:"type:date"|attr:"class:form-control"|attr:"type:date"}}</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.size.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">Porte:</div>
-							<div class="col-sm-6">{{ form_dog.size|attr:"class:form-control"}}</div>
-						</div>
-					</div>
-
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.gender.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">Sexo:</div>
-							<div class="col-sm-6">{{ form_dog.gender|attr:"class:form-control"}}</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.color.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">Cor:</div>
-							<div class="col-sm-6">
-								{{ form_dog.color|attr:"class:form-control"}}
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.abandoned.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">O cão é abandonado?</div>
-							<div class="col-sm-6">
-								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-default">
-										<input id="id_abandoned" name="abandoned" type="checkbox"/> Sim
-									</label>
+					<form name="signup" action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+						<div id="newdog_d">
+							<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6"><span class="mandatory">* </span>Nome:</div>
+									<div class="col-sm-6">{{ form_dog.name|attr:"class:form-control"|attr:"placeholder:Nome do cão"}}</div>
 								</div>
+								{% if form_dog.name.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.name.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group {% if form_dog.description.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6"><span class="mandatory">* </span>Descrição:</div>
+									<div class="col-sm-6">{{ form_dog.description|attr:"class:form-control"|attr:"placeholder:Descreva como é o cão"}}</div>
+								</div>
+								{% if form_dog.description.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.description.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group {% if form_dog.birth_date.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6">Data de nascimento:</div>
+									<div class="col-sm-6">{{ form_dog.birth_date|attr:"class:form-control"|attr:"data-mask:99/99/9999"|attr:"placeholder:Data de nascimento do cão xx/xx/xxxx"}}</div>
+								</div>
+								{% if form_dog.birth_date.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.birth_date.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group {% if form_dog.size.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6"><span class="mandatory">* </span>Porte:</div>
+									<div class="col-sm-6">{{ form_dog.size|attr:"class:form-control"}}</div>
+								</div>
+								{% if form_dog.size.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.size.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+
+							<div class="form-group {% if form_dog.gender.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6"><span class="mandatory">* </span>Sexo:</div>
+									<div class="col-sm-6">{{ form_dog.gender|attr:"class:form-control"}}</div>
+								</div>
+								{% if form_dog.gender.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.gender.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group {% if form_dog.color.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6"><span class="mandatory">* </span>Cor:</div>
+									<div class="col-sm-6">
+										{{ form_dog.color|attr:"class:form-control"}}
+									</div>
+								</div>
+								{% if form_dog.color.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.color.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group {% if form_dog.abandoned.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6">O cão é abandonado?</div>
+									<div class="col-sm-6">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-primary">
+												<input value="y" id="id_abandoned1" name="abandoned" type="radio"/> Sim
+											</label>
+											<label class="btn btn-primary active">
+												<input value="n" checked="checked" id="id_abandoned1" name="abandoned" type="radio"/> Não
+											</label>
+										</div>
+									</div>
+								</div>
+								{% if form_dog.abandoned.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.abandoned.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group {% if form_dog.breed.errors %}has-error{% endif %}">
+								<div class="row">
+									<div class="col-sm-6"><span class="mandatory">* </span>Raça:</div>
+									<div class="col-sm-6">
+										{{ form_dog.breed|attr:"class:form-control" }}
+									</div>
+								</div>
+								{% if form_dog.breed.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.breed.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+
+							<div class="form-group {% if form_dog.photo.errors %}has-error{% endif %}">
+								<div class="row" id="dogphoto">
+									<div class="col-sm-6">Foto do cão:</div>
+									<div class="col-sm-6">{{ form_dog.photo|attr:"class:form-control" }}</div>
+									<!--<div class="col-sm-6"><input type="file" name="photo" placeholder="Foto do cachorro" class="form-control"/></div>-->
+								</div>
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										{% if photo %}
+										<div class="alert alert-warning">
+											<strong>Atenção!</strong> Se escolher outra imagem, a atual será removida.
+										</div>
+										{% endif %}
+									</div>
+								</div>
+								{% if form_dog.photo.errors %}
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-6">
+										<div class="alert alert-danger">
+											{{ form_dog.photo.errors }}
+										</div>
+									</div>
+								</div>
+								{% endif %}
 							</div>
 						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.breed.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">Raça:</div>
-							<div class="col-sm-6">
-								{{ form_dog.breed|attr:"class:form-control" }}
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12"><span class="badge">{{ form_dog.photo.errors }}</span></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">Foto:</div>
-							<div class="col-sm-6">{{ form_dog.photo|attr:"class:form-control" }}</div>
-							<!--<div class="col-sm-6"><input type="file" name="photo" placeholder="Foto do cachorro" class="form-control"/></div>-->
-						</div>
-					</div>
-				</div>
 
 
-				{% comment %}
+				<!-- {% comment %}
 				<h1>Dados de localização do cão</h1>
 				<i class="hr"></i>
 
-				<div class="form-group">
+				<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Usar seu endereço:</div>
 						<div class="col-sm-6">
@@ -133,7 +217,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">CEP:</div>
 						<div class="col-sm-6"><input type="text" name="zipcode" placeholder="CEP" class="form-control"/></div>
@@ -141,44 +225,58 @@
 				</div>
 
 
-				<div class="form-group">
+				<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Rua:</div>
 						<div class="col-sm-6"><input type="text" name="street" placeholder="Rua" class="form-control"/></div>
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Bairro:</div>
 						<div class="col-sm-6"><input type="text" name="neighb" placeholder="Bairro" class="form-control"/></div>
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Cidade:</div>
 						<div class="col-sm-6"><input type="text" name="city" placeholder="Cidade" class="form-control"/></div>
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 					<div class="row">
 						<div class="col-sm-6">Estado:</div>
 						<div class="col-sm-6"><input type="text" name="state" placeholder="Estado" class="form-control"/></div>
 					</div>
 				</div>
 
-				{% endcomment %}
-				<br><br><br>
+				{% endcomment %} -->
+
+				<br/>
+
+				<div class="tar">
+					<div class="btn-group">
+						<a href="/user/" class="btn btn-lg btn-danger"><i class="icon icon-arrow-left"></i> Cancelar registro</a>
+						<button type="submit" class="btn btn-lg btn-success" value="Submit"><i class="icon icon-check"></i> Concluir registro</button>
+					</div>
+				</div>
+
+				<br>
 
 				<h1>Características do cão <button type="button" class="btn btn-default" id="btnewdog_c"><i class="icon icon-caret-down"></i></button></h1>
 				<i class="hr"></i>
 
 				<div id="newdog_c" style="display: none;">
+					<div class="alert alert-info">
+						Esses são os dados de características do cão, você não é obrigado a responder nenhuma das questões, elas apenas definem como é o comportamento do cão e permitem buscas por personalidade.
+					</div>
+
 					{% for field in form_characteristics %}
 
-					<div class="form-group">
+					<div class="form-group {% if form_dog.name.errors %}has-error{% endif %}">
 						<div class="row">
 							<div class="col-sm-12"><span class="badge">{{ field.errors }}</span></div>
 						</div>
@@ -192,7 +290,10 @@
 				</div>
 
 				<div class="tar">
-					<button type="submit" class="btn btn-primary" value="Submit">Concluir registro</button>
+					<div class="btn-group">
+						<a href="/user/" class="btn btn-lg btn-danger"><i class="icon icon-arrow-left"></i> Cancelar registro</a>
+						<button type="submit" class="btn btn-lg btn-success" value="Submit"><i class="icon icon-check"></i> Concluir registro</button>
+					</div>
 				</div>
 			</form>
 		</div>

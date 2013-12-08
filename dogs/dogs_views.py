@@ -49,12 +49,6 @@ def user(request):
 	dogs = request.user.person.in_adoption_by.all().order_by('name') | request.user.person.adopted_by.all().order_by('name')
 	testimonials = request.user.person.adopter.all()
 
-	context = {'user': request.user, 'dogs': dogs, 'testimonials': testimonials}
-	if request.method == 'POST' and 'remove' in request.POST:
-		dogid = request.POST['remove']
-		d = Dog.objects.get(pk=dogid)
-		d.delete()
-
 	if request.method == 'POST' and 'removet' in request.POST:
 		tid = request.POST['removet']
 		d = Testimonial.objects.get(pk=tid)
@@ -70,6 +64,15 @@ def user(request):
 		d.adopted_by = None
 		d.save()
 
+	canWrite = False
+
+	for d in dogs:
+		if d.adopted:
+			canWrite = True
+			break
+
+	context = {'user': request.user, 'dogs': dogs, 'testimonials': testimonials, 'canWrite': canWrite}
+
 	return render(request, 'persons/user.html', context)
 
 
@@ -78,6 +81,8 @@ def about(request):
 
 
 def index(request):
+	# racas = ["Akita Inu", "Beagle", "Beagle Harrier", "Bobtail", "Boiadeiro de Berna", "Boxer", "Braco Alemão", "Braco Francês", "Bull Terrier Inglês", "Bulldog Americano", "Bulldog Inglês", "Cairn Terrier", "Cane Corso", "Caniche", "Cão de Crista Chinês", "Cão d’Água Espanhol", "Cão Lobo Checoslovaco", "Cavalier King Charles Spaniel", "Chihuahua", "Chow-Chow", "Cocker Americano", "Cocker Spaniel Inglês", "Collie", "Dálmata", "Doberman", "Dogue Alemão", "Dogue de Bordéus", "Epagneul Bretão", "Fila Brasileiro", "Fox Terrier", "Galgo Afegão", "Golden Retriever", "Husky Siberiano", "Ibizan Hound", "Jack Russel Terrier", "Lhasa Apso", "Mastiff", "Mastim dos Pirenéus", "Mastim Espanhol", "Mastim Napolitano", "Norfolk Terrier", "Papillon", "Pastor Alemão", "Pastor de Beauce", "Pequeno Basset Griffon", "Pequeno Brabançon", "Pequeno Cão Leão", "Pequinês", "Perdigueiro Português", "Pinscher Anão", "Pitbull", "Rottweiler", "Samoiedo", "São Bernardo", "Schnauzer", "Setter Inglês", "Setter Irlandês", "Shar Pei", "Shih Tzu", "Spaniel Japonês", "Spitz Alemão", "Staffordshire Bull Terrier", "Teckel", "Terranova", "Terrier Brasileiro", "Vizsla", "Waimaraner", "West Highland White Terrier", "Yorkshire Terrier"]
+
 	dogs = Dog.objects.all()[:10]
 	context = {'dogs': dogs}
 	return render(request, 'dogs/index.html', context)
@@ -128,6 +133,12 @@ def detail(request, dog_id):
 			jaccard=int(jaccard)
 
 
+	charsList = dog.characteristics.__dict__
+	hasChars = False
+	
+	for c in charsList:
+		hasChars = c[0] != '_' and c != 'id' and charsList[c] != None
+
 	return render(request, 'dogs/dog.html', {'dog': dog,
 	 'user': request.user, 
 	 'color': color,
@@ -135,6 +146,7 @@ def detail(request, dog_id):
 	 'genderLetter': letter, 
 	 'dogIsAvailable': available, 
 	 'char': c,
+	 'hasChars': hasChars,
 	 'jaccard': jaccard})
 
 
@@ -145,8 +157,11 @@ def searchTestimonial(request):
 
 
 def search(request):
+	messages.info(request, 'Three credits remain in your account.')
 	if 'breed' not in request.GET or 'size' not in request.GET or 'color' not in request.GET or request.GET['breed'] == '' or request.GET['size'] == '' or request.GET['color'] == '':
-		return render(request, 'dogs/search.html', {'breeds': Breed.objects.all()})
+		r = Breed.objects.all()
+		rn = len(r)
+		return render(request, 'dogs/search.html', {'breeds': r, 'results': rn})
 
 	elif 'personalidade' in request.GET:
 		if not request.user.is_authenticated():
@@ -156,12 +171,15 @@ def search(request):
 		breed = 'Todas'
 		dogs, indexes = similar_dogs(request)
 
+		rn = len(dogs)
+
 		context = {
 			'color': color,
 			'size': size,
 			'breed': request.GET['breed'],
 			'dogs': dogs,
 			'indexes': indexes,
+			'results': rn,
 		}
 
 		return render(request, 'dogs/list-dogs.html', context)
@@ -189,12 +207,15 @@ def search(request):
 		if request.GET['breed'] != 'Todas':
 			dogs = dogs.filter(breed__breed_name=request.GET['breed'])
 
+		rn = len(dogs)
+
 		context = {
 			'color': color,
 			'size': size,
 			'breed': request.GET['breed'],
 			'dogs': dogs,
 			'indexes': False,
+			'results': rn
 		}
 
 		return render(request, 'dogs/list-dogs.html', context)
@@ -243,6 +264,7 @@ def create(request):  # depois mudar pra ficar restful
 		else:
 			print "erro1"
 			return render(request, 'dogs/newdog.html', {
+				'photo': False,
 				'form_dog': form_dog,
 				'form_characteristics': form_characteristics,
 				'error': True
@@ -260,6 +282,7 @@ def create(request):  # depois mudar pra ficar restful
 		else:
 			print "erro2"
 			return render(request, 'dogs/newdog.html', {
+				'photo': False,
 				'form_dog': form_dog,
 				'form_characteristics': form_characteristics,
 				'error': True
@@ -270,6 +293,7 @@ def create(request):  # depois mudar pra ficar restful
 		form_characteristics = CharacteristicsForm()
 
 	return render(request, 'dogs/newdog.html', {
+		'photo': False,
 		'form_dog': form_dog,
 		'form_characteristics': form_characteristics,
 	})
@@ -280,7 +304,7 @@ def edittestimonial(request, t_id):
 	if request.method == 'POST':  # If the form has been submitted...
 		# A form bound to the POST data
 		form_testimonial = TestimonialForm(request.POST, request.FILES)
-		if form_dog.is_valid():
+		if form_testimonial.is_valid():
 			t = form_testimonial.save(commit=False)
 			t.adopter = t.dog.adopted_by
 			t.giver = t.dog.in_adoption_by
@@ -300,6 +324,39 @@ def edittestimonial(request, t_id):
 		'form_testimonial': form_testimonial,
 	})
 
+
+@login_required(login_url='/accounts/login/')
+def removeDog(request, dog_id):
+	print 'remover cao'
+	dog = get_object_or_404(Dog, pk=dog_id)
+
+	if dog.in_adoption_by != request.user.person:
+		return render(request, 'index.html', {})
+
+	if request.method == 'POST':
+		dog.delete()
+		return HttpResponseRedirect('/user/')
+
+	letter = 'o' if dog.gender == 'M' else 'a'
+
+	return render(request, 'dogs/deletedog.html', {'dog': dog, 'genderLetter': letter})
+	
+
+@login_required(login_url='/accounts/login/')
+def removetestimonial(request, t_id):
+	print 'remover cao'
+	t = get_object_or_404(Testimonial, pk=t_id)
+
+	if t.adopter != request.user.person:
+		return render(request, 'index.html', {})
+
+	if request.method == 'POST':
+		t.delete()
+		return HttpResponseRedirect('/user/')
+
+
+	return render(request, 'dogs/deletetestimonial.html', {'id': t.id})
+
 #pegar caracteristicas do dog_id tambem
 @login_required(login_url='/accounts/login/')
 def edit(request, dog_id):  # depois mudar pra ficar restful
@@ -308,7 +365,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 	c = dog.characteristics
 	if dog.in_adoption_by != request.user.person:
 			return render(request, 'index.html', {})
-	
+
 	if request.method == 'POST':	
 		form_dog = DogForm(request.POST, request.FILES)
 		form_characteristics = CharacteristicsForm(request.POST, request.FILES)	
@@ -317,6 +374,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		else:
 			print "erro1"
 			return render(request, 'dogs/newdog.html', {
+				'photo': dog.photo,
 				'form_dog': form_dog,
 				'form_characteristics': form_characteristics,
 				'error': True
@@ -324,15 +382,26 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		if request.method == 'POST':  # If the form has been submitted...
 			# A form bound to the POST data
 			form_dog = DogForm(request.POST, request.FILES)
+
+			photourl = dog.photo
+
+			if 'photo' in request.FILES:
+				photourl = None
+
 			if form_dog.is_valid():
 				dog = form_dog.save(commit=False)
 				dog.id = dog_id
 				dog.characteristics = c
 				dog.characteristics.save()
 				dog.in_adoption_by = request.user.person
+
+				if photourl != None:
+					dog.photo = photourl
+
 				dog.save()
 			else:
 				return render(request, 'dogs/newdog.html', {
+					'photo': dog.photo,
 					'form_dog': form_dog,
 					'form_characteristics': form_characteristics,
 					'error': True
@@ -345,6 +414,7 @@ def edit(request, dog_id):  # depois mudar pra ficar restful
 		form_characteristics = CharacteristicsForm(instance=c)
 		print 'aqui get'
 	return render(request, 'dogs/newdog.html', {
+		'photo': dog.photo,
 		'form_dog': form_dog,
 		'form_characteristics': form_characteristics,
 		'error': False,

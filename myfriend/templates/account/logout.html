@@ -32,7 +32,10 @@
 				{% if redirect_field_value %}
 				<input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
 				{% endif %}
-				<button type="submit" class="btn btn-lg btn-danger"><i class="icon icon-power-off"></i> Sim, desejo sair</a>
+				<div class="btn-group">
+					<a href="/user/" class="btn btn-lg btn-primary"><i class="icon icon-arrow-left"></i> Não, desejo voltar</a>
+					<button type="submit" class="btn btn-lg btn-danger"><i class="icon icon-power-off"></i> Sim, desejo sair</button>
+				</button>
 			</form>
 		</div>
 	</div>
