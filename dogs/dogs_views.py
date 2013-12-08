@@ -355,7 +355,7 @@ def removetestimonial(request, t_id):
 		return HttpResponseRedirect('/user/')
 
 
-	return render(request, 'dogs/deletetestimonial.html', {})
+	return render(request, 'dogs/deletetestimonial.html', {'id': t.id})
 
 #pegar caracteristicas do dog_id tambem
 @login_required(login_url='/accounts/login/')
