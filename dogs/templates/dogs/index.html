@@ -58,6 +58,12 @@
 
 				</ul>
 
+				{% if messages %}
+
+    {% for message in messages %}
+    {% endfor %}
+{% endif %}
+
 				<select name="mnh" class="form-control" style="display: none;">
 					<option value="home">Home</option>
 					<option value="search">Buscar</option>
