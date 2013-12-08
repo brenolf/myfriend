@@ -49,8 +49,6 @@ def user(request):
 	dogs = request.user.person.in_adoption_by.all().order_by('name') | request.user.person.adopted_by.all().order_by('name')
 	testimonials = request.user.person.adopter.all()
 
-	context = {'user': request.user, 'dogs': dogs, 'testimonials': testimonials}
-
 	if request.method == 'POST' and 'removet' in request.POST:
 		tid = request.POST['removet']
 		d = Testimonial.objects.get(pk=tid)
@@ -65,6 +63,15 @@ def user(request):
 		d.adopted = False
 		d.adopted_by = None
 		d.save()
+
+	canWrite = False
+
+	for d in dogs:
+		if d.adopted:
+			canWrite = True
+			break
+
+	context = {'user': request.user, 'dogs': dogs, 'testimonials': testimonials, 'canWrite': canWrite}
 
 	return render(request, 'persons/user.html', context)
 
@@ -327,7 +334,7 @@ def removeDog(request, dog_id):
 		return HttpResponseRedirect('/user/')
 
 	letter = 'o' if dog.gender == 'M' else 'a'
-	
+
 	return render(request, 'dogs/deletedog.html', {'dog': dog, 'genderLetter': letter})
 
 #pegar caracteristicas do dog_id tambem

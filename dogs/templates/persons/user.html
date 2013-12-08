@@ -24,7 +24,10 @@
 			    <ul class="nav navbar-nav">
 				    <li><a href="{% url 'edit-person' %}"><i class="icon icon-edit"></i> Editar seus dados</a></li>
 					<li><a href="{% url 'create-dog' %}"><i class="icon icon-plus"></i> Registrar cachorro</a></li>
+					
+					{% if canWrite %}
 					<li><a href="{% url 'create-testimonial' %}"><i class="icon icon-plus"></i> Criar história</a></li>
+					{% endif %}
 			    </ul>
 			    <ul class="nav navbar-right">
 			    	<li><a href="{% url 'account_logout' %}"><i class="icon icon-power-off"></i> Sair</a></li>
