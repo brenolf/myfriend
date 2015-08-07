@@ -21,7 +21,7 @@ The project was developed using Django for backend and LESS in front-end.
 This project was made with [Rafael Tomazela](https://github.com/sohakes), [Henrique Squinello](https://github.com/hsquinello) and Alexandre Saldanha.
 
 ## Support
-Even though we have put an effort on developing this, we provide no warranty of its complete reliability, i.e. there might be some bugs. You can open an issue if you like to.
+Even though we have put effort into developing this, we provide no warranty of its complete reliability, i.e. there might be some bugs. You can open an issue if you like to.
 
 ## License
 Apache License 2.0
